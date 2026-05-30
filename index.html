@@ -562,9 +562,10 @@ header{position:sticky;top:0;z-index:100;
 (function () {
   'use strict';
 
-  var STORAGE_KEY = 'shopping_lists_v7'; 
-  var CURRENT_LIST_KEY = 'current_list_v7';
-  var CUSTOM_CATS_KEY = 'custom_cats_v7';
+  // Version 8 to ensure a perfectly clean slate after duplicates
+  var STORAGE_KEY = 'shopping_lists_v8'; 
+  var CURRENT_LIST_KEY = 'current_list_v8';
+  var CUSTOM_CATS_KEY = 'custom_cats_v8';
   var AI_KEY_STORAGE = 'gemini_api_key_v5';
 
   var CAT_META = {
@@ -633,7 +634,7 @@ header{position:sticky;top:0;z-index:100;
     sel.innerHTML = Object.keys(all).map(function(k) {
       return '<option value="' + k + '">' + all[k].icon + ' ' + sanitize(all[k].title) + '</option>';
     }).join('');
-    sel.value = 'other'; // default
+    sel.value = 'other';
   }
 
   window.addCustomCategory = function() {
