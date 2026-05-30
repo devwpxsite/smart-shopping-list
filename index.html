@@ -22,6 +22,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(212,168,67,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(212,168,67,0.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
 .wrap{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 16px 120px}
 
+/* HEADER */
 header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:13px 16px;margin:0 -16px}
 .h-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .brand{display:flex;align-items:center;gap:10px}
@@ -33,9 +34,11 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .h-btn{background:none;border:1px solid var(--border);border-radius:99px;color:var(--text-muted);font-size:11px;font-weight:700;font-family:var(--font);padding:5px 12px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s;white-space:nowrap}
 .h-btn:hover{border-color:var(--gold-dim);color:var(--gold);background:var(--gold-glow)}
 
+/* SECTIONS */
 .section{margin-top:16px;animation:fadeUp .35s ease}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
 
+/* PROGRESS */
 .prog-card{padding:16px}
 .prog-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .prog-label{font-size:12px;font-weight:500;color:var(--text-dim)}
@@ -46,14 +49,17 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .ps{font-size:11px;color:var(--text-muted)}
 .ps b{color:var(--text-dim)}
 
+/* DONE BANNER */
 .done-banner{margin-top:16px;background:var(--green-dim);border:1px solid rgba(62,207,142,.2);border-radius:var(--radius);padding:14px;text-align:center;font-size:13px;font-weight:600;color:var(--green);display:none;animation:fadeUp .3s ease}
 
+/* ADD PANEL */
 .add-main{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--border);position:relative}
 .add-icon{color:var(--gold-dim);font-size:15px;flex-shrink:0}
 .inp-wrap{flex:1;position:relative}
 
-/* Mobile Zoom Fix */
-#new-name,#new-notes,#new-qty,.cat-sel,.m-inp,.m-ta,#import-ta { font-size:16px !important; }
+/* iPhone zoom fix: all text inputs >=16px */
+#new-name,#new-notes,#new-qty,.cat-sel,
+.m-inp,.m-ta,#import-ta,#share-email-inp,#list-name-inp { font-size:16px !important; }
 
 #new-name{width:100%;background:transparent;border:none;outline:none;font-family:var(--font);font-weight:500;color:var(--text);caret-color:var(--gold)}
 #new-name::placeholder{color:var(--text-muted);font-weight:400}
@@ -80,12 +86,14 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .act-btn.share{color:var(--blue);border-color:rgba(96,165,250,.25)}
 .act-btn.share:hover{background:var(--blue-dim);border-color:rgba(96,165,250,.5)}
 
+/* FILTER */
 .filter-bar{display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px}
 .f-tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:4px}
 .f-tab{background:none;border:none;font-family:var(--font);font-size:11px;font-weight:600;color:var(--text-muted);padding:5px 12px;border-radius:99px;cursor:pointer;transition:all .2s;white-space:nowrap}
 .f-tab.active{background:var(--gold);color:#0f0f10}
 .f-tab:not(.active):hover{color:var(--text-dim)}
 
+/* LIST */
 .cat-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;animation:fadeUp .3s ease}
 .cat-hdr{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.01)}
 .cat-icon{font-size:15px}
@@ -113,12 +121,13 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .ico-btn:hover{color:var(--red);background:var(--red-dim)}
 .ico-btn.cmp:hover{color:var(--gold);background:var(--gold-glow)}
 
+/* EMPTY */
 .empty{text-align:center;padding:60px 20px;color:var(--text-muted);animation:fadeUp .4s ease}
 .empty-icon{font-size:36px;margin-bottom:12px}
 .empty-title{font-size:14px;font-weight:600;color:var(--text-dim);margin-bottom:6px}
 .empty-sub{font-size:12px}
 
-/* MODALS */
+/* ── MODALS ── */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(10px);z-index:400;display:none;align-items:center;justify-content:center;padding:16px}
 .modal-bg.open{display:flex;animation:fadeUp .2s ease}
 .modal{background:var(--surface);border:1px solid var(--border-light);border-radius:20px;padding:24px;width:100%;max-width:420px;box-shadow:0 24px 64px rgba(0,0,0,.8);animation:slideUp .25s ease;max-height:90vh;overflow-y:auto}
@@ -127,6 +136,8 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .m-close:hover{color:var(--text)}
 .m-sub{font-size:12px;color:var(--text-dim);margin-bottom:16px;line-height:1.6}
 .m-label{font-size:10px;font-weight:700;color:var(--text-muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;margin-top:14px}
+.m-inp{width:100%;background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font);padding:10px 12px;outline:none;transition:border-color .2s;text-align:right}
+.m-inp:focus{border-color:var(--gold-dim)}
 .m-ta{width:100%;background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font);padding:10px 12px;outline:none;resize:none;transition:border-color .2s;direction:rtl;text-align:right;line-height:1.6}
 .m-ta:focus{border-color:var(--gold-dim)}
 .m-ta::placeholder{color:var(--text-muted)}
@@ -142,6 +153,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .m-row .m-btn{margin-top:0}
 .sep{height:1px;background:var(--border);margin:16px 0}
 
+/* Import preview */
 .import-preview{background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);padding:12px;max-height:200px;overflow-y:auto;margin-top:10px}
 .prev-empty{font-size:11px;color:var(--text-muted);text-align:center;padding:16px 0}
 .prev-item{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;gap:8px}
@@ -152,12 +164,14 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .preview-stats{display:flex;align-items:center;justify-content:space-between;margin-top:8px;font-size:11px;color:var(--text-muted)}
 .preview-stats b{color:var(--text-dim)}
 
+/* Price modal */
 .price-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:6px}
 .price-row.best{background:var(--green-dim);border-color:rgba(62,207,142,.2)}
 .pr-name{font-size:12px;font-weight:600;color:var(--text-dim);display:flex;align-items:center;gap:6px}
 .pr-price{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--text)}
 .best-badge{font-size:9px;font-weight:700;color:var(--green);background:rgba(62,207,142,.15);padding:2px 6px;border-radius:4px}
 
+/* Share modal */
 .share-opt{display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);cursor:pointer;transition:all .15s;margin-bottom:8px}
 .share-opt:hover{border-color:var(--border-light);background:rgba(255,255,255,.04)}
 .share-opt-icon{font-size:22px;flex-shrink:0}
@@ -165,6 +179,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .share-opt-title{font-size:13px;font-weight:700;color:var(--text)}
 .share-opt-sub{font-size:11px;color:var(--text-dim);margin-top:2px}
 .share-opt-arrow{color:var(--text-muted);font-size:14px}
+
 .share-opt.wa-opt{border-color:rgba(37,211,102,.2)}
 .share-opt.wa-opt:hover{background:rgba(37,211,102,.06);border-color:rgba(37,211,102,.4)}
 .share-opt.copy-opt{border-color:rgba(96,165,250,.2)}
@@ -172,6 +187,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .share-opt.sms-opt{border-color:rgba(212,168,67,.2)}
 .share-opt.sms-opt:hover{background:var(--gold-glow);border-color:rgba(212,168,67,.4)}
 
+/* Toast */
 #toast-wrap{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:600;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
 .toast{background:var(--surface2);border:1px solid var(--border-light);color:var(--text-dim);font-size:12px;font-weight:600;padding:9px 18px;border-radius:99px;box-shadow:0 4px 24px rgba(0,0,0,.5);animation:toastIn .25s ease,toastOut .3s ease 2.2s forwards;white-space:nowrap}
 .toast.success{color:var(--green);border-color:rgba(62,207,142,.3)}
@@ -292,11 +308,15 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     <div class="m-title">💬 ייבוא מוואטסאפ <button class="m-close" onclick="closeModal('import-modal')">✕</button></div>
     <div class="m-sub">הדבק כאן רשימה חופשית — המערכת מזהה אוטומטית מוצרים, כמויות וקטגוריות.</div>
     <textarea class="m-ta" id="import-ta" rows="6" placeholder="לדוגמה:&#10;חלב&#10;2 מלפפונים&#10;צבע לעץ (חום)&#10;3 ארוחות ילדים"></textarea>
-    <div class="import-preview" id="import-preview"><div class="prev-empty">הדבק טקסט לראות תצוגה מקדימה</div></div>
+    
+    <div class="import-preview" id="import-preview">
+      <div class="prev-empty">הדבק טקסט כדי לראות תצוגה מקדימה</div>
+    </div>
     <div class="preview-stats" id="preview-stats" style="display:none">
       <span>זוהו: <b id="prev-count">0</b> מוצרים</span>
       <span id="prev-cats-summary"></span>
     </div>
+    
     <div class="sep"></div>
     <div class="m-label">הוסף לרשימה:</div>
     <div class="m-row" style="margin-top:8px">
@@ -319,6 +339,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
       </div>
       <div class="share-opt-arrow">›</div>
     </div>
+    
     <div class="share-opt copy-opt" onclick="shareViaCopy()">
       <div class="share-opt-icon">📋</div>
       <div class="share-opt-text">
@@ -327,6 +348,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
       </div>
       <div class="share-opt-arrow">›</div>
     </div>
+    
     <div class="share-opt sms-opt" onclick="shareViaSms()">
       <div class="share-opt-icon">📱</div>
       <div class="share-opt-text">
@@ -335,17 +357,18 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
       </div>
       <div class="share-opt-arrow">›</div>
     </div>
+
     <div class="share-opt" onclick="shareViaEmail()" style="border-color:rgba(212,168,67,.15)">
       <div class="share-opt-icon">📧</div>
       <div class="share-opt-text">
         <div class="share-opt-title">שלח במייל</div>
-        <div class="share-opt-sub">משגר דואר אלקטרוני</div>
+        <div class="share-opt-sub">משגר דואר אלקטרוני עם הרשימה</div>
       </div>
       <div class="share-opt-arrow">›</div>
     </div>
     
     <div class="sep"></div>
-    <div class="m-label">תצוגה מקדימה של הרשימה:</div>
+    <div class="m-label">תצוגה מקדימה של הרשימה המשותפת:</div>
     <div class="import-preview" id="share-preview" style="margin-top:8px;max-height:150px"></div>
   </div>
 </div>
@@ -364,6 +387,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
   'use strict';
 
   var STORAGE_KEY = 'shopping_list_v2';
+
   var CAT_META = {
     produce: { title: 'ירקות ופירות', icon: '🥦' },
     bakery: { title: 'מאפים ולחמים', icon: '🥖' },
@@ -379,18 +403,19 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     other: { title: 'כללי', icon: '📦' }
   };
 
+  // מילון מורחב ומשופר (כולל צורות רבים נפוצות)
   var CAT_RULES = [
-    { cat: 'dairy', words: ['חלב','גבינה','שמנת','קוטג','יוגורט','חמאה','קצפת','לבנה','שוקו','מוצרלה','ריקוטה','פרמזן','גאודה','בולגרית','צהובה','מעדן'] },
-    { cat: 'bakery', words: ['לחם','פיתה','פיתות','לחמניות','חלה','מאפה','קרואסון','עוגה','עוגיות','בגט','בורקס','טורטיה'] },
-    { cat: 'produce', words: ['מלפפון','מלפפונים','עגבניה','עגבניות','לימון','תפוח','אבטיח','פרי','ירק','בצל','גזר','שום','חסה','פלפל','בננה','תות','תפוח אדמה','פפאיה'] },
-    { cat: 'meat', words: ['עוף','תרנגול','פרגית','שוקיים','כנפיים','חזה','הודו','בשר','בקר','שניצל','קציצות','המבורגר','נקניקיות','סלמון','דג','טונה'] },
-    { cat: 'frozen', words: ['קפוא','קפואים','קפואה','פיצה קפואה','שניצל קפוא','אפונה קפואה','בורקס קפוא'] },
-    { cat: 'cleaning', words: ['אבקת כביסה','נוזל כלים','סבון כביסה','מרכך','מגב','מטלית','שקיות אשפה','נייר טואלט','מגבות נייר','נייר אלומיניום','ניקוי'] },
-    { cat: 'hygiene', words: ['שמפו','מרכך שיער','סבון גוף','דאודורנט','משחת שיניים','מי פה','טמפונים','גילוח','תרופה','אקמול'] },
+    { cat: 'dairy', words: ['חלב','גבינה','גבינות','שמנת','קוטג','יוגורט','יוגורטים','חמאה','קצפת','לבנה','שוקו','מוצרלה','ריקוטה','פרמזן','גאודה','בולגרית','צהובה','מעדן','מעדנים'] },
+    { cat: 'bakery', words: ['לחם','לחמים','פיתה','פיתות','לחמניה','לחמניות','חלה','חלות','מאפה','מאפים','קרואסון','עוגה','עוגות','עוגיות','בגט','בורקס','טורטיה'] },
+    { cat: 'produce', words: ['מלפפון','מלפפונים','עגבניה','עגבניות','לימון','לימונים','תפוח','תפוחים','אבטיח','פרי','פירות','ירק','ירקות','בצל','בצלים','גזר','גזרים','שום','חסה','פלפל','פלפלים','בננה','בננות','תות','תותים','תפוח אדמה','תפוחי אדמה','פפאיה','פטריות','עשבי תיבול'] },
+    { cat: 'meat', words: ['עוף','עופות','תרנגול','פרגית','שוקיים','כנפיים','חזה','הודו','בשר','בקר','שניצל','קציצות','המבורגר','נקניק','נקניקיות','סלמון','דג','דגים','טונה'] },
+    { cat: 'frozen', words: ['קפוא','קפואים','קפואה','פיצה','גלידה','ארטיק','קרח','אפונה קפואה','שניצל קפוא'] },
+    { cat: 'cleaning', words: ['כביסה','אבקת כביסה','נוזל כלים','סבון כביסה','מרכך','מגב','מטלית','שקיות אשפה','שקיות','נייר טואלט','מגבות נייר','נייר אלומיניום','ניקוי','אקונומיקה','ספוג'] },
+    { cat: 'hygiene', words: ['שמפו','מרכך שיער','סבון גוף','דאודורנט','משחת שיניים','מי פה','טמפונים','גילוח','תרופה','אקמול','טיטולים','חיתולים','מגבונים','פלסטרים'] },
     { cat: 'drinks', words: ['מים','מיץ','קולה','ספרייט','פאנטה','סודה','בירה','יין','וודקה','קפה','תה'] },
-    { cat: 'snacks', words: ['חטיף','ביסלי','במבה','פופקורן','שוקולד','סוכריות','גומי','קינדר','בוטנים','שקדים','מקדונלדס','ארוחת ילדים','מקורויאל'] },
-    { cat: 'pets', words: ['אוכל לכלב','אוכל לכלבים','כלב מבוגר','שימורים לכלב','רצועה','חטיף לכלב','תרופה לכלב'] },
-    { cat: 'diy', words: ['עץ','קורות עץ','צבע לעץ','ברגים','מסמרים','פלאנר','מברשת','לכה','דבק נגרים','אדנית','נדנדה'] }
+    { cat: 'snacks', words: ['חטיף','חטיפים','ביסלי','במבה','פופקורן','שוקולד','סוכריות','גומי','קינדר','בוטנים','שקדים','גרעינים'] },
+    { cat: 'pets', words: ['כלב','כלבים','חתול','חתולים','רצועה','חטיף לכלב','תרופה לכלב'] },
+    { cat: 'diy', words: ['עץ','קרשים','קורות','צבע לעץ','ברגים','מסמרים','מברשת','לכה','דבק נגרים','אדנית','נדנדה','דיבלים','מברגה'] }
   ];
 
   function autoCategorize(name) {
@@ -410,20 +435,33 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;');
   }
 
+  var DEFAULT_ITEMS = [
+    { id: '1', name: 'שמנת להקצפה', qty: 2, cat: 'dairy', notes: 'אריזה שחורה', done: false },
+    { id: '2', name: 'מלפפונים', qty: 1, cat: 'produce', notes: '', done: false },
+    { id: '3', name: 'ברגים לעץ 4x40', qty: 1, cat: 'diy', notes: '', done: false }
+  ];
+
   var items = [];
   var currentFilter = 'all';
   var parsedImportItems = [];
 
-  function saveToStorage() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch(e) {} }
+  function saveToStorage() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch(e) {}
+  }
+
   function loadFromStorage() {
     try {
       var raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) { var parsed = JSON.parse(raw); if (Array.isArray(parsed)) return parsed; }
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) return parsed;
+      }
     } catch(e) {}
     return null;
   }
 
-  items = loadFromStorage() || [];
+  var stored = loadFromStorage();
+  items = stored || DEFAULT_ITEMS;
 
   function showToast(msg, type) {
     var wrap = document.getElementById('toast-wrap');
@@ -437,6 +475,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
   function render() {
     var wrap = document.getElementById('list-wrap');
     var empty = document.getElementById('empty');
+    
     var filtered = items.filter(function(item) {
       if (currentFilter === 'active') return !item.done;
       if (currentFilter === 'done') return item.done;
@@ -558,14 +597,16 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 
   function removeItem(id) {
     items = items.filter(function(i) { return i.id !== id; });
-    saveToStorage(); render();
+    saveToStorage();
+    render();
   }
 
   function clearDone() {
     var before = items.length;
     items = items.filter(function(i) { return !i.done; });
     var removed = before - items.length;
-    saveToStorage(); render();
+    saveToStorage();
+    render();
     if (removed > 0) showToast(removed + ' פריטים נמחקו', 'success');
   }
 
@@ -584,7 +625,8 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 
   function hideCatBadge() {
     var badge = document.getElementById('auto-cat-badge');
-    badge.classList.remove('show'); badge.textContent = '';
+    badge.classList.remove('show');
+    badge.textContent = '';
   }
 
   document.getElementById('new-name').addEventListener('input', function() {
@@ -598,7 +640,9 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     badge.classList.add('show');
   });
 
-  // IMPORT
+  // ══════════════════════════════════════════
+  // WHATSAPP IMPORT 
+  // ══════════════════════════════════════════
   function parseWhatsAppText(raw) {
     if (!raw || !raw.trim()) return [];
     var lines = raw.split('\n');
@@ -609,6 +653,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
       if (/^\[\d/.test(text) || /^\d{1,2}\/\d{1,2}/.test(text)) return;
       
       var qty = 1; var notes = ''; var name = text;
+      
       var m1 = text.match(/^(\d+)\s*[xX×*]?\s+(.+)$/);
       if (m1 && parseInt(m1[1]) < 50) { qty = parseInt(m1[1]); name = m1[2].trim(); }
       else {
@@ -619,14 +664,17 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
           if (m3) { name = m3[1].trim(); notes = m3[2] + ' ' + m3[3]; }
         }
       }
+
       var mParen = name.match(/^([^\(]+)\s*\((.+?)\)\s*$/);
       if (mParen) { name = mParen[1].trim(); notes = mParen[2].trim(); }
       else {
         var mHyph = name.split(/\s+-\s+/);
         if (mHyph.length > 1) { name = mHyph[0].trim(); notes = mHyph.slice(1).join(' - ').trim(); }
       }
+      
       name = name.trim();
-      if (!name) return;
+      if (!name || name.length < 1) return;
+      
       result.push({
         id: 'imp_' + Date.now() + '_' + Math.random().toString(36).slice(2,5),
         name: name, qty: qty, cat: autoCategorize(name), notes: notes, done: false
@@ -645,14 +693,22 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     var stats = document.getElementById('preview-stats');
     if (!parsed || !parsed.length) {
       box.innerHTML = '<div class="prev-empty">הדבק טקסט כדי לראות תצוגה מקדימה</div>';
-      stats.style.display = 'none'; return;
+      stats.style.display = 'none';
+      return;
     }
     var catCount = {};
     parsed.forEach(function(p) { catCount[p.cat] = (catCount[p.cat] || 0) + 1; });
     var catSummary = Object.keys(catCount).map(function(k) { return CAT_META[k].icon + ' ' + catCount[k]; }).join(' ');
+    
     box.innerHTML = parsed.map(function(p) {
       var meta = CAT_META[p.cat] || CAT_META.other;
-      return '<div class="prev-item"><span class="prev-name">' + sanitize(p.name) + (p.notes ? ' <span style="color:var(--text-muted);font-size:10px">(' + sanitize(p.notes) + ')</span>' : '') + '</span><span class="prev-cat">' + meta.icon + ' ' + meta.title + '</span><span class="prev-qty">×' + p.qty + '</span></div>';
+      return (
+        '<div class="prev-item">' +
+          '<span class="prev-name">' + sanitize(p.name) + (p.notes ? ' <span style="color:var(--text-muted);font-size:10px">(' + sanitize(p.notes) + ')</span>' : '') + '</span>' +
+          '<span class="prev-cat">' + meta.icon + ' ' + meta.title + '</span>' +
+          '<span class="prev-qty">×' + p.qty + '</span>' +
+        '</div>'
+      );
     }).join('');
     document.getElementById('prev-count').textContent = parsed.length;
     document.getElementById('prev-cats-summary').textContent = catSummary;
@@ -660,7 +716,9 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
   }
 
   function execImport(mode) {
-    if (!parsedImportItems || !parsedImportItems.length) { showToast('לא זוהו מוצרים בטקסט', 'error'); return; }
+    if (!parsedImportItems || !parsedImportItems.length) {
+      showToast('לא זוהו מוצרים בטקסט', 'error'); return;
+    }
     if (mode === 'replace') {
       items = parsedImportItems.map(function(p) {
         return { id: Date.now().toString() + Math.random(), name: p.name, qty: p.qty, cat: p.cat, notes: p.notes, done: false };
@@ -668,31 +726,43 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
       showToast(parsedImportItems.length + ' מוצרים יובאו (הרשימה הוחלפה)', 'success');
     } else {
       parsedImportItems.forEach(function(p) {
-        var existing = items.find(function(i) { return i.name.toLowerCase() === p.name.toLowerCase(); });
-        if (existing) { existing.qty += p.qty; if (!existing.notes && p.notes) existing.notes = p.notes; }
-        else { items.push({ id: Date.now().toString() + Math.random(), name: p.name, qty: p.qty, cat: p.cat, notes: p.notes, done: false }); }
+        var existing = items.find(function(i) { return i.name.trim().toLowerCase() === p.name.trim().toLowerCase(); });
+        if (existing) {
+          existing.qty += p.qty;
+          if (!existing.notes && p.notes) existing.notes = p.notes;
+        } else {
+          items.push({ id: Date.now().toString() + Math.random(), name: p.name, qty: p.qty, cat: p.cat, notes: p.notes, done: false });
+        }
       });
-      showToast(parsedImportItems.length + ' מוצרים נוספו/מוזגו לרשימה', 'success');
+      showToast(parsedImportItems.length + ' מוצרים נוספו לרשימה', 'success');
     }
     saveToStorage(); render(); closeModal('import-modal');
-    document.getElementById('import-ta').value = ''; parsedImportItems = []; renderImportPreview([]);
+    document.getElementById('import-ta').value = '';
+    parsedImportItems = []; renderImportPreview([]);
   }
 
-  // SHARE
+  // ══════════════════════════════════════════
+  // SHARE 
+  // ══════════════════════════════════════════
   function buildShareText() {
     if (!items.length) return 'הרשימה ריקה';
     var lines = ['🛒 רשימת קניות\n'];
     var groups = {};
     items.filter(function(i) { return !i.done; }).forEach(function(item) {
       var c = item.cat || 'other';
-      if (!groups[c]) groups[c] = []; groups[c].push(item);
+      if (!groups[c]) groups[c] = [];
+      groups[c].push(item);
     });
+    
     Object.keys(CAT_META).forEach(function(catKey) {
       var catItems = groups[catKey];
       if (!catItems || !catItems.length) return;
-      lines.push(CAT_META[catKey].icon + ' ' + CAT_META[catKey].title + ':');
+      var meta = CAT_META[catKey];
+      lines.push(meta.icon + ' ' + meta.title + ':');
       catItems.forEach(function(item) {
-        var line = ' • ' + item.name + (item.qty > 1 ? ' ×' + item.qty : '') + (item.notes ? ' (' + item.notes + ')' : '');
+        var line = ' • ' + item.name;
+        if (item.qty > 1) line += ' ×' + item.qty;
+        if (item.notes) line += ' (' + item.notes + ')';
         lines.push(line);
       });
       lines.push('');
@@ -700,50 +770,106 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     return lines.join('\n').trim();
   }
 
-  function shareViaWhatsApp() { window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(buildShareText()), '_blank'); closeModal('share-modal'); }
-  function shareViaCopy() {
+  function shareViaWhatsApp() {
     var text = buildShareText();
-    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(function() { showToast('הועתק ללוח!', 'success'); }).catch(function() { fallbackCopy(text); }); }
-    else { fallbackCopy(text); }
+    var url = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(text);
+    window.open(url, '_blank');
     closeModal('share-modal');
   }
+
+  function shareViaCopy() {
+    var text = buildShareText();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function() { showToast('הרשימה הועתקה ללוח! ✓', 'success'); }).catch(function() { fallbackCopy(text); });
+    } else { fallbackCopy(text); }
+    closeModal('share-modal');
+  }
+
   function fallbackCopy(text) {
-    var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
     document.body.appendChild(ta); ta.focus(); ta.select();
-    try { document.execCommand('copy'); showToast('הועתק ללוח!', 'success'); } catch(e) { showToast('שגיאה בהעתקה', 'error'); }
+    try { document.execCommand('copy'); showToast('הרשימה הועתקה ✓', 'success'); } catch(e) { showToast('שגיאה בהעתקה', 'error'); }
     document.body.removeChild(ta);
   }
-  function shareViaSms() { window.open('sms:?body=' + encodeURIComponent(buildShareText()), '_blank'); closeModal('share-modal'); }
-  function shareViaEmail() { window.open('mailto:?subject=' + encodeURIComponent('רשימת קניות') + '&body=' + encodeURIComponent(buildShareText()), '_blank'); closeModal('share-modal'); }
 
-  // PRICE MODAL
+  function shareViaSms() {
+    var text = buildShareText();
+    window.open('sms:?body=' + encodeURIComponent(text), '_blank');
+    closeModal('share-modal');
+  }
+
+  function shareViaEmail() {
+    var text = buildShareText();
+    var subj = encodeURIComponent('רשימת קניות מעודכנת');
+    var body = encodeURIComponent(text);
+    window.open('mailto:?subject=' + subj + '&body=' + body, '_blank');
+    closeModal('share-modal');
+  }
+
+  // ══════════════════════════════════════════
+  // PRICE MODAL 
+  // ══════════════════════════════════════════
   function openPriceModal(id) {
     var item = items.find(function(i) { return i.id === id; });
     if (!item) return;
     document.getElementById('price-modal-name').textContent = 'הערכת מחירים עבור: ' + item.name + ' (' + item.qty + ' יח\')';
+    
     var basePrices = { produce:4.9, dairy:8.9, bakery:11.9, meat:35, frozen:25, cleaning:18, hygiene:22, drinks:8, snacks:12, pets:45, diy:15, other:15 };
     var baseVal = (basePrices[item.cat] || 15) * item.qty;
-    var stores = [ {name:'מחסני השוק', factor:0.88}, {name:'רמי לוי', factor:0.93}, {name:'יוחננוף', factor:0.96}, {name:'ויקטורי', factor:1.02}, {name:'שופרסל', factor:1.12} ];
-    var sorted = stores.map(function(s) { return { name: s.name, price: (baseVal * s.factor).toFixed(2) }; }).sort(function(a,b) { return parseFloat(a.price) - parseFloat(b.price); });
+    
+    var stores = [
+      { name:'מחסני השוק', factor:0.88 },
+      { name:'רמי לוי', factor:0.93 },
+      { name:'יוחננוף', factor:0.96 },
+      { name:'ויקטורי', factor:1.02 },
+      { name:'שופרסל', factor:1.12 }
+    ];
+    
+    var sorted = stores.map(function(s) {
+      return { name: s.name, price: (baseVal * s.factor).toFixed(2) };
+    }).sort(function(a,b) { return parseFloat(a.price) - parseFloat(b.price); });
+    
     document.getElementById('price-list').innerHTML = sorted.map(function(s, idx) {
-      return '<div class="price-row ' + (idx === 0 ? 'best' : '') + '"><div class="pr-name">' + (idx === 0 ? '<span class="best-badge">הזול ביותר!</span>' : '') + '🛒 ' + sanitize(s.name) + '</div><div class="pr-price">' + sanitize(s.price) + ' ₪</div></div>';
+      return (
+        '<div class="price-row ' + (idx === 0 ? 'best' : '') + '">' +
+          '<div class="pr-name">' + (idx === 0 ? '<span class="best-badge">הזול ביותר!</span>' : '') + '🛒 ' + sanitize(s.name) + '</div>' +
+          '<div class="pr-price">' + sanitize(s.price) + ' ₪</div>' +
+        '</div>'
+      );
     }).join('');
-    document.getElementById('chp-link-btn').onclick = function() { window.open('https://chp.co.il/?q=' + encodeURIComponent(item.name), '_blank'); };
+    
+    document.getElementById('chp-link-btn').onclick = function() {
+      window.open('https://chp.co.il/?q=' + encodeURIComponent(item.name), '_blank');
+    };
     openModal('price-modal-bg');
   }
 
-  // MODALS
+  // ══════════════════════════════════════════
+  // MODALS 
+  // ══════════════════════════════════════════
   function openModal(id) {
     document.getElementById(id).classList.add('open');
-    if (id === 'share-modal') document.getElementById('share-preview').innerHTML = '<pre style="font-size:11px;color:var(--text-dim);white-space:pre-wrap;line-height:1.7;direction:rtl;text-align:right">' + sanitize(buildShareText()) + '</pre>';
+    if (id === 'share-modal') {
+      var text = buildShareText();
+      document.getElementById('share-preview').innerHTML = '<pre style="font-size:11px;color:var(--text-dim);white-space:pre-wrap;line-height:1.7;direction:rtl;text-align:right">' + sanitize(text) + '</pre>';
+    }
   }
-  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
-  // EVENTS & GLOBALS
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+  }
+
+  // ══════════════════════════════════════════
+  // EVENTS & GLOBALS 
+  // ══════════════════════════════════════════
   document.getElementById('new-name').addEventListener('keydown', function(e) { if (e.key === 'Enter') addItem(); });
   document.getElementById('new-notes').addEventListener('keydown', function(e) { if (e.key === 'Enter') addItem(); });
-  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') ['import-modal','share-modal','price-modal-bg'].forEach(closeModal); });
-  ['import-modal','share-modal','price-modal-bg'].forEach(function(id) { document.getElementById(id).addEventListener('click', function(e) { if (e.target === this) closeModal(id); }); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { ['import-modal','share-modal','price-modal-bg'].forEach(closeModal); } });
+  
+  ['import-modal','share-modal','price-modal-bg'].forEach(function(id) {
+    document.getElementById(id).addEventListener('click', function(e) { if (e.target === this) closeModal(id); });
+  });
 
   window.addItem = addItem;
   window.toggleItem = toggleItem;
