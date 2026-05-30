@@ -190,7 +190,7 @@ header{position:sticky;top:0;z-index:100;
 
 /* ── CATEGORY BLOCKS ── */
 .cat-block{background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius);overflow:hidden;animation:fadeUp .3s ease}
+  border-radius:var(--radius);overflow:hidden;animation:fadeUp .3s ease; margin-bottom:12px;}
 .cat-hdr{display:flex;align-items:center;gap:9px;padding:10px 14px;
   border-bottom:1px solid var(--border);background:rgba(255,255,255,.008)}
 .cat-icon{font-size:15px}
@@ -344,7 +344,7 @@ header{position:sticky;top:0;z-index:100;
   white-space:nowrap;max-width:90vw;overflow:hidden;text-overflow:ellipsis;
   backdrop-filter:blur(10px)}
 .toast.success{color:var(--green);border-color:rgba(46,204,136,.3)}
-.toast.error{color:var(--red);border-color:rgba(240,96,96,.3);animation:toastIn .25s ease,toastOut .3s ease 6s forwards}
+.toast.error{color:var(--red);border-color:rgba(240,96,96,.3);animation:toastIn .25s ease,toastOut .3s ease 8s forwards; max-width: 95vw; white-space: normal;}
 .toast.ai{color:var(--purple);border-color:rgba(167,139,250,.3)}
 
 /* ── SCROLLBAR ── */
@@ -562,10 +562,10 @@ header{position:sticky;top:0;z-index:100;
 (function () {
   'use strict';
 
-  var STORAGE_KEY = 'shopping_lists_v9'; 
-  var CURRENT_LIST_KEY = 'current_list_v9';
-  var CUSTOM_CATS_KEY = 'custom_cats_v9';
-  var AI_KEY_STORAGE = 'gemini_api_key_v5';
+  var STORAGE_KEY = 'shopping_lists_v10'; 
+  var CURRENT_LIST_KEY = 'current_list_v10';
+  var CUSTOM_CATS_KEY = 'custom_cats_v10';
+  var AI_KEY_STORAGE = 'gemini_api_key_v10';
 
   var CAT_META = {
     produce: { title: 'ירקות ופירות', icon: '🥦' },
@@ -906,10 +906,10 @@ header{position:sticky;top:0;z-index:100;
     if(!wrap) return;
     var el = document.createElement('div');
     el.className = 'toast' + (type ? ' ' + type : '');
-    if (type === 'error') el.style.animation = 'toastIn .25s ease, toastOut .3s ease 6s forwards';
+    if (type === 'error') el.style.animation = 'toastIn .25s ease, toastOut .3s ease 8s forwards';
     el.innerHTML = sanitize(msg);
     wrap.appendChild(el);
-    setTimeout(function() { el.remove(); }, type === 'error' ? 6200 : 2700);
+    setTimeout(function() { el.remove(); }, type === 'error' ? 8200 : 2700);
   }
 
   // ── AI ──
@@ -932,18 +932,20 @@ header{position:sticky;top:0;z-index:100;
       
       if (!res.ok) {
         var errText = (data && data.error && data.error.message) ? data.error.message : '';
-        var hebError = 'שגיאת AI';
-        if (errText.includes('API key not valid')) hebError = 'מפתח לא חוקי';
-        else if (errText.includes('has not been used')) hebError = 'המפתח עדיין לא פעיל, נסה שוב בעוד דקה';
-        else if (errText.includes('generativelanguage.googleapis.com')) hebError = 'שגיאת הרשאות — צור מפתח חדש ב-AI Studio';
-        showToast(hebError, 'error'); return;
+        var hebError = 'שגיאת AI (' + res.status + ')';
+        if (errText.includes('API key not valid')) hebError = 'מפתח ה-API לא חוקי. אנא בדוק שהעתקת אותו נכון.';
+        else if (errText.includes('has not been used')) hebError = 'המפתח עדיין לא פעיל. חכה דקה ונסה שוב.';
+        else if (errText.includes('generativelanguage.googleapis.com')) hebError = 'שגיאת הרשאות. יש לייצר מפתח חדש ב-AI Studio בלבד.';
+        else if (res.status === 429) hebError = 'הגעת למגבלת הבקשות החינמית של גוגל.';
+        else hebError += ': ' + errText;
+        showToast(hebError, 'error'); 
+        return;
       }
       
       if (data && data.candidates && data.candidates[0].content.parts[0].text) {
         var rawText = data.candidates[0].content.parts[0].text.trim().toLowerCase();
         var smartCat = 'other';
         
-        // מנגנון חילוץ חכם: מחפש את המזהה בתוך התשובה של ה-AI
         for (var i = 0; i < allowedIds.length; i++) {
           if (rawText.includes(allowedIds[i].toLowerCase())) {
             smartCat = allowedIds[i];
@@ -955,15 +957,13 @@ header{position:sticky;top:0;z-index:100;
         if (finalCats[smartCat] && smartCat !== 'other') {
           var cur = getItems();
           var idx = cur.findIndex(function(i) { return i.id === itemId; });
-          if (idx > -1) { 
-            cur[idx].cat = smartCat; 
-            setItems(cur); 
-            render(); 
-            showToast('🤖 ' + itemName + ' → ' + finalCats[smartCat].title, 'ai'); 
-          }
+          if (idx > -1) { cur[idx].cat = smartCat; setItems(cur); render(); showToast('🤖 ' + itemName + ' → ' + finalCats[smartCat].title, 'ai'); }
         }
       }
-    } catch(e) { showToast('שגיאת תקשורת עם AI (בדוק אינטרנט או חוסם פרסומות)', 'error'); }
+    } catch(e) { 
+      console.error(e);
+      showToast('שגיאת רשת/קריסה: ' + (e.message || 'שגיאה לא ידועה'), 'error'); 
+    }
   }
 
   window.openAiSettings = function() {
@@ -974,20 +974,28 @@ header{position:sticky;top:0;z-index:100;
     }
     openModal('ai-modal');
   };
+
   window.saveAiKey = function() {
     var inp = document.getElementById('ai-key-inp');
     if(!inp) return;
-    var key = inp.value.trim();
+    
+    // Deep Clean: מוחק רווחים, ירידות שורה ותווים נסתרים לחלוטין
+    var key = inp.value.replace(/[\s\r\n]+/g, '').trim();
+    
     if (key.length < 10) { showToast('מפתח לא תקין', 'error'); return; }
+    
     localStorage.setItem(AI_KEY_STORAGE, key);
     isAiEnabled = true;
+    
     var dot = document.getElementById('ai-status-dot');
     var txt = document.getElementById('ai-status-text');
     if(dot) dot.classList.add('active');
     if(txt) txt.textContent = 'AI מחובר';
+    
     closeModal('ai-modal');
-    showToast('AI הופעל!', 'success');
+    showToast('AI הופעל בהצלחה!', 'success');
   };
+
   window.clearAiKey = function() {
     localStorage.removeItem(AI_KEY_STORAGE);
     var inp = document.getElementById('ai-key-inp');
