@@ -58,6 +58,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .add-icon{color:var(--gold-dim);font-size:15px;flex-shrink:0}
 .inp-wrap{flex:1;position:relative}
 
+/* Mobile Zoom Fix */
 #new-name,#new-notes,#new-qty,.cat-sel,.m-inp,.m-ta,#import-ta,#ai-key-inp { font-size:16px !important; }
 
 #new-name{width:100%;background:transparent;border:none;outline:none;font-family:var(--font);font-weight:500;color:var(--text);caret-color:var(--gold)}
@@ -120,7 +121,6 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .ico-btn:hover{color:var(--red);background:var(--red-dim)}
 .ico-btn.cmp:hover{color:var(--gold);background:var(--gold-glow)}
 
-/* EMPTY */
 .empty{text-align:center;padding:60px 20px;color:var(--text-muted);animation:fadeUp .4s ease}
 .empty-icon{font-size:36px;margin-bottom:12px}
 .empty-title{font-size:14px;font-weight:600;color:var(--text-dim);margin-bottom:6px}
@@ -453,7 +453,6 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     var wrap = document.getElementById('toast-wrap');
     var el = document.createElement('div');
     el.className = 'toast' + (type ? ' ' + type : '');
-    // Increase display time for errors
     if(type === 'error') el.style.animation = 'toastIn .25s ease, toastOut .3s ease 4.5s forwards';
     el.innerHTML = sanitize(msg);
     wrap.appendChild(el);
@@ -461,7 +460,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
   }
 
   // ══════════════════════════════════════════
-  // AI INTEGRATION (Gemini API)
+  // AI INTEGRATION (Gemini API - Updated to 2.5)
   // ══════════════════════════════════════════
   async function fetchCategoryFromAI(itemName, itemId) {
     var key = localStorage.getItem(AI_KEY_STORAGE);
@@ -470,7 +469,8 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     var prompt = "You are a Hebrew supermarket categorization engine. Analyze this item: '" + itemName + "'. Return ONLY ONE exact word from this list: produce, bakery, dairy, meat, frozen, cleaning, hygiene, drinks, snacks, pets, diy, other. Do not return any other text.";
     
     try {
-      var res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + key, {
+      // עדכון הקישור למודל gemini-2.5-flash
+      var res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + key, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -481,7 +481,6 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
       
       var data = await res.json();
 
-      // ניהול שגיאות חכם
       if (!res.ok) {
          var errText = (data && data.error && data.error.message) ? data.error.message : 'שגיאה לא ידועה';
          var hebError = "שגיאת שרת גוגל";
