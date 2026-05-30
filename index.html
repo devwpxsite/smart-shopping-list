@@ -4,162 +4,62 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>רשימת קניות חכמה</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#0f0f10; --surface:#18181b; --surface2:#222228; --border:#2a2a32; --border-light:#323240;
-  --gold:#d4a843; --gold-dim:#a07828; --gold-glow:rgba(212,168,67,0.12);
-  --text:#e8e8ed; --text-dim:#7c7c8a; --text-muted:#4a4a58;
-  --green:#3ecf8e; --green-dim:rgba(62,207,142,0.12);
-  --red:#f87171; --red-dim:rgba(248,113,113,0.1);
-  --blue:#60a5fa; --radius:14px; --radius-sm:8px;
-  --font:'Heebo',sans-serif; --mono:'DM Mono',monospace;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
-.wrap{position:relative;max-width:640px;margin:0 auto;padding:0 16px 120px}
-
-/* HEADER */
-header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:13px 16px;margin:0 -16px}
-.h-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.list-selector{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);padding:5px 10px;font-family:var(--font);font-weight:600;cursor:pointer}
-.actions{display:flex;gap:4px}
-.icon-btn{background:none;border:1px solid var(--border);border-radius:50%;color:var(--text-muted);font-size:14px;width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.icon-btn:hover{border-color:var(--text-dim);color:var(--text)}
-
-/* SECTION & CARDS */
-.section{margin-top:16px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;padding:16px}
-
-/* ADD PANEL */
-.add-main{display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:12px}
-#new-name{flex:1;background:transparent;border:none;outline:none;font-family:var(--font);font-size:16px;color:var(--text)}
-.btn-add{background:var(--gold);color:#0f0f10;border:none;border-radius:var(--radius-sm);padding:6px 14px;font-weight:700;cursor:pointer}
-
-/* LIST ITEMS */
-.item-row{display:flex;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);gap:10px}
-.item-name{flex:1;font-size:14px}
-.item-row.done{opacity:.4}
-.chk-btn{width:20px;height:20px;border-radius:6px;border:2px solid var(--border-light);background:transparent;cursor:pointer}
-.chk-btn.on{background:var(--green);border-color:var(--green)}
-.del-btn{color:var(--red);cursor:pointer;background:none;border:none}
-
-/* MODALS */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:400;display:none;align-items:center;justify-content:center;padding:16px}
-.modal-bg.open{display:flex}
-.modal{background:var(--surface);padding:24px;border-radius:20px;width:100%;max-width:400px}
-.m-inp{width:100%;background:var(--surface2);border:1px solid var(--border-light);padding:10px;color:var(--text);border-radius:8px;margin:10px 0}
-.m-btn{width:100%;padding:10px;border:none;border-radius:8px;font-weight:700;cursor:pointer;margin-top:8px}
-.m-btn.primary{background:var(--gold);color:#0f0f10}
-
+:root { --bg:#0f0f10; --surface:#18181b; --gold:#d4a843; --text:#e8e8ed; --border:#2a2a32; }
+body { font-family: system-ui; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+.wrap { max-width: 500px; margin: 0 auto; }
+header { display: flex; gap: 10px; margin-bottom: 20px; }
+select, input { background: var(--surface); border: 1px solid var(--border); color: white; padding: 10px; border-radius: 8px; }
+select { flex: 1; }
+.btn { background: var(--gold); border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+.item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="h-inner">
-    <select id="list-selector" class="list-selector" onchange="switchList()"></select>
-    <div class="actions">
-      <button class="icon-btn" onclick="openModal('add-list-modal')">+</button>
-      <button class="icon-btn" onclick="deleteCurrentList()">🗑️</button>
-    </div>
-  </div>
-</header>
-
 <div class="wrap">
-  <div class="section card">
-    <div class="add-main">
-      <input id="new-name" type="text" placeholder="מה להוסיף לרשימה?">
-      <button class="btn-add" onclick="addItem()">הוסף</button>
-    </div>
-    <div id="list-wrap"></div>
-  </div>
-</div>
+  <header>
+    <select id="list-selector" onchange="switchList()"></select>
+    <button class="btn" onclick="addList()">+</button>
+    <button class="btn" onclick="delList()">🗑️</button>
+  </header>
 
-<!-- Modal -->
-<div class="modal-bg" id="add-list-modal">
-  <div class="modal">
-    <h3>שם רשימה חדשה</h3>
-    <input type="text" id="new-list-name" class="m-inp" placeholder="למשל: ימי הולדת / חומרי בנייה">
-    <button class="m-btn primary" onclick="addNewList()">צור רשימה</button>
+  <div style="background:var(--surface); padding:20px; border-radius:14px;">
+    <div style="display:flex; gap:10px;">
+      <input id="new-item" style="flex:1" placeholder="מוצר חדש...">
+      <button class="btn" onclick="addItem()">הוסף</button>
+    </div>
+    <div id="list-area"></div>
   </div>
 </div>
 
 <script>
-  let allLists = JSON.parse(localStorage.getItem('all_lists')) || { "קניות": [] };
-  let currentListName = localStorage.getItem('current_list') || "קניות";
+  let db = JSON.parse(localStorage.getItem('db')) || { "קניות": [] };
+  let active = localStorage.getItem('active') || "קניות";
 
-  function renderLists() {
+  function save() { localStorage.setItem('db', JSON.stringify(db)); localStorage.setItem('active', active); render(); }
+  
+  function render() {
     const sel = document.getElementById('list-selector');
-    sel.innerHTML = "";
-    Object.keys(allLists).forEach(name => {
-      const opt = document.createElement('option');
-      opt.value = name; opt.textContent = name;
-      if(name === currentListName) opt.selected = true;
-      sel.appendChild(opt);
-    });
-    renderItems();
+    sel.innerHTML = Object.keys(db).map(n => `<option value="${n}" ${n===active?'selected':''}>${n}</option>`).join('');
+    
+    document.getElementById('list-area').innerHTML = db[active].map((item, i) => `
+      <div class="item ${item.d ? 'done':''}">
+        <input type="checkbox" ${item.d ? 'checked':''} onchange="toggle(${i})">
+        <span style="flex:1">${item.t}</span>
+        <span onclick="rem(${i})" style="color:red; cursor:pointer">X</span>
+      </div>
+    `).join('');
   }
 
-  function renderItems() {
-    const wrap = document.getElementById('list-wrap');
-    wrap.innerHTML = "";
-    allLists[currentListName].forEach((item, index) => {
-      const div = document.createElement('div');
-      div.className = `item-row ${item.done ? 'done' : ''}`;
-      div.innerHTML = `
-        <button class="chk-btn ${item.done ? 'on' : ''}" onclick="toggleItem(${index})"></button>
-        <span class="item-name">${item.name}</span>
-        <button class="del-btn" onclick="removeItem(${index})">🗑️</button>
-      `;
-      wrap.appendChild(div);
-    });
-    localStorage.setItem('all_lists', JSON.stringify(allLists));
-  }
+  function switchList() { active = document.getElementById('list-selector').value; render(); }
+  function addList() { const n = prompt("שם רשימה:"); if(n && !db[n]) { db[n] = []; active = n; save(); } }
+  function delList() { if(Object.keys(db).length>1) { delete db[active]; active = Object.keys(db)[0]; save(); } else alert("אי אפשר למחוק אחרונה!"); }
+  function addItem() { const i = document.getElementById('new-item'); if(i.value) { db[active].push({t:i.value, d:false}); i.value=''; save(); } }
+  function toggle(i) { db[active][i].d = !db[active][i].d; save(); }
+  function rem(i) { db[active].splice(i,1); save(); }
 
-  function switchList() {
-    currentListName = document.getElementById('list-selector').value;
-    localStorage.setItem('current_list', currentListName);
-    renderItems();
-  }
-
-  function addNewList() {
-    const name = document.getElementById('new-list-name').value;
-    if(name && !allLists[name]) {
-      allLists[name] = [];
-      currentListName = name;
-      localStorage.setItem('current_list', name);
-      document.getElementById('add-list-modal').classList.remove('open');
-      renderLists();
-    }
-  }
-
-  function deleteCurrentList() {
-    if(Object.keys(allLists).length > 1) {
-      delete allLists[currentListName];
-      currentListName = Object.keys(allLists)[0];
-      renderLists();
-    } else {
-      alert("אי אפשר למחוק את הרשימה האחרונה!");
-    }
-  }
-
-  function addItem() {
-    const name = document.getElementById('new-name').value;
-    if(name) {
-      allLists[currentListName].push({ name, done: false });
-      document.getElementById('new-name').value = "";
-      renderItems();
-    }
-  }
-
-  function toggleItem(i) { allLists[currentListName][i].done = !allLists[currentListName][i].done; renderItems(); }
-  function removeItem(i) { allLists[currentListName].splice(i, 1); renderItems(); }
-  function openModal(id) { document.getElementById(id).classList.add('open'); }
-  window.onclick = (e) => { if(e.target.classList.contains('modal-bg')) e.target.classList.remove('open'); }
-
-  renderLists();
+  render();
 </script>
 </body>
 </html>
