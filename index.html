@@ -58,7 +58,6 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .add-icon{color:var(--gold-dim);font-size:15px;flex-shrink:0}
 .inp-wrap{flex:1;position:relative}
 
-/* Mobile Zoom Fix */
 #new-name,#new-notes,#new-qty,.cat-sel,.m-inp,.m-ta,#import-ta,#ai-key-inp { font-size:16px !important; }
 
 #new-name{width:100%;background:transparent;border:none;outline:none;font-family:var(--font);font-weight:500;color:var(--text);caret-color:var(--gold)}
@@ -121,13 +120,12 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .ico-btn:hover{color:var(--red);background:var(--red-dim)}
 .ico-btn.cmp:hover{color:var(--gold);background:var(--gold-glow)}
 
-/* EMPTY */
 .empty{text-align:center;padding:60px 20px;color:var(--text-muted);animation:fadeUp .4s ease}
 .empty-icon{font-size:36px;margin-bottom:12px}
 .empty-title{font-size:14px;font-weight:600;color:var(--text-dim);margin-bottom:6px}
 .empty-sub{font-size:12px}
 
-/* ── MODALS ── */
+/* MODALS */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(10px);z-index:400;display:none;align-items:center;justify-content:center;padding:16px}
 .modal-bg.open{display:flex;animation:fadeUp .2s ease}
 .modal{background:var(--surface);border:1px solid var(--border-light);border-radius:20px;padding:24px;width:100%;max-width:420px;box-shadow:0 24px 64px rgba(0,0,0,.8);animation:slideUp .25s ease;max-height:90vh;overflow-y:auto}
@@ -153,7 +151,6 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .m-row .m-btn{margin-top:0}
 .sep{height:1px;background:var(--border);margin:16px 0}
 
-/* Import preview */
 .import-preview{background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);padding:12px;max-height:200px;overflow-y:auto;margin-top:10px}
 .prev-empty{font-size:11px;color:var(--text-muted);text-align:center;padding:16px 0}
 .prev-item{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;gap:8px}
@@ -164,14 +161,12 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .preview-stats{display:flex;align-items:center;justify-content:space-between;margin-top:8px;font-size:11px;color:var(--text-muted)}
 .preview-stats b{color:var(--text-dim)}
 
-/* Price modal */
 .price-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:6px}
 .price-row.best{background:var(--green-dim);border-color:rgba(62,207,142,.2)}
 .pr-name{font-size:12px;font-weight:600;color:var(--text-dim);display:flex;align-items:center;gap:6px}
 .pr-price{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--text)}
 .best-badge{font-size:9px;font-weight:700;color:var(--green);background:rgba(62,207,142,.15);padding:2px 6px;border-radius:4px}
 
-/* Share modal */
 .share-opt{display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);cursor:pointer;transition:all .15s;margin-bottom:8px}
 .share-opt:hover{border-color:var(--border-light);background:rgba(255,255,255,.04)}
 .share-opt-icon{font-size:22px;flex-shrink:0}
@@ -307,6 +302,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 
 <div id="toast-wrap"></div>
 
+<!-- ══ AI SETTINGS MODAL ══ -->
 <div class="modal-bg" id="ai-modal">
   <div class="modal">
     <div class="m-title">🤖 סיווג חכם באמצעות AI <button class="m-close" onclick="closeModal('ai-modal')">✕</button></div>
@@ -322,6 +318,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
   </div>
 </div>
 
+<!-- ══ IMPORT MODAL ══ -->
 <div class="modal-bg" id="import-modal">
   <div class="modal">
     <div class="m-title">💬 ייבוא מוואטסאפ <button class="m-close" onclick="closeModal('import-modal')">✕</button></div>
@@ -341,6 +338,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
   </div>
 </div>
 
+<!-- ══ SHARE MODAL ══ -->
 <div class="modal-bg" id="share-modal">
   <div class="modal">
     <div class="m-title">↗ שיתוף רשימה <button class="m-close" onclick="closeModal('share-modal')">✕</button></div>
@@ -371,12 +369,20 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
   </div>
 </div>
 
+<!-- ══ PRICE MODAL ══ -->
 <div class="modal-bg" id="price-modal-bg">
   <div class="modal">
     <div class="m-title"><span>📊</span> השוואת מחירים (אומדן) <button class="m-close" onclick="closeModal('price-modal-bg')">✕</button></div>
     <div class="m-sub" id="price-modal-name">...</div>
     <div id="price-list" style="margin-bottom:16px"></div>
-    <button class="m-btn primary" id="cmp-link-btn">🔍 חפש והשווה אונליין</button>
+    
+    <div class="m-label" style="margin-top:0; margin-bottom:8px; text-align:center;">חפש מוצר זה אונליין:</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+      <button class="m-btn secondary" id="rl-link-btn" style="margin:0;">🛒 רמי לוי</button>
+      <button class="m-btn secondary" id="shufersal-link-btn" style="margin:0;">🛒 שופרסל</button>
+      <button class="m-btn secondary" id="victory-link-btn" style="margin:0;">🛒 ויקטורי</button>
+      <button class="m-btn secondary" id="carrefour-link-btn" style="margin:0;">🛒 קרפור</button>
+    </div>
   </div>
 </div>
 
@@ -464,7 +470,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
   }
 
   // ══════════════════════════════════════════
-  // AI INTEGRATION (Gemini API 2.5 Flash)
+  // AI INTEGRATION (Gemini 2.5 Flash)
   // ══════════════════════════════════════════
   async function fetchCategoryFromAI(itemName, itemId) {
     var key = localStorage.getItem(AI_KEY_STORAGE);
@@ -831,7 +837,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
   function shareViaEmail() { window.open('mailto:?subject=' + encodeURIComponent('רשימת קניות') + '&body=' + encodeURIComponent(buildShareText()), '_blank'); closeModal('share-modal'); }
 
   // ══════════════════════════════════════════
-  // PRICE MODAL (Upgraded Dictionary)
+  // PRICE MODAL
   // ══════════════════════════════════════════
   function openPriceModal(id) {
     var item = items.find(function(i) { return i.id === id; });
@@ -840,7 +846,6 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     
     var nm = item.name.toLowerCase();
     
-    // מילון מחירים חכם לבסיס חישוב מדויק
     var knownPrices = {
       'שמנת להקצפה': 14.9, 'חלב': 6.2, 'קוטג': 5.9, 'גבינה צהובה': 22.0, 'יוגורט': 4.5, 'חמאה': 8.5,
       'לחם': 8.0, 'פיתות': 14.0, 'לחמניות': 15.0, 'לחם פרוס': 12.0, 'עננים': 13.0,
@@ -860,7 +865,6 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
       if (nm.includes(k)) { baseVal = knownPrices[k]; break; }
     }
     
-    // מחירי ממוצע כגיבוי במידה ואין במילון
     if (baseVal === 0) {
       var basePrices = { produce:5.5, dairy:10.0, bakery:14.0, meat:45.0, frozen:28.0, cleaning:22.0, hygiene:20.0, drinks:9.0, snacks:6.0, pets:60.0, diy:30.0, other:15.0 };
       baseVal = basePrices[item.cat] || 15.0;
@@ -870,7 +874,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     var stores = [ {name:'רמי לוי', factor:0.92}, {name:'יוחננוף', factor:0.95}, {name:'קרפור', factor:0.98}, {name:'ויקטורי', factor:1.03}, {name:'שופרסל', factor:1.10} ];
     
     var sorted = stores.map(function(s) { 
-      var noise = 1 + ((Math.random() * 0.04) - 0.02); // רעש מתמטי קל ליצירת פערים טבעיים (+/- 2%)
+      var noise = 1 + ((Math.random() * 0.04) - 0.02);
       return { name: s.name, price: (totalBase * s.factor * noise).toFixed(2) }; 
     }).sort(function(a,b) { return parseFloat(a.price) - parseFloat(b.price); });
     
@@ -878,8 +882,11 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
       return '<div class="price-row ' + (idx === 0 ? 'best' : '') + '"><div class="pr-name">' + (idx === 0 ? '<span class="best-badge">הזול ביותר!</span>' : '') + '🛒 ' + sanitize(s.name) + '</div><div class="pr-price">' + sanitize(s.price) + ' ₪</div></div>';
     }).join('');
     
-    // חיבור לפרייסז במקום CHP (למניעת פתיחת דף ריק)
-    document.getElementById('cmp-link-btn').onclick = function() { window.open('https://www.pricez.co.il/Search?q=' + encodeURIComponent(item.name), '_blank'); };
+    document.getElementById('rl-link-btn').onclick = function() { window.open('https://www.rami-levy.co.il/he/online/search?q=' + encodeURIComponent(item.name), '_blank'); };
+    document.getElementById('shufersal-link-btn').onclick = function() { window.open('https://www.shufersal.co.il/online/he/search?q=' + encodeURIComponent(item.name), '_blank'); };
+    document.getElementById('victory-link-btn').onclick = function() { window.open('https://www.victoryonline.co.il/search?q=' + encodeURIComponent(item.name), '_blank'); };
+    document.getElementById('carrefour-link-btn').onclick = function() { window.open('https://www.carrefour.co.il/search?q=' + encodeURIComponent(item.name), '_blank'); };
+    
     openModal('price-modal-bg');
   }
 
