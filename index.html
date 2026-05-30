@@ -301,6 +301,7 @@ header{position:sticky;top:0;z-index:100;
 .m-row .m-btn{margin-top:0}
 .sep{height:1px;background:var(--border);margin:16px 0}
 
+/* Import preview */
 .import-preview{background:var(--surface2);border:1px solid var(--border-light);
   border-radius:var(--radius-sm);padding:12px;max-height:200px;overflow-y:auto;margin-top:10px}
 .prev-empty{font-size:11px;color:var(--text-muted);text-align:center;padding:16px 0}
@@ -391,6 +392,7 @@ header{position:sticky;top:0;z-index:100;
 </header>
 
 <div class="wrap">
+  <!-- List selector -->
   <div class="section">
     <div class="card list-bar">
       <span class="list-label">רשימה:</span>
@@ -400,6 +402,7 @@ header{position:sticky;top:0;z-index:100;
     </div>
   </div>
 
+  <!-- Progress -->
   <div class="section">
     <div class="card prog-card">
       <div class="prog-head">
@@ -417,6 +420,7 @@ header{position:sticky;top:0;z-index:100;
 
   <div class="done-banner" id="done-banner">🎉 כל המוצרים בעגלה! קנייה מוצלחת!</div>
 
+  <!-- Add item -->
   <div class="section">
     <div class="card">
       <div class="add-main">
@@ -447,6 +451,7 @@ header{position:sticky;top:0;z-index:100;
     </div>
   </div>
 
+  <!-- Filter bar -->
   <div class="section filter-bar">
     <div class="f-tabs">
       <button class="f-tab active" data-f="all" onclick="setFilter('all')">הכל (<span id="fc-all">0</span>)</button>
@@ -466,6 +471,7 @@ header{position:sticky;top:0;z-index:100;
 
 <div id="toast-wrap"></div>
 
+<!-- NEW LIST MODAL -->
 <div class="modal-bg" id="list-modal">
   <div class="modal">
     <div class="sheet-handle"></div>
@@ -477,6 +483,7 @@ header{position:sticky;top:0;z-index:100;
   </div>
 </div>
 
+<!-- CATEGORY MANAGER MODAL -->
 <div class="modal-bg" id="cat-modal">
   <div class="modal">
     <div class="sheet-handle"></div>
@@ -492,6 +499,7 @@ header{position:sticky;top:0;z-index:100;
   </div>
 </div>
 
+<!-- AI MODAL -->
 <div class="modal-bg" id="ai-modal">
   <div class="modal">
     <div class="sheet-handle"></div>
@@ -508,6 +516,7 @@ header{position:sticky;top:0;z-index:100;
   </div>
 </div>
 
+<!-- IMPORT MODAL -->
 <div class="modal-bg" id="import-modal">
   <div class="modal">
     <div class="sheet-handle"></div>
@@ -527,6 +536,7 @@ header{position:sticky;top:0;z-index:100;
   </div>
 </div>
 
+<!-- SHARE MODAL -->
 <div class="modal-bg" id="share-modal">
   <div class="modal">
     <div class="sheet-handle"></div>
@@ -562,7 +572,7 @@ header{position:sticky;top:0;z-index:100;
 (function () {
   'use strict';
 
-  var STORAGE_KEY = 'shopping_lists_v6';
+  var STORAGE_KEY = 'shopping_lists_v6'; 
   var CURRENT_LIST_KEY = 'current_list_v6';
   var CUSTOM_CATS_KEY = 'custom_cats_v6';
   var AI_KEY_STORAGE = 'gemini_api_key_v5';
@@ -629,6 +639,7 @@ header{position:sticky;top:0;z-index:100;
   function renderCatSelect() {
     var all = getAllCats();
     var sel = document.getElementById('new-cat');
+    if (!sel) return;
     sel.innerHTML = Object.keys(all).map(function(k) {
       return '<option value="' + k + '">' + all[k].icon + ' ' + sanitize(all[k].title) + '</option>';
     }).join('');
@@ -658,7 +669,6 @@ header{position:sticky;top:0;z-index:100;
       delete customCats[id];
       localStorage.setItem(CUSTOM_CATS_KEY, JSON.stringify(customCats));
       
-      // Move orphaned items to 'other'
       Object.keys(lists).forEach(function(listName) {
          lists[listName].forEach(function(item) {
             if (item.cat === id) item.cat = 'other';
@@ -673,13 +683,15 @@ header{position:sticky;top:0;z-index:100;
   };
 
   function renderCustomCatsList() {
+    var listEl = document.getElementById('custom-cat-list');
+    if (!listEl) return;
     var html = Object.keys(customCats).map(function(k) {
       return '<div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border); font-size:13px;">' +
              '<span>' + customCats[k].icon + ' ' + sanitize(customCats[k].title) + '</span>' +
              '<button class="icon-btn" style="width:28px;height:28px;color:var(--red);border-color:transparent" onclick="removeCustomCategory(\''+k+'\')">🗑️</button>' +
              '</div>';
     }).join('');
-    document.getElementById('custom-cat-list').innerHTML = html || '<div style="text-align:center;color:var(--text-muted);font-size:12px;padding:16px;">אין קטגוריות אישיות</div>';
+    listEl.innerHTML = html || '<div style="text-align:center;color:var(--text-muted);font-size:12px;padding:16px;">אין קטגוריות אישיות</div>';
   }
 
   window.openCatModal = function() {
@@ -725,8 +737,10 @@ header{position:sticky;top:0;z-index:100;
     var aiKey = localStorage.getItem(AI_KEY_STORAGE);
     if (aiKey && aiKey.length > 10) {
       isAiEnabled = true;
-      document.getElementById('ai-status-dot').classList.add('active');
-      document.getElementById('ai-status-text').textContent = 'AI מחובר';
+      var dot = document.getElementById('ai-status-dot');
+      var txt = document.getElementById('ai-status-text');
+      if(dot) dot.classList.add('active');
+      if(txt) txt.textContent = 'AI מחובר';
     }
     
     renderCatSelect();
@@ -772,6 +786,7 @@ header{position:sticky;top:0;z-index:100;
 
   function showAutocomplete(query) {
     var list = document.getElementById('autocomplete-list');
+    if (!list) return;
     var suggestions = getAutocompleteSuggestions(query);
     acSelectedIndex = -1;
 
@@ -805,30 +820,32 @@ header{position:sticky;top:0;z-index:100;
 
   function hideAutocomplete() {
     var list = document.getElementById('autocomplete-list');
-    list.classList.remove('show');
+    if (list) list.classList.remove('show');
     acSelectedIndex = -1;
   }
 
   function selectAutocomplete(name, cat) {
     var nameEl = document.getElementById('new-name');
-    nameEl.value = name;
-    document.getElementById('new-cat').value = cat;
+    var catSel = document.getElementById('new-cat');
+    if(nameEl) nameEl.value = name;
+    if(catSel) catSel.value = cat;
     isCatManuallyChanged = false;
     var allCats = getAllCats();
     var meta = allCats[cat] || allCats.other;
     var badge = document.getElementById('auto-cat-badge');
-    if (cat !== 'other') {
+    if (cat !== 'other' && badge) {
       badge.textContent = meta.icon + ' ' + meta.title;
       badge.classList.add('show');
-    } else {
+    } else if (badge) {
       hideCatBadge();
     }
     hideAutocomplete();
-    nameEl.focus();
+    if(nameEl) nameEl.focus();
   }
 
   function navigateAutocomplete(dir) {
     var list = document.getElementById('autocomplete-list');
+    if (!list) return false;
     var items = list.querySelectorAll('.ac-item');
     if (!items.length) return false;
     items.forEach(function(el) { el.classList.remove('selected'); });
@@ -845,6 +862,7 @@ header{position:sticky;top:0;z-index:100;
   // ── LIST MANAGEMENT ──
   function renderListSelector() {
     var sel = document.getElementById('list-manager-select');
+    if(!sel) return;
     sel.innerHTML = Object.keys(lists).map(function(name) {
       return '<option value="' + sanitize(name) + '"' + (name === currentList ? ' selected' : '') + '>' + sanitize(name) + '</option>';
     }).join('');
@@ -861,6 +879,7 @@ header{position:sticky;top:0;z-index:100;
 
   function createNewList() {
     var inp = document.getElementById('new-list-name-inp');
+    if(!inp) return;
     var name = inp.value.trim();
     if (!name) { inp.focus(); return; }
     if (lists[name]) { showToast('רשימה בשם זה כבר קיימת', 'error'); return; }
@@ -889,6 +908,7 @@ header{position:sticky;top:0;z-index:100;
   // ── TOAST ──
   function showToast(msg, type) {
     var wrap = document.getElementById('toast-wrap');
+    if(!wrap) return;
     var el = document.createElement('div');
     el.className = 'toast' + (type ? ' ' + type : '');
     if (type === 'error') el.style.animation = 'toastIn .25s ease, toastOut .3s ease 6s forwards';
@@ -936,25 +956,35 @@ header{position:sticky;top:0;z-index:100;
 
   window.openAiSettings = function() {
     var key = localStorage.getItem(AI_KEY_STORAGE);
-    if (key) document.getElementById('ai-key-inp').value = key;
+    if (key) {
+      var inp = document.getElementById('ai-key-inp');
+      if(inp) inp.value = key;
+    }
     openModal('ai-modal');
   };
   window.saveAiKey = function() {
-    var key = document.getElementById('ai-key-inp').value.trim();
+    var inp = document.getElementById('ai-key-inp');
+    if(!inp) return;
+    var key = inp.value.trim();
     if (key.length < 10) { showToast('מפתח לא תקין', 'error'); return; }
     localStorage.setItem(AI_KEY_STORAGE, key);
     isAiEnabled = true;
-    document.getElementById('ai-status-dot').classList.add('active');
-    document.getElementById('ai-status-text').textContent = 'AI מחובר';
+    var dot = document.getElementById('ai-status-dot');
+    var txt = document.getElementById('ai-status-text');
+    if(dot) dot.classList.add('active');
+    if(txt) txt.textContent = 'AI מחובר';
     closeModal('ai-modal');
     showToast('AI הופעל!', 'success');
   };
   window.clearAiKey = function() {
     localStorage.removeItem(AI_KEY_STORAGE);
-    document.getElementById('ai-key-inp').value = '';
+    var inp = document.getElementById('ai-key-inp');
+    if(inp) inp.value = '';
     isAiEnabled = false;
-    document.getElementById('ai-status-dot').classList.remove('active');
-    document.getElementById('ai-status-text').textContent = 'מילון מקומי';
+    var dot = document.getElementById('ai-status-dot');
+    var txt = document.getElementById('ai-status-text');
+    if(dot) dot.classList.remove('active');
+    if(txt) txt.textContent = 'מילון מקומי';
     closeModal('ai-modal');
     showToast('AI נותק', 'error');
   };
@@ -963,6 +993,7 @@ header{position:sticky;top:0;z-index:100;
   function render() {
     var wrap = document.getElementById('list-wrap');
     var empty = document.getElementById('empty');
+    if(!wrap || !empty) return;
     var items = getItems();
     var filtered = items.filter(function(item) {
       if (currentFilter === 'active') return !item.done;
@@ -1017,42 +1048,60 @@ header{position:sticky;top:0;z-index:100;
     var total = items.length;
     var done = items.filter(function(i) { return i.done; }).length;
     var pct = total === 0 ? 0 : Math.round((done / total) * 100);
-    document.getElementById('cnt-total').textContent = total;
-    document.getElementById('cnt-done').textContent = done;
-    document.getElementById('cnt-left').textContent = total - done;
-    document.getElementById('fc-all').textContent = total;
-    document.getElementById('fc-active').textContent = total - done;
-    document.getElementById('fc-done').textContent = done;
-    document.getElementById('chip-total').textContent = total + ' פריטים';
-    document.getElementById('pct').textContent = pct + '%';
-    document.getElementById('prog-fill').style.width = pct + '%';
-    document.getElementById('done-banner').style.display = (total > 0 && done === total) ? 'block' : 'none';
+    
+    var elTotal = document.getElementById('cnt-total');
+    var elDone = document.getElementById('cnt-done');
+    var elLeft = document.getElementById('cnt-left');
+    var elFcAll = document.getElementById('fc-all');
+    var elFcActive = document.getElementById('fc-active');
+    var elFcDone = document.getElementById('fc-done');
+    var elChipTotal = document.getElementById('chip-total');
+    var elPct = document.getElementById('pct');
+    var elProgFill = document.getElementById('prog-fill');
+    var elDoneBanner = document.getElementById('done-banner');
+
+    if(elTotal) elTotal.textContent = total;
+    if(elDone) elDone.textContent = done;
+    if(elLeft) elLeft.textContent = total - done;
+    if(elFcAll) elFcAll.textContent = total;
+    if(elFcActive) elFcActive.textContent = total - done;
+    if(elFcDone) elFcDone.textContent = done;
+    if(elChipTotal) elChipTotal.textContent = total + ' פריטים';
+    if(elPct) elPct.textContent = pct + '%';
+    if(elProgFill) elProgFill.style.width = pct + '%';
+    if(elDoneBanner) elDoneBanner.style.display = (total > 0 && done === total) ? 'block' : 'none';
   }
 
   // ── ADD ITEM ──
   function addItem() {
     var nameEl = document.getElementById('new-name');
+    var catSel = document.getElementById('new-cat');
+    var qtyEl = document.getElementById('new-qty');
+    var notesEl = document.getElementById('new-notes');
+    
+    if(!nameEl || !catSel || !qtyEl || !notesEl) return;
+
     var name = nameEl.value.trim();
     if (!name) { nameEl.focus(); return; }
     hideAutocomplete();
 
-    var finalCat = document.getElementById('new-cat').value;
+    var finalCat = catSel.value;
     var newId = Date.now().toString();
     var items = getItems();
     items.push({
       id: newId, name: name,
-      qty: Math.max(1, parseInt(document.getElementById('new-qty').value) || 1),
+      qty: Math.max(1, parseInt(qtyEl.value) || 1),
       cat: finalCat,
-      notes: document.getElementById('new-notes').value.trim(),
+      notes: notesEl.value.trim(),
       done: false
     });
     setItems(items);
 
     var wasCatManual = isCatManuallyChanged;
     nameEl.value = '';
-    document.getElementById('new-qty').value = '1';
-    document.getElementById('new-notes').value = '';
-    document.getElementById('new-cat').value = 'other';
+    qtyEl.value = '1';
+    notesEl.value = '';
+    catSel.value = 'other';
     hideCatBadge();
     isCatManuallyChanged = false;
     nameEl.focus();
@@ -1094,7 +1143,7 @@ header{position:sticky;top:0;z-index:100;
 
   function adjustNewQty(amt) {
     var inp = document.getElementById('new-qty');
-    inp.value = Math.max(1, (parseInt(inp.value) || 1) + amt);
+    if(inp) inp.value = Math.max(1, (parseInt(inp.value) || 1) + amt);
   }
   function setFilter(type) {
     currentFilter = type;
@@ -1103,56 +1152,73 @@ header{position:sticky;top:0;z-index:100;
   }
   function hideCatBadge() {
     var badge = document.getElementById('auto-cat-badge');
-    badge.classList.remove('show');
-    badge.textContent = '';
+    if(badge) {
+      badge.classList.remove('show');
+      badge.textContent = '';
+    }
   }
 
   // ── NAME INPUT EVENTS ──
   var nameInput = document.getElementById('new-name');
-  nameInput.addEventListener('input', function() {
-    var val = this.value.trim();
-    isCatManuallyChanged = false;
-    if (!val) { hideCatBadge(); document.getElementById('new-cat').value = 'other'; hideAutocomplete(); return; }
-    var cat = autoCategorize(val);
-    document.getElementById('new-cat').value = cat;
-    if (cat !== 'other') {
-      var allCats = getAllCats();
-      var meta = allCats[cat];
-      if (meta) {
-        var badge = document.getElementById('auto-cat-badge');
-        badge.textContent = meta.icon + ' ' + meta.title;
-        badge.classList.add('show');
+  if (nameInput) {
+    nameInput.addEventListener('input', function() {
+      var val = this.value.trim();
+      isCatManuallyChanged = false;
+      var catSel = document.getElementById('new-cat');
+      if (!val) { 
+        hideCatBadge(); 
+        if(catSel) catSel.value = 'other'; 
+        hideAutocomplete(); 
+        return; 
       }
-    } else { hideCatBadge(); }
-    showAutocomplete(val);
-  });
+      var cat = autoCategorize(val);
+      if(catSel) catSel.value = cat;
+      if (cat !== 'other') {
+        var allCats = getAllCats();
+        var meta = allCats[cat];
+        if (meta) {
+          var badge = document.getElementById('auto-cat-badge');
+          if(badge) {
+            badge.textContent = meta.icon + ' ' + meta.title;
+            badge.classList.add('show');
+          }
+        }
+      } else { hideCatBadge(); }
+      showAutocomplete(val);
+    });
 
-  nameInput.addEventListener('keydown', function(e) {
-    var list = document.getElementById('autocomplete-list');
-    if (list.classList.contains('show')) {
-      if (e.key === 'ArrowDown') { e.preventDefault(); navigateAutocomplete(1); return; }
-      if (e.key === 'ArrowUp') { e.preventDefault(); navigateAutocomplete(-1); return; }
-      if (e.key === 'Escape') { hideAutocomplete(); return; }
-      if (e.key === 'Enter' || e.key === 'Tab') {
-        var items = list.querySelectorAll('.ac-item');
-        if (acSelectedIndex >= 0 && items[acSelectedIndex]) {
-          e.preventDefault();
-          var el = items[acSelectedIndex];
-          selectAutocomplete(el.dataset.name, el.dataset.cat);
-          return;
+    nameInput.addEventListener('keydown', function(e) {
+      var list = document.getElementById('autocomplete-list');
+      if (list && list.classList.contains('show')) {
+        if (e.key === 'ArrowDown') { e.preventDefault(); navigateAutocomplete(1); return; }
+        if (e.key === 'ArrowUp') { e.preventDefault(); navigateAutocomplete(-1); return; }
+        if (e.key === 'Escape') { hideAutocomplete(); return; }
+        if (e.key === 'Enter' || e.key === 'Tab') {
+          var items = list.querySelectorAll('.ac-item');
+          if (acSelectedIndex >= 0 && items[acSelectedIndex]) {
+            e.preventDefault();
+            var el = items[acSelectedIndex];
+            selectAutocomplete(el.dataset.name, el.dataset.cat);
+            return;
+          }
         }
       }
-    }
-    if (e.key === 'Enter') addItem();
-  });
+      if (e.key === 'Enter') addItem();
+    });
 
-  nameInput.addEventListener('blur', function() {
-    setTimeout(hideAutocomplete, 150);
-  });
+    nameInput.addEventListener('blur', function() {
+      setTimeout(hideAutocomplete, 150);
+    });
+  }
 
-  document.getElementById('new-cat').addEventListener('change', function() { isCatManuallyChanged = true; });
-  document.getElementById('new-notes').addEventListener('keydown', function(e) { if (e.key === 'Enter') addItem(); });
-  document.getElementById('new-list-name-inp').addEventListener('keydown', function(e) { if (e.key === 'Enter') createNewList(); });
+  var newCatEl = document.getElementById('new-cat');
+  if(newCatEl) newCatEl.addEventListener('change', function() { isCatManuallyChanged = true; });
+  
+  var newNotesEl = document.getElementById('new-notes');
+  if(newNotesEl) newNotesEl.addEventListener('keydown', function(e) { if (e.key === 'Enter') addItem(); });
+  
+  var newListNameInp = document.getElementById('new-list-name-inp');
+  if(newListNameInp) newListNameInp.addEventListener('keydown', function(e) { if (e.key === 'Enter') createNewList(); });
 
   // ── IMPORT ──
   function parseWhatsAppText(raw) {
@@ -1185,14 +1251,18 @@ header{position:sticky;top:0;z-index:100;
     return result;
   }
 
-  document.getElementById('import-ta').addEventListener('input', function() {
-    parsedImportItems = parseWhatsAppText(this.value);
-    renderImportPreview(parsedImportItems);
-  });
+  var importTa = document.getElementById('import-ta');
+  if (importTa) {
+    importTa.addEventListener('input', function() {
+      parsedImportItems = parseWhatsAppText(this.value);
+      renderImportPreview(parsedImportItems);
+    });
+  }
 
   function renderImportPreview(parsed) {
     var box = document.getElementById('import-preview');
     var stats = document.getElementById('preview-stats');
+    if (!box || !stats) return;
     if (!parsed || !parsed.length) {
       box.innerHTML = '<div class="prev-empty">הדבק טקסט לראות תצוגה מקדימה</div>';
       stats.style.display = 'none'; return;
@@ -1200,12 +1270,14 @@ header{position:sticky;top:0;z-index:100;
     var catCount = {};
     parsed.forEach(function(p) { catCount[p.cat] = (catCount[p.cat] || 0) + 1; });
     var allCats = getAllCats();
-    document.getElementById('prev-cats-summary').textContent = Object.keys(catCount).map(function(k) { var meta = allCats[k] || allCats.other; return meta.icon + ' ' + catCount[k]; }).join(' ');
+    var prevCatsSum = document.getElementById('prev-cats-summary');
+    if(prevCatsSum) prevCatsSum.textContent = Object.keys(catCount).map(function(k) { var meta = allCats[k] || allCats.other; return meta.icon + ' ' + catCount[k]; }).join(' ');
     box.innerHTML = parsed.map(function(p) {
       var meta = allCats[p.cat] || allCats.other;
       return '<div class="prev-item"><span class="prev-name">' + sanitize(p.name) + (p.notes ? ' <span style="color:var(--text-muted);font-size:10px">(' + sanitize(p.notes) + ')</span>' : '') + '</span><span class="prev-cat">' + meta.icon + ' ' + meta.title + '</span><span class="prev-qty">×' + p.qty + '</span></div>';
     }).join('');
-    document.getElementById('prev-count').textContent = parsed.length;
+    var prevCountEl = document.getElementById('prev-count');
+    if(prevCountEl) prevCountEl.textContent = parsed.length;
     stats.style.display = 'flex';
   }
 
@@ -1226,7 +1298,8 @@ header{position:sticky;top:0;z-index:100;
     setItems(items);
     if (isAiEnabled) items.forEach(function(it) { if (it.cat === 'other') setTimeout(function() { fetchCategoryFromAI(it.name, it.id); }, 50); });
     render(); closeModal('import-modal');
-    document.getElementById('import-ta').value = '';
+    var importTaEl = document.getElementById('import-ta');
+    if(importTaEl) importTaEl.value = '';
     parsedImportItems = []; renderImportPreview([]);
   }
 
@@ -1270,18 +1343,27 @@ header{position:sticky;top:0;z-index:100;
 
   // ── MODALS ──
   function openModal(id) {
-    document.getElementById(id).classList.add('open');
+    var el = document.getElementById(id);
+    if(el) el.classList.add('open');
     if (id === 'share-modal') {
-      document.getElementById('share-preview').innerHTML = '<pre style="font-size:11px;color:var(--text-dim);white-space:pre-wrap;line-height:1.7;direction:rtl;text-align:right">' + sanitize(buildShareText()) + '</pre>';
+      var prev = document.getElementById('share-preview');
+      if(prev) prev.innerHTML = '<pre style="font-size:11px;color:var(--text-dim);white-space:pre-wrap;line-height:1.7;direction:rtl;text-align:right">' + sanitize(buildShareText()) + '</pre>';
     }
   }
-  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+  function closeModal(id) { 
+    var el = document.getElementById(id);
+    if(el) el.classList.remove('open'); 
+  }
 
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') ['import-modal','share-modal','ai-modal','list-modal','cat-modal'].forEach(closeModal);
   });
+  
   ['import-modal','share-modal','ai-modal','list-modal','cat-modal'].forEach(function(id) {
-    document.getElementById(id).addEventListener('click', function(e) { if (e.target === this) closeModal(id); });
+    var el = document.getElementById(id);
+    if(el) {
+      el.addEventListener('click', function(e) { if (e.target === this) closeModal(id); });
+    }
   });
 
   // ── GLOBALS ──
