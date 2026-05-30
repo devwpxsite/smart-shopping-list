@@ -13,922 +13,153 @@
   --text:#e8e8ed; --text-dim:#7c7c8a; --text-muted:#4a4a58;
   --green:#3ecf8e; --green-dim:rgba(62,207,142,0.12);
   --red:#f87171; --red-dim:rgba(248,113,113,0.1);
-  --amber:#fbbf24; --blue:#60a5fa; --blue-dim:rgba(96,165,250,0.1);
-  --radius:14px; --radius-sm:8px;
+  --blue:#60a5fa; --radius:14px; --radius-sm:8px;
   --font:'Heebo',sans-serif; --mono:'DM Mono',monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(212,168,67,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(212,168,67,0.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
-.wrap{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 16px 120px}
+.wrap{position:relative;max-width:640px;margin:0 auto;padding:0 16px 120px}
 
 /* HEADER */
 header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:13px 16px;margin:0 -16px}
 .h-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{display:flex;align-items:center;gap:10px}
-.brand-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--gold),var(--gold-dim));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 20px var(--gold-glow);flex-shrink:0}
-.brand-title{font-size:15px;font-weight:700;line-height:1.2}
-.brand-sub{font-size:11px;color:var(--text-dim);display:flex;align-items:center;gap:4px;}
-.ai-dot{width:6px;height:6px;border-radius:50%;background:var(--text-muted);display:inline-block}
-.ai-dot.active{background:var(--gold);box-shadow:0 0 8px var(--gold)}
-.h-right{display:flex;align-items:center;gap:8px}
-.chip{font-family:var(--mono);font-size:11px;color:var(--text-dim);background:var(--surface);border:1px solid var(--border);padding:4px 10px;border-radius:20px;white-space:nowrap}
-.h-btn{background:none;border:1px solid var(--border);border-radius:99px;color:var(--text-muted);font-size:11px;font-weight:700;font-family:var(--font);padding:5px 12px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s;white-space:nowrap}
-.h-btn:hover{border-color:var(--gold-dim);color:var(--gold);background:var(--gold-glow)}
-.icon-btn{background:none;border:1px solid var(--border);border-radius:50%;color:var(--text-muted);font-size:14px;width:30px;height:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.list-selector{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);padding:5px 10px;font-family:var(--font);font-weight:600;cursor:pointer}
+.actions{display:flex;gap:4px}
+.icon-btn{background:none;border:1px solid var(--border);border-radius:50%;color:var(--text-muted);font-size:14px;width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .icon-btn:hover{border-color:var(--text-dim);color:var(--text)}
 
-/* PROGRESS */
-.section{margin-top:16px;animation:fadeUp .35s ease}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.prog-card{padding:16px}
-.prog-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.prog-label{font-size:12px;font-weight:500;color:var(--text-dim)}
-.prog-pct{font-family:var(--mono);font-size:22px;color:var(--gold);line-height:1}
-.prog-track{height:6px;background:var(--surface2);border-radius:99px;overflow:hidden}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold-dim),var(--gold));border-radius:99px;transition:width .5s cubic-bezier(.4,0,.2,1);box-shadow:0 0 12px rgba(212,168,67,.4)}
-.prog-stats{display:flex;gap:16px;margin-top:10px}
-.ps{font-size:11px;color:var(--text-muted)}
-.ps b{color:var(--text-dim)}
-
-.done-banner{margin-top:16px;background:var(--green-dim);border:1px solid rgba(62,207,142,.2);border-radius:var(--radius);padding:14px;text-align:center;font-size:13px;font-weight:600;color:var(--green);display:none;animation:fadeUp .3s ease}
+/* SECTION & CARDS */
+.section{margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;padding:16px}
 
 /* ADD PANEL */
-.add-main{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--border);position:relative}
-.add-icon{color:var(--gold-dim);font-size:15px;flex-shrink:0}
-.inp-wrap{flex:1;position:relative}
+.add-main{display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:12px}
+#new-name{flex:1;background:transparent;border:none;outline:none;font-family:var(--font);font-size:16px;color:var(--text)}
+.btn-add{background:var(--gold);color:#0f0f10;border:none;border-radius:var(--radius-sm);padding:6px 14px;font-weight:700;cursor:pointer}
 
-#new-name,#new-notes,#new-qty,.cat-sel,.m-inp,.m-ta,#import-ta,#ai-key-inp { font-size:16px !important; }
-
-#new-name{width:100%;background:transparent;border:none;outline:none;font-family:var(--font);font-weight:500;color:var(--text);caret-color:var(--gold)}
-#new-name::placeholder{color:var(--text-muted);font-weight:400}
-.auto-cat-badge{display:none;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--gold);background:var(--gold-glow);border:1px solid var(--gold-dim);padding:2px 8px;border-radius:99px;white-space:nowrap;flex-shrink:0;cursor:default}
-.auto-cat-badge.show{display:flex}
-.add-controls{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.cat-sel{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-dim);font-family:var(--font);font-weight:600;padding:5px 6px;outline:none;cursor:pointer}
-.cat-sel option{background:var(--surface2)}
-.qty-ctrl{display:flex;align-items:center;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm)}
-.qty-b{background:none;border:none;color:var(--text-muted);font-size:15px;padding:4px 8px;cursor:pointer;line-height:1;transition:color .15s}
-.qty-b:hover{color:var(--gold)}
-#new-qty{width:32px;text-align:center;background:transparent;border:none;outline:none;font-family:var(--mono);font-weight:500;color:var(--text)}
-.btn-add{background:linear-gradient(135deg,var(--gold-dim),var(--gold));border:none;border-radius:var(--radius-sm);color:#0f0f10;font-family:var(--font);font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;transition:opacity .15s,transform .15s;white-space:nowrap}
-.btn-add:hover{opacity:.9;transform:scale(1.02)}
-.btn-add:active{transform:scale(.98)}
-.add-sec{display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid var(--border)}
-#new-notes{flex:1;background:transparent;border:none;outline:none;font-family:var(--font);color:var(--text-dim);caret-color:var(--gold)}
-#new-notes::placeholder{color:var(--text-muted)}
-.add-actions{display:flex;align-items:center;gap:6px;padding:9px 14px;flex-wrap:wrap}
-.act-btn{background:none;border:1px solid var(--border);font-size:11px;font-weight:700;font-family:var(--font);cursor:pointer;padding:5px 10px;border-radius:99px;transition:all .15s;display:flex;align-items:center;gap:4px;color:var(--text-muted)}
-.act-btn:hover{border-color:var(--border-light);color:var(--text-dim);background:var(--surface2)}
-.act-btn.wa{color:#25d366;border-color:rgba(37,211,102,.25)}
-.act-btn.wa:hover{background:rgba(37,211,102,.08);border-color:rgba(37,211,102,.5)}
-.act-btn.share{color:var(--blue);border-color:rgba(96,165,250,.25)}
-.act-btn.share:hover{background:var(--blue-dim);border-color:rgba(96,165,250,.5)}
-
-/* FILTER */
-.filter-bar{display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px}
-.f-tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:4px}
-.f-tab{background:none;border:none;font-family:var(--font);font-size:11px;font-weight:600;color:var(--text-muted);padding:5px 12px;border-radius:99px;cursor:pointer;transition:all .2s;white-space:nowrap}
-.f-tab.active{background:var(--gold);color:#0f0f10}
-.f-tab:not(.active):hover{color:var(--text-dim)}
-
-/* LIST */
-.cat-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;animation:fadeUp .3s ease}
-.cat-hdr{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.01)}
-.cat-icon{font-size:15px}
-.cat-name{font-size:11px;font-weight:700;color:var(--text-dim);letter-spacing:.5px;text-transform:uppercase;flex:1}
-.cat-cnt{font-family:var(--mono);font-size:10px;color:var(--text-muted);background:var(--surface2);border:1px solid var(--border);padding:2px 8px;border-radius:99px}
-.item-row{display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);transition:background .15s;gap:10px}
-.item-row:last-child{border-bottom:none}
-.item-row:hover{background:rgba(255,255,255,.02)}
+/* LIST ITEMS */
+.item-row{display:flex;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);gap:10px}
+.item-name{flex:1;font-size:14px}
 .item-row.done{opacity:.4}
-.chk-btn{width:20px;height:20px;border-radius:6px;border:2px solid var(--border-light);background:transparent;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;color:transparent;font-size:11px;font-weight:900}
-.chk-btn:hover{border-color:var(--gold-dim)}
-.chk-btn.on{background:var(--green);border-color:var(--green);color:#0f0f10}
-.item-info{flex:1;cursor:pointer;min-width:0}
-.item-name{font-size:13px;font-weight:500;color:var(--text);line-height:1.3}
-.item-row.done .item-name{text-decoration:line-through;color:var(--text-muted)}
-.item-note{font-size:10px;margin-top:2px}
-.nbadge{font-size:9px;background:var(--surface2);border:1px solid var(--border-light);color:var(--text-dim);padding:1px 6px;border-radius:4px}
-.nbadge.sale{background:rgba(248,113,113,.1);border-color:rgba(248,113,113,.2);color:var(--red)}
-.item-acts{display:flex;align-items:center;gap:6px;flex-shrink:0}
-.qty-pill{display:flex;align-items:center;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm)}
-.qty-pill button{background:none;border:none;color:var(--text-muted);padding:3px 7px;cursor:pointer;font-size:13px;line-height:1;transition:color .15s}
-.qty-pill button:hover{color:var(--gold)}
-.qty-val{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--text-dim);min-width:22px;text-align:center}
-.ico-btn{background:none;border:none;cursor:pointer;color:var(--text-muted);padding:4px;border-radius:6px;font-size:13px;transition:color .15s,background .15s;line-height:1}
-.ico-btn:hover{color:var(--red);background:var(--red-dim)}
-.ico-btn.cmp:hover{color:var(--gold);background:var(--gold-glow)}
-
-.empty{text-align:center;padding:60px 20px;color:var(--text-muted);animation:fadeUp .4s ease}
-.empty-icon{font-size:36px;margin-bottom:12px}
-.empty-title{font-size:14px;font-weight:600;color:var(--text-dim);margin-bottom:6px}
-.empty-sub{font-size:12px}
+.chk-btn{width:20px;height:20px;border-radius:6px;border:2px solid var(--border-light);background:transparent;cursor:pointer}
+.chk-btn.on{background:var(--green);border-color:var(--green)}
+.del-btn{color:var(--red);cursor:pointer;background:none;border:none}
 
 /* MODALS */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(10px);z-index:400;display:none;align-items:center;justify-content:center;padding:16px}
-.modal-bg.open{display:flex;animation:fadeUp .2s ease}
-.modal{background:var(--surface);border:1px solid var(--border-light);border-radius:20px;padding:24px;width:100%;max-width:420px;box-shadow:0 24px 64px rgba(0,0,0,.8);animation:slideUp .25s ease;max-height:90vh;overflow-y:auto}
-.m-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.m-close{margin-right:auto;background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer;padding:2px;line-height:1;transition:color .15s;flex-shrink:0}
-.m-close:hover{color:var(--text)}
-.m-sub{font-size:12px;color:var(--text-dim);margin-bottom:16px;line-height:1.6}
-.m-label{font-size:10px;font-weight:700;color:var(--text-muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;margin-top:14px}
-.m-inp{width:100%;background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font);padding:10px 12px;outline:none;transition:border-color .2s;text-align:right}
-.m-inp:focus{border-color:var(--gold-dim)}
-.m-ta{width:100%;background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font);padding:10px 12px;outline:none;resize:none;transition:border-color .2s;direction:rtl;text-align:right;line-height:1.6}
-.m-ta:focus{border-color:var(--gold-dim)}
-.m-ta::placeholder{color:var(--text-muted)}
-.m-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-family:var(--font);font-size:13px;font-weight:700;padding:11px 16px;border-radius:var(--radius-sm);border:none;cursor:pointer;transition:all .15s;width:100%}
-.m-btn+.m-btn{margin-top:8px}
-.m-btn.primary{background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:#0f0f10}
-.m-btn.primary:hover{opacity:.9}
-.m-btn.secondary{background:var(--surface2);border:1px solid var(--border-light);color:var(--text-dim)}
-.m-btn.secondary:hover{background:var(--border);color:var(--text)}
-.m-btn.green{background:var(--green-dim);border:1px solid rgba(62,207,142,.25);color:var(--green)}
-.m-btn.green:hover{background:rgba(62,207,142,.2)}
-.m-row{display:flex;gap:8px}
-.m-row .m-btn{margin-top:0}
-.sep{height:1px;background:var(--border);margin:16px 0}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:400;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-bg.open{display:flex}
+.modal{background:var(--surface);padding:24px;border-radius:20px;width:100%;max-width:400px}
+.m-inp{width:100%;background:var(--surface2);border:1px solid var(--border-light);padding:10px;color:var(--text);border-radius:8px;margin:10px 0}
+.m-btn{width:100%;padding:10px;border:none;border-radius:8px;font-weight:700;cursor:pointer;margin-top:8px}
+.m-btn.primary{background:var(--gold);color:#0f0f10}
 
-.import-preview{background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);padding:12px;max-height:200px;overflow-y:auto;margin-top:10px}
-.prev-empty{font-size:11px;color:var(--text-muted);text-align:center;padding:16px 0}
-.prev-item{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;gap:8px}
-.prev-item:last-child{border-bottom:none}
-.prev-name{color:var(--text);font-weight:500;flex:1}
-.prev-cat{font-size:10px;background:var(--surface);border:1px solid var(--border-light);color:var(--text-dim);padding:2px 7px;border-radius:4px;white-space:nowrap}
-.prev-qty{font-family:var(--mono);font-size:10px;background:var(--gold-glow);color:var(--gold);padding:2px 8px;border-radius:4px;white-space:nowrap}
-.preview-stats{display:flex;align-items:center;justify-content:space-between;margin-top:8px;font-size:11px;color:var(--text-muted)}
-.preview-stats b{color:var(--text-dim)}
-
-.price-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:6px}
-.price-row.best{background:var(--green-dim);border-color:rgba(62,207,142,.2)}
-.pr-name{font-size:12px;font-weight:600;color:var(--text-dim);display:flex;align-items:center;gap:6px}
-.pr-price{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--text)}
-.best-badge{font-size:9px;font-weight:700;color:var(--green);background:rgba(62,207,142,.15);padding:2px 6px;border-radius:4px}
-
-.share-opt{display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);cursor:pointer;transition:all .15s;margin-bottom:8px}
-.share-opt:hover{border-color:var(--border-light);background:rgba(255,255,255,.04)}
-.share-opt-icon{font-size:22px;flex-shrink:0}
-.share-opt-text{flex:1}
-.share-opt-title{font-size:13px;font-weight:700;color:var(--text)}
-.share-opt-sub{font-size:11px;color:var(--text-dim);margin-top:2px}
-.share-opt-arrow{color:var(--text-muted);font-size:14px}
-.share-opt.wa-opt{border-color:rgba(37,211,102,.2)}
-.share-opt.wa-opt:hover{background:rgba(37,211,102,.06);border-color:rgba(37,211,102,.4)}
-.share-opt.copy-opt{border-color:rgba(96,165,250,.2)}
-.share-opt.copy-opt:hover{background:var(--blue-dim);border-color:rgba(96,165,250,.4)}
-.share-opt.sms-opt{border-color:rgba(212,168,67,.2)}
-.share-opt.sms-opt:hover{background:var(--gold-glow);border-color:rgba(212,168,67,.4)}
-
-/* Toast */
-#toast-wrap{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:600;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
-.toast{background:var(--surface2);border:1px solid var(--border-light);color:var(--text-dim);font-size:12px;font-weight:600;padding:9px 18px;border-radius:99px;box-shadow:0 4px 24px rgba(0,0,0,.5);animation:toastIn .25s ease,toastOut .3s ease 4.5s forwards;white-space:nowrap; max-width: 90vw; overflow:hidden; text-overflow:ellipsis;}
-.toast.success{color:var(--green);border-color:rgba(62,207,142,.3)}
-.toast.error{color:var(--red);border-color:rgba(248,113,113,.3)}
-.toast.ai{color:#c084fc;border-color:rgba(192,132,252,.3)}
-
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:99px}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-@keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-@keyframes toastIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@keyframes toastOut{from{opacity:1}to{opacity:0}}
-@media(max-width:420px){.cat-sel{display:none}.h-btn span.label{display:none}}
 </style>
 </head>
 <body>
 
 <header>
   <div class="h-inner">
-    <div class="brand">
-      <div class="brand-icon">🛒</div>
-      <div>
-        <div class="brand-title">רשימת קניות</div>
-        <div class="brand-sub">
-          <span class="ai-dot" id="ai-status-dot"></span>
-          <span id="ai-status-text">מילון מקומי</span>
-        </div>
-      </div>
-    </div>
-    <div class="h-right">
-      <div class="chip" id="chip-total">0 פריטים</div>
-      <button class="h-btn" onclick="openShareModal()">
-        <span>↗</span><span class="label">שיתוף</span>
-      </button>
-      <button class="icon-btn" onclick="openAiSettings()" title="הגדרות AI">⚙️</button>
+    <select id="list-selector" class="list-selector" onchange="switchList()"></select>
+    <div class="actions">
+      <button class="icon-btn" onclick="openModal('add-list-modal')">+</button>
+      <button class="icon-btn" onclick="deleteCurrentList()">🗑️</button>
     </div>
   </div>
 </header>
 
 <div class="wrap">
-  <div class="section">
-    <div class="card prog-card">
-      <div class="prog-head">
-        <span class="prog-label">התקדמות קנייה</span>
-        <span class="prog-pct" id="pct">0%</span>
-      </div>
-      <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
-      <div class="prog-stats">
-        <div class="ps">בעגלה: <b id="cnt-done">0</b></div>
-        <div class="ps">נותרו: <b id="cnt-left">0</b></div>
-        <div class="ps">סה"כ: <b id="cnt-total">0</b></div>
-      </div>
+  <div class="section card">
+    <div class="add-main">
+      <input id="new-name" type="text" placeholder="מה להוסיף לרשימה?">
+      <button class="btn-add" onclick="addItem()">הוסף</button>
     </div>
-  </div>
-
-  <div class="done-banner" id="done-banner">🎉 כל המוצרים בעגלה! קנייה מוצלחת!</div>
-
-  <div class="section">
-    <div class="card">
-      <div class="add-main">
-        <span class="add-icon">✦</span>
-        <div class="inp-wrap">
-          <input id="new-name" type="text" placeholder="הוסף מוצר..." autocomplete="off">
-        </div>
-        <div class="auto-cat-badge" id="auto-cat-badge"></div>
-        <div class="add-controls">
-          <select id="new-cat" class="cat-sel">
-            <option value="produce">🥦 ירקות</option>
-            <option value="bakery">🥖 מאפים</option>
-            <option value="dairy">🥛 חלב</option>
-            <option value="meat">🥩 בשר</option>
-            <option value="frozen">🧊 קפוא</option>
-            <option value="cleaning">🧹 ניקיון</option>
-            <option value="hygiene">🧴 טיפוח</option>
-            <option value="drinks">🧃 שתייה</option>
-            <option value="snacks">🍫 חטיפים</option>
-            <option value="pets">🐾 חיות מחמד</option>
-            <option value="diy">🛠️ חומרה ועץ</option>
-            <option value="other">📦 כללי</option>
-          </select>
-          <div class="qty-ctrl">
-            <button class="qty-b" onclick="adjustNewQty(-1)">−</button>
-            <input id="new-qty" type="number" value="1" min="1">
-            <button class="qty-b" onclick="adjustNewQty(1)">＋</button>
-          </div>
-          <button class="btn-add" onclick="addItem()">הוסף</button>
-        </div>
-      </div>
-      <div class="add-sec">
-        <input id="new-notes" type="text" placeholder="הערה (למשל: רק אם יש מבצע)">
-      </div>
-      <div class="add-actions">
-        <button class="act-btn wa" onclick="openImportModal()">💬 ייבוא מוואטסאפ</button>
-        <button class="act-btn share" onclick="openShareModal()">↗ שתף רשימה</button>
-        <button class="act-btn" onclick="clearDone()">🧹 נקה שנקנו</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="section filter-bar">
-    <div class="f-tabs">
-      <button class="f-tab active" data-f="all" onclick="setFilter('all')">הכל (<span id="fc-all">0</span>)</button>
-      <button class="f-tab" data-f="active" onclick="setFilter('active')">לקנות (<span id="fc-active">0</span>)</button>
-      <button class="f-tab" data-f="done" onclick="setFilter('done')">בעגלה (<span id="fc-done">0</span>)</button>
-    </div>
-  </div>
-
-  <div id="list-wrap" style="display:flex;flex-direction:column;gap:12px;margin-top:16px"></div>
-
-  <div class="empty" id="empty" style="display:none">
-    <div class="empty-icon">🍃</div>
-    <div class="empty-title">הרשימה ריקה</div>
-    <div class="empty-sub">הוסף מוצרים או ייבא מוואטסאפ</div>
+    <div id="list-wrap"></div>
   </div>
 </div>
 
-<div id="toast-wrap"></div>
-
-<!-- ══ AI SETTINGS MODAL ══ -->
-<div class="modal-bg" id="ai-modal">
+<!-- Modal -->
+<div class="modal-bg" id="add-list-modal">
   <div class="modal">
-    <div class="m-title">🤖 סיווג חכם באמצעות AI <button class="m-close" onclick="closeModal('ai-modal')">✕</button></div>
-    <div class="m-sub">על מנת לזהות בצורה מושלמת כל מוצר, הכנס מפתח חינמי של Google Gemini.</div>
-    <div class="m-label">מפתח API (Gemini API Key):</div>
-    <input type="password" id="ai-key-inp" class="m-inp" placeholder="AIzaSy... או AQ...">
-    <div class="m-sub" style="margin-top:8px;font-size:10px">
-      אין לך מפתח? <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:var(--gold)">לחץ כאן ליצירת מפתח חינם ב-Google AI Studio</a>.
-    </div>
-    <div class="sep"></div>
-    <button class="m-btn primary" onclick="saveAiKey()">💾 שמור מפתח והפעל מנוע AI</button>
-    <button class="m-btn secondary" onclick="clearAiKey()">🗑️ מחק מפתח ונתק AI</button>
-  </div>
-</div>
-
-<!-- ══ IMPORT MODAL ══ -->
-<div class="modal-bg" id="import-modal">
-  <div class="modal">
-    <div class="m-title">💬 ייבוא מוואטסאפ <button class="m-close" onclick="closeModal('import-modal')">✕</button></div>
-    <div class="m-sub">הדבק כאן רשימה חופשית — המערכת תזהה מוצרים, כמויות וקטגוריות.</div>
-    <textarea class="m-ta" id="import-ta" rows="6" placeholder="לדוגמה:&#10;חלב&#10;2 מלפפונים&#10;צבע לעץ (חום)&#10;3 ארוחות ילדים"></textarea>
-    <div class="import-preview" id="import-preview"><div class="prev-empty">הדבק טקסט לראות תצוגה מקדימה</div></div>
-    <div class="preview-stats" id="preview-stats" style="display:none">
-      <span>זוהו: <b id="prev-count">0</b> מוצרים</span>
-      <span id="prev-cats-summary"></span>
-    </div>
-    <div class="sep"></div>
-    <div class="m-label">הוסף לרשימה:</div>
-    <div class="m-row" style="margin-top:8px">
-      <button class="m-btn green" onclick="execImport('add')">＋ הוסף לקיימת</button>
-      <button class="m-btn secondary" onclick="execImport('replace')">↺ צור חדשה</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══ SHARE MODAL ══ -->
-<div class="modal-bg" id="share-modal">
-  <div class="modal">
-    <div class="m-title">↗ שיתוף רשימה <button class="m-close" onclick="closeModal('share-modal')">✕</button></div>
-    <div class="m-sub">בחר איך לשתף את הרשימה הנוכחית המקוטלגת.</div>
-    <div class="share-opt wa-opt" onclick="shareViaWhatsApp()">
-      <div class="share-opt-icon">💬</div>
-      <div class="share-opt-text"><div class="share-opt-title">שלח בוואטסאפ</div></div>
-      <div class="share-opt-arrow">›</div>
-    </div>
-    <div class="share-opt copy-opt" onclick="shareViaCopy()">
-      <div class="share-opt-icon">📋</div>
-      <div class="share-opt-text"><div class="share-opt-title">העתק ללוח</div></div>
-      <div class="share-opt-arrow">›</div>
-    </div>
-    <div class="share-opt sms-opt" onclick="shareViaSms()">
-      <div class="share-opt-icon">📱</div>
-      <div class="share-opt-text"><div class="share-opt-title">שלח ב-SMS</div></div>
-      <div class="share-opt-arrow">›</div>
-    </div>
-    <div class="share-opt" onclick="shareViaEmail()" style="border-color:rgba(212,168,67,.15)">
-      <div class="share-opt-icon">📧</div>
-      <div class="share-opt-text"><div class="share-opt-title">שלח במייל</div></div>
-      <div class="share-opt-arrow">›</div>
-    </div>
-    <div class="sep"></div>
-    <div class="m-label">תצוגה מקדימה של הרשימה המשותפת:</div>
-    <div class="import-preview" id="share-preview" style="margin-top:8px;max-height:150px"></div>
-  </div>
-</div>
-
-<!-- ══ PRICE MODAL ══ -->
-<div class="modal-bg" id="price-modal-bg">
-  <div class="modal">
-    <div class="m-title"><span>📊</span> השוואת מחירים (אומדן) <button class="m-close" onclick="closeModal('price-modal-bg')">✕</button></div>
-    <div class="m-sub" id="price-modal-name">...</div>
-    <div id="price-list" style="margin-bottom:16px"></div>
-    
-    <div class="m-label" style="margin-top:0; margin-bottom:8px; text-align:center;">חפש מוצר זה אונליין:</div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-      <button class="m-btn secondary" id="rl-link-btn" style="margin:0;">🛒 רמי לוי</button>
-      <button class="m-btn secondary" id="shufersal-link-btn" style="margin:0;">🛒 שופרסל</button>
-      <button class="m-btn secondary" id="victory-link-btn" style="margin:0;">🛒 ויקטורי</button>
-      <button class="m-btn secondary" id="carrefour-link-btn" style="margin:0;">🛒 קרפור</button>
-    </div>
+    <h3>שם רשימה חדשה</h3>
+    <input type="text" id="new-list-name" class="m-inp" placeholder="למשל: ימי הולדת / חומרי בנייה">
+    <button class="m-btn primary" onclick="addNewList()">צור רשימה</button>
   </div>
 </div>
 
 <script>
-(function () {
-  'use strict';
+  let allLists = JSON.parse(localStorage.getItem('all_lists')) || { "קניות": [] };
+  let currentListName = localStorage.getItem('current_list') || "קניות";
 
-  var STORAGE_KEY = 'shopping_list_v2';
-  var AI_KEY_STORAGE = 'gemini_api_key';
-  
-  var CAT_META = {
-    produce: { title: 'ירקות ופירות', icon: '🥦' },
-    bakery: { title: 'מאפים ולחמים', icon: '🥖' },
-    dairy: { title: 'מוצרי חלב', icon: '🥛' },
-    meat: { title: 'בשר ודגים', icon: '🥩' },
-    frozen: { title: 'קפואים', icon: '🧊' },
-    cleaning: { title: 'ניקיון', icon: '🧹' },
-    hygiene: { title: 'טיפוח ובריאות', icon: '🧴' },
-    drinks: { title: 'שתייה', icon: '🧃' },
-    snacks: { title: 'חטיפים ומתוקים', icon: '🍫' },
-    pets: { title: 'ציוד וחיות מחמד', icon: '🐾' },
-    diy: { title: 'חומרה ועץ', icon: '🛠️' },
-    other: { title: 'כללי', icon: '📦' }
-  };
-
-  var CAT_RULES = [
-    { cat: 'dairy', words: ['חלב','גבינה','גבינות','שמנת','קוטג','יוגורט','יוגורטים','חמאה','קצפת','לבנה','שוקו','מוצרלה','ריקוטה','פרמזן','גאודה','בולגרית','צהובה','מעדן','מעדנים'] },
-    { cat: 'bakery', words: ['לחם','לחמים','פיתה','פיתות','לחמניה','לחמניות','חלה','חלות','מאפה','מאפים','קרואסון','עוגה','עוגות','עוגיות','בגט','בורקס','טורטיה'] },
-    { cat: 'produce', words: ['מלפפון','מלפפונים','עגבניה','עגבניות','לימון','לימונים','תפוח','תפוחים','אבטיח','פרי','פירות','ירק','ירקות','בצל','בצלים','גזר','גזרים','שום','חסה','פלפל','פלפלים','בננה','בננות','תות','תותים','תפוח אדמה','תפוחי אדמה','פפאיה','פטריות','עשבי תיבול'] },
-    { cat: 'meat', words: ['עוף','עופות','תרנגול','פרגית','שוקיים','כנפיים','חזה','הודו','בשר','בקר','שניצל','קציצות','המבורגר','נקניק','נקניקיות','סלמון','דג','דגים','טונה'] },
-    { cat: 'frozen', words: ['קפוא','קפואים','קפואה','פיצה','גלידה','ארטיק','קרח','אפונה קפואה','שניצל קפוא'] },
-    { cat: 'cleaning', words: ['כביסה','אבקת כביסה','נוזל כלים','סבון כביסה','מרכך','מגב','מטלית','שקיות אשפה','שקיות','נייר טואלט','מגבות נייר','נייר אלומיניום','ניקוי','אקונומיקה','ספוג'] },
-    { cat: 'hygiene', words: ['שמפו','מרכך שיער','סבון גוף','דאודורנט','משחת שיניים','מי פה','טמפונים','גילוח','תרופה','אקמול','טיטולים','חיתולים','מגבונים','פלסטרים'] },
-    { cat: 'drinks', words: ['מים','מיץ','קולה','ספרייט','פאנטה','סודה','בירה','יין','וודקה','קפה','תה'] },
-    { cat: 'snacks', words: ['חטיף','חטיפים','ביסלי','במבה','פופקורן','שוקולד','סוכריות','גומי','קינדר','בוטנים','שקדים','גרעינים'] },
-    { cat: 'pets', words: ['כלב','כלבים','חתול','חתולים','רצועה','חטיף לכלב','תרופה לכלב'] },
-    { cat: 'diy', words: ['עץ','קרשים','קורות','צבע לעץ','ברגים','מסמרים','מברשת','לכה','דבק נגרים','אדנית','נדנדה','דיבלים','מברגה'] }
-  ];
-
-  function autoCategorize(name) {
-    if (!name || !name.trim()) return 'other';
-    var lower = name.trim().toLowerCase();
-    for (var r = 0; r < CAT_RULES.length; r++) {
-      var rule = CAT_RULES[r];
-      for (var w = 0; w < rule.words.length; w++) {
-        if (lower.includes(rule.words[w])) return rule.cat;
-      }
-    }
-    return 'other';
-  }
-
-  function sanitize(str) {
-    if (typeof str !== 'string') return '';
-    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;');
-  }
-
-  var items = [];
-  var currentFilter = 'all';
-  var isAiEnabled = false;
-  var isCatManuallyChanged = false;
-
-  function initApp() {
-    var raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) { try { items = JSON.parse(raw) || []; } catch(e) { items = []; } }
-    
-    var aiKey = localStorage.getItem(AI_KEY_STORAGE);
-    if (aiKey && aiKey.length > 10) {
-      isAiEnabled = true;
-      document.getElementById('ai-status-dot').classList.add('active');
-      document.getElementById('ai-status-text').textContent = 'AI מחובר';
-    }
-    render();
-  }
-
-  function saveToStorage() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch(e) {} }
-
-  function showToast(msg, type) {
-    var wrap = document.getElementById('toast-wrap');
-    var el = document.createElement('div');
-    el.className = 'toast' + (type ? ' ' + type : '');
-    if(type === 'error') el.style.animation = 'toastIn .25s ease, toastOut .3s ease 4.5s forwards';
-    el.innerHTML = sanitize(msg);
-    wrap.appendChild(el);
-    setTimeout(function() { el.remove(); }, type === 'error' ? 5000 : 2700);
-  }
-
-  // ══════════════════════════════════════════
-  // AI INTEGRATION (Gemini 2.5 Flash)
-  // ══════════════════════════════════════════
-  async function fetchCategoryFromAI(itemName, itemId) {
-    var key = localStorage.getItem(AI_KEY_STORAGE);
-    if (!key) return;
-
-    var prompt = "You are a Hebrew supermarket categorization engine. Analyze this item: '" + itemName + "'. Return ONLY ONE exact word from this list: produce, bakery, dairy, meat, frozen, cleaning, hygiene, drinks, snacks, pets, diy, other. Do not return any other text.";
-    
-    try {
-      var res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + key, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.1, maxOutputTokens: 5 }
-        })
-      });
-      
-      var data = await res.json();
-
-      if (!res.ok) {
-         var errText = (data && data.error && data.error.message) ? data.error.message : 'שגיאה לא ידועה';
-         var hebError = "שגיאת שרת גוגל";
-         if (errText.includes('API key not valid')) hebError = "המפתח לא חוקי (אולי נוסף רווח בטעות?)";
-         else if (errText.includes('has not been used')) hebError = "המפתח עדיין לא פעיל במערכת גוגל (נסה שוב בעוד כמה דקות)";
-         else if (errText.includes('API key not found')) hebError = "המפתח לא נמצא (וודא שהעתקת אותו בשלמותו)";
-         else hebError = "שגיאת AI: " + errText;
-
-         showToast(hebError, 'error');
-         console.error("AI Error:", data);
-         return;
-      }
-
-      if (data && data.candidates && data.candidates[0].content.parts[0].text) {
-        var smartCat = data.candidates[0].content.parts[0].text.trim().toLowerCase();
-        
-        if (CAT_META[smartCat] && smartCat !== 'other') {
-           var itemIndex = items.findIndex(function(i) { return i.id === itemId; });
-           if (itemIndex > -1) {
-             items[itemIndex].cat = smartCat;
-             saveToStorage();
-             render();
-             showToast('🤖 ' + itemName + ' סווג ל' + CAT_META[smartCat].title, 'ai');
-           }
-        }
-      }
-    } catch(e) {
-      showToast('שגיאת תקשורת עם ה-AI (בדוק חיבור אינטרנט או חוסם פרסומות)', 'error');
-      console.warn("AI categorization failed", e);
-    }
-  }
-
-  window.openAiSettings = function() {
-    var key = localStorage.getItem(AI_KEY_STORAGE);
-    if (key) document.getElementById('ai-key-inp').value = key;
-    openModal('ai-modal');
-  };
-
-  window.saveAiKey = function() {
-    var key = document.getElementById('ai-key-inp').value.trim();
-    if (key.length < 10) { showToast('מפתח לא תקין', 'error'); return; }
-    localStorage.setItem(AI_KEY_STORAGE, key);
-    isAiEnabled = true;
-    document.getElementById('ai-status-dot').classList.add('active');
-    document.getElementById('ai-status-text').textContent = 'AI מחובר';
-    closeModal('ai-modal');
-    showToast('ה-AI הופעל בהצלחה!', 'success');
-  };
-
-  window.clearAiKey = function() {
-    localStorage.removeItem(AI_KEY_STORAGE);
-    document.getElementById('ai-key-inp').value = '';
-    isAiEnabled = false;
-    document.getElementById('ai-status-dot').classList.remove('active');
-    document.getElementById('ai-status-text').textContent = 'מילון מקומי';
-    closeModal('ai-modal');
-    showToast('ה-AI נותק', 'error');
-  };
-
-  // ══════════════════════════════════════════
-  // RENDER & LOGIC
-  // ══════════════════════════════════════════
-  function render() {
-    var wrap = document.getElementById('list-wrap');
-    var empty = document.getElementById('empty');
-    var filtered = items.filter(function(item) {
-      if (currentFilter === 'active') return !item.done;
-      if (currentFilter === 'done') return item.done;
-      return true;
+  function renderLists() {
+    const sel = document.getElementById('list-selector');
+    sel.innerHTML = "";
+    Object.keys(allLists).forEach(name => {
+      const opt = document.createElement('option');
+      opt.value = name; opt.textContent = name;
+      if(name === currentListName) opt.selected = true;
+      sel.appendChild(opt);
     });
+    renderItems();
+  }
 
-    if (filtered.length === 0) {
-      wrap.innerHTML = '';
-      empty.style.display = 'block';
-      updateStats(); return;
+  function renderItems() {
+    const wrap = document.getElementById('list-wrap');
+    wrap.innerHTML = "";
+    allLists[currentListName].forEach((item, index) => {
+      const div = document.createElement('div');
+      div.className = `item-row ${item.done ? 'done' : ''}`;
+      div.innerHTML = `
+        <button class="chk-btn ${item.done ? 'on' : ''}" onclick="toggleItem(${index})"></button>
+        <span class="item-name">${item.name}</span>
+        <button class="del-btn" onclick="removeItem(${index})">🗑️</button>
+      `;
+      wrap.appendChild(div);
+    });
+    localStorage.setItem('all_lists', JSON.stringify(allLists));
+  }
+
+  function switchList() {
+    currentListName = document.getElementById('list-selector').value;
+    localStorage.setItem('current_list', currentListName);
+    renderItems();
+  }
+
+  function addNewList() {
+    const name = document.getElementById('new-list-name').value;
+    if(name && !allLists[name]) {
+      allLists[name] = [];
+      currentListName = name;
+      localStorage.setItem('current_list', name);
+      document.getElementById('add-list-modal').classList.remove('open');
+      renderLists();
     }
-    empty.style.display = 'none';
-
-    var groups = {};
-    Object.keys(CAT_META).forEach(function(k) { groups[k] = []; });
-    filtered.forEach(function(item) {
-      var c = item.cat || 'other';
-      if (!groups[c]) groups[c] = [];
-      groups[c].push(item);
-    });
-
-    var html = '';
-    Object.keys(CAT_META).forEach(function(catKey) {
-      var catItems = groups[catKey];
-      if (!catItems || !catItems.length) return;
-      var meta = CAT_META[catKey];
-      
-      var itemsHtml = catItems.map(function(item) {
-        var isSale = item.notes && item.notes.includes('מבצע');
-        var noteHtml = item.notes ? '<div class="item-note"><span class="nbadge' + (isSale ? ' sale' : '') + '">' + sanitize(item.notes) + '</span></div>' : '';
-        return (
-          '<div class="item-row ' + (item.done ? 'done' : '') + '">' +
-            '<button class="chk-btn ' + (item.done ? 'on' : '') + '" onclick="toggleItem(\'' + item.id + '\')">' + (item.done ? '✓' : '') + '</button>' +
-            '<div class="item-info" onclick="toggleItem(\'' + item.id + '\')">' +
-              '<div class="item-name">' + sanitize(item.name) + '</div>' + noteHtml +
-            '</div>' +
-            '<div class="item-acts">' +
-              '<button class="ico-btn cmp" onclick="openPriceModal(\'' + item.id + '\')" title="השוואת מחירים">💰</button>' +
-              '<div class="qty-pill">' +
-                '<button onclick="adjustQty(\'' + item.id + '\',-1)">−</button>' +
-                '<div class="qty-val">' + item.qty + '</div>' +
-                '<button onclick="adjustQty(\'' + item.id + '\',1)">＋</button>' +
-              '</div>' +
-              '<button class="ico-btn" onclick="removeItem(\'' + item.id + '\')">🗑️</button>' +
-            '</div>' +
-          '</div>'
-        );
-      }).join('');
-
-      html += '<div class="cat-block"><div class="cat-hdr"><div class="cat-icon">' + meta.icon + '</div><div class="cat-name">' + meta.title + '</div><div class="cat-cnt">' + catItems.length + '</div></div><div>' + itemsHtml + '</div></div>';
-    });
-
-    wrap.innerHTML = html;
-    updateStats();
   }
 
-  function updateStats() {
-    var total = items.length;
-    var done = items.filter(function(i) { return i.done; }).length;
-    var pct = total === 0 ? 0 : Math.round((done / total) * 100);
-
-    document.getElementById('cnt-total').textContent = total;
-    document.getElementById('cnt-done').textContent = done;
-    document.getElementById('cnt-left').textContent = total - done;
-    document.getElementById('fc-all').textContent = total;
-    document.getElementById('fc-active').textContent = total - done;
-    document.getElementById('fc-done').textContent = done;
-    document.getElementById('chip-total').textContent = total + ' פריטים';
-    document.getElementById('pct').textContent = pct + '%';
-    document.getElementById('prog-fill').style.width = pct + '%';
-    document.getElementById('done-banner').style.display = (total > 0 && done === total) ? 'block' : 'none';
+  function deleteCurrentList() {
+    if(Object.keys(allLists).length > 1) {
+      delete allLists[currentListName];
+      currentListName = Object.keys(allLists)[0];
+      renderLists();
+    } else {
+      alert("אי אפשר למחוק את הרשימה האחרונה!");
+    }
   }
-
-  document.getElementById('new-cat').addEventListener('change', function() {
-    isCatManuallyChanged = true;
-  });
 
   function addItem() {
-    var nameEl = document.getElementById('new-name');
-    var name = nameEl.value.trim();
-    if (!name) { nameEl.focus(); return; }
-    
-    var finalCat = document.getElementById('new-cat').value;
-    var newItemId = Date.now().toString();
-    
-    items.push({
-      id: newItemId,
-      name: name,
-      qty: Math.max(1, parseInt(document.getElementById('new-qty').value) || 1),
-      cat: finalCat,
-      notes: document.getElementById('new-notes').value.trim(),
-      done: false
-    });
-
-    if (isAiEnabled && !isCatManuallyChanged && finalCat === 'other') {
-       fetchCategoryFromAI(name, newItemId);
+    const name = document.getElementById('new-name').value;
+    if(name) {
+      allLists[currentListName].push({ name, done: false });
+      document.getElementById('new-name').value = "";
+      renderItems();
     }
-
-    nameEl.value = '';
-    document.getElementById('new-qty').value = '1';
-    document.getElementById('new-notes').value = '';
-    document.getElementById('new-cat').value = 'other';
-    hideCatBadge();
-    isCatManuallyChanged = false;
-    nameEl.focus();
-    saveToStorage();
-    render();
   }
 
-  function toggleItem(id) { var item = items.find(function(i) { return i.id === id; }); if (item) { item.done = !item.done; saveToStorage(); render(); } }
-  function adjustQty(id, amt) { var item = items.find(function(i) { return i.id === id; }); if (item) { item.qty = Math.max(1, item.qty + amt); saveToStorage(); render(); } }
-  function removeItem(id) { items = items.filter(function(i) { return i.id !== id; }); saveToStorage(); render(); }
-  function clearDone() {
-    var before = items.length;
-    items = items.filter(function(i) { return !i.done; });
-    var removed = before - items.length;
-    saveToStorage(); render();
-    if (removed > 0) showToast(removed + ' פריטים נמחקו', 'success');
-  }
+  function toggleItem(i) { allLists[currentListName][i].done = !allLists[currentListName][i].done; renderItems(); }
+  function removeItem(i) { allLists[currentListName].splice(i, 1); renderItems(); }
+  function openModal(id) { document.getElementById(id).classList.add('open'); }
+  window.onclick = (e) => { if(e.target.classList.contains('modal-bg')) e.target.classList.remove('open'); }
 
-  function adjustNewQty(amt) { var inp = document.getElementById('new-qty'); inp.value = Math.max(1, (parseInt(inp.value) || 1) + amt); }
-  function setFilter(type) {
-    currentFilter = type;
-    document.querySelectorAll('.f-tab').forEach(function(btn) { btn.classList.toggle('active', btn.dataset.f === type); });
-    render();
-  }
-
-  function hideCatBadge() { var badge = document.getElementById('auto-cat-badge'); badge.classList.remove('show'); badge.textContent = ''; }
-
-  document.getElementById('new-name').addEventListener('input', function() {
-    var val = this.value.trim();
-    var badge = document.getElementById('auto-cat-badge');
-    isCatManuallyChanged = false;
-    if (!val) { hideCatBadge(); document.getElementById('new-cat').value = 'other'; return; }
-    
-    var cat = autoCategorize(val);
-    document.getElementById('new-cat').value = cat;
-    
-    if (cat !== 'other') {
-       var meta = CAT_META[cat];
-       badge.textContent = meta.icon + ' ' + meta.title;
-       badge.classList.add('show');
-    } else {
-       hideCatBadge();
-    }
-  });
-
-  // ══════════════════════════════════════════
-  // WHATSAPP IMPORT 
-  // ══════════════════════════════════════════
-  function parseWhatsAppText(raw) {
-    if (!raw || !raw.trim()) return [];
-    var lines = raw.split('\n');
-    var result = [];
-    lines.forEach(function(line) {
-      var text = line.trim().replace(/^[\-*•·◦▪▸➤➢✓✔☑\s]+/, '').replace(/^\d+[\.\)\-]\s*/, '').replace(/^[א-ת]\.\s*/, '').trim();
-      if (!text || text.length < 2) return;
-      if (/^\[\d/.test(text) || /^\d{1,2}\/\d{1,2}/.test(text)) return;
-      
-      var qty = 1; var notes = ''; var name = text;
-      
-      var m1 = text.match(/^(\d+)\s*[xX×*]?\s+(.+)$/);
-      if (m1 && parseInt(m1[1]) < 50) { qty = parseInt(m1[1]); name = m1[2].trim(); }
-      else {
-        var m2 = text.match(/^(.+?)\s*[xX×]\s*(\d+)$/);
-        if (m2) { name = m2[1].trim(); qty = parseInt(m2[2]); }
-        else {
-          var m3 = text.match(/^(.+?)\s+(\d+\.?\d*)\s*(ק"ג|קג|גרם|גר'|ליטר|ל'|יח'?)\s*$/i);
-          if (m3) { name = m3[1].trim(); notes = m3[2] + ' ' + m3[3]; }
-        }
-      }
-
-      var mParen = name.match(/^([^\(]+)\s*\((.+?)\)\s*$/);
-      if (mParen) { name = mParen[1].trim(); notes = mParen[2].trim(); }
-      else {
-        var mHyph = name.split(/\s+-\s+/);
-        if (mHyph.length > 1) { name = mHyph[0].trim(); notes = mHyph.slice(1).join(' - ').trim(); }
-      }
-      
-      name = name.trim();
-      if (!name || name.length < 1) return;
-      
-      result.push({
-        id: 'imp_' + Date.now() + '_' + Math.random().toString(36).slice(2,5),
-        name: name, qty: qty, cat: autoCategorize(name), notes: notes, done: false
-      });
-    });
-    return result;
-  }
-
-  document.getElementById('import-ta').addEventListener('input', function() {
-    parsedImportItems = parseWhatsAppText(this.value);
-    renderImportPreview(parsedImportItems);
-  });
-
-  function renderImportPreview(parsed) {
-    var box = document.getElementById('import-preview');
-    var stats = document.getElementById('preview-stats');
-    if (!parsed || !parsed.length) {
-      box.innerHTML = '<div class="prev-empty">הדבק טקסט לראות תצוגה מקדימה</div>';
-      stats.style.display = 'none'; return;
-    }
-    var catCount = {};
-    parsed.forEach(function(p) { catCount[p.cat] = (catCount[p.cat] || 0) + 1; });
-    var catSummary = Object.keys(catCount).map(function(k) { return CAT_META[k].icon + ' ' + catCount[k]; }).join(' ');
-    
-    box.innerHTML = parsed.map(function(p) {
-      var meta = CAT_META[p.cat] || CAT_META.other;
-      return '<div class="prev-item"><span class="prev-name">' + sanitize(p.name) + (p.notes ? ' <span style="color:var(--text-muted);font-size:10px">(' + sanitize(p.notes) + ')</span>' : '') + '</span><span class="prev-cat">' + meta.icon + ' ' + meta.title + '</span><span class="prev-qty">×' + p.qty + '</span></div>';
-    }).join('');
-    document.getElementById('prev-count').textContent = parsed.length;
-    document.getElementById('prev-cats-summary').textContent = catSummary;
-    stats.style.display = 'flex';
-  }
-
-  function execImport(mode) {
-    if (!parsedImportItems || !parsedImportItems.length) { showToast('לא זוהו מוצרים בטקסט', 'error'); return; }
-    if (mode === 'replace') {
-      items = parsedImportItems.map(function(p) {
-        return { id: Date.now().toString() + Math.random(), name: p.name, qty: p.qty, cat: p.cat, notes: p.notes, done: false };
-      });
-      showToast(parsedImportItems.length + ' מוצרים יובאו (הרשימה הוחלפה)', 'success');
-    } else {
-      parsedImportItems.forEach(function(p) {
-        var existing = items.find(function(i) { return i.name.trim().toLowerCase() === p.name.trim().toLowerCase(); });
-        if (existing) { existing.qty += p.qty; if (!existing.notes && p.notes) existing.notes = p.notes; }
-        else { items.push({ id: Date.now().toString() + Math.random(), name: p.name, qty: p.qty, cat: p.cat, notes: p.notes, done: false }); }
-      });
-      showToast(parsedImportItems.length + ' מוצרים נוספו לרשימה', 'success');
-    }
-    
-    if (isAiEnabled) {
-       items.forEach(function(it) {
-          if (it.cat === 'other') fetchCategoryFromAI(it.name, it.id);
-       });
-    }
-
-    saveToStorage(); render(); closeModal('import-modal');
-    document.getElementById('import-ta').value = ''; parsedImportItems = []; renderImportPreview([]);
-  }
-
-  // ══════════════════════════════════════════
-  // SHARE
-  // ══════════════════════════════════════════
-  function buildShareText() {
-    if (!items.length) return 'הרשימה ריקה';
-    var lines = ['🛒 רשימת קניות\n'];
-    var groups = {};
-    items.filter(function(i) { return !i.done; }).forEach(function(item) {
-      var c = item.cat || 'other';
-      if (!groups[c]) groups[c] = []; groups[c].push(item);
-    });
-    Object.keys(CAT_META).forEach(function(catKey) {
-      var catItems = groups[catKey];
-      if (!catItems || !catItems.length) return;
-      lines.push(CAT_META[catKey].icon + ' ' + CAT_META[catKey].title + ':');
-      catItems.forEach(function(item) {
-        var line = ' • ' + item.name + (item.qty > 1 ? ' ×' + item.qty : '') + (item.notes ? ' (' + item.notes + ')' : '');
-        lines.push(line);
-      });
-      lines.push('');
-    });
-    return lines.join('\n').trim();
-  }
-
-  function shareViaWhatsApp() { window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(buildShareText()), '_blank'); closeModal('share-modal'); }
-  function shareViaCopy() {
-    var text = buildShareText();
-    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(function() { showToast('הועתק ללוח!', 'success'); }).catch(function() { fallbackCopy(text); }); }
-    else { fallbackCopy(text); }
-    closeModal('share-modal');
-  }
-  function fallbackCopy(text) {
-    var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-    document.body.appendChild(ta); ta.focus(); ta.select();
-    try { document.execCommand('copy'); showToast('הועתק ללוח!', 'success'); } catch(e) { showToast('שגיאה בהעתקה', 'error'); }
-    document.body.removeChild(ta);
-  }
-  function shareViaSms() { window.open('sms:?body=' + encodeURIComponent(buildShareText()), '_blank'); closeModal('share-modal'); }
-  function shareViaEmail() { window.open('mailto:?subject=' + encodeURIComponent('רשימת קניות') + '&body=' + encodeURIComponent(buildShareText()), '_blank'); closeModal('share-modal'); }
-
-  // ══════════════════════════════════════════
-  // PRICE MODAL
-  // ══════════════════════════════════════════
-  function openPriceModal(id) {
-    var item = items.find(function(i) { return i.id === id; });
-    if (!item) return;
-    document.getElementById('price-modal-name').textContent = 'הערכת מחירים עבור: ' + item.name + ' (' + item.qty + ' יח\')';
-    
-    var nm = item.name.toLowerCase();
-    
-    var knownPrices = {
-      'שמנת להקצפה': 14.9, 'חלב': 6.2, 'קוטג': 5.9, 'גבינה צהובה': 22.0, 'יוגורט': 4.5, 'חמאה': 8.5,
-      'לחם': 8.0, 'פיתות': 14.0, 'לחמניות': 15.0, 'לחם פרוס': 12.0, 'עננים': 13.0,
-      'מלפפון': 4.9, 'עגבניה': 5.9, 'בצל': 3.9, 'תפוח אדמה': 4.9, 'לימון': 6.0, 'בננה': 7.0, 'תפוח': 9.0,
-      'עוף': 25.0, 'חזה עוף': 35.0, 'בשר טחון': 45.0, 'שניצל': 35.0, 'סלמון': 70.0,
-      'אבקת כביסה': 30.0, 'מרכך כביסה': 18.0, 'נייר טואלט': 35.0, 'נוזל כלים': 12.0,
-      'שמפו': 18.0, 'משחת שיניים': 14.0, 'דאודורנט': 18.0,
-      'קולה': 7.5, 'מים': 12.0, 'בירה': 35.0, 'יין': 40.0,
-      'במבה': 4.5, 'ביסלי': 4.5, 'שוקולד': 6.0,
-      'מקורויאל': 55.0, 'ארוחת ילדים': 28.0, 'המבורגר': 45.0,
-      'אוכל לכלב': 80.0, 'שימורים לכלב': 12.0, 'מפרקים לכלב': 120.0,
-      'צבע לעץ': 80.0, 'לכה': 60.0, 'ברגים': 15.0, 'קורות עץ': 40.0, 'אדנית': 150.0
-    };
-    
-    var baseVal = 0;
-    for (var k in knownPrices) {
-      if (nm.includes(k)) { baseVal = knownPrices[k]; break; }
-    }
-    
-    if (baseVal === 0) {
-      var basePrices = { produce:5.5, dairy:10.0, bakery:14.0, meat:45.0, frozen:28.0, cleaning:22.0, hygiene:20.0, drinks:9.0, snacks:6.0, pets:60.0, diy:30.0, other:15.0 };
-      baseVal = basePrices[item.cat] || 15.0;
-    }
-    
-    var totalBase = baseVal * item.qty;
-    var stores = [ {name:'רמי לוי', factor:0.92}, {name:'יוחננוף', factor:0.95}, {name:'קרפור', factor:0.98}, {name:'ויקטורי', factor:1.03}, {name:'שופרסל', factor:1.10} ];
-    
-    var sorted = stores.map(function(s) { 
-      var noise = 1 + ((Math.random() * 0.04) - 0.02);
-      return { name: s.name, price: (totalBase * s.factor * noise).toFixed(2) }; 
-    }).sort(function(a,b) { return parseFloat(a.price) - parseFloat(b.price); });
-    
-    document.getElementById('price-list').innerHTML = sorted.map(function(s, idx) {
-      return '<div class="price-row ' + (idx === 0 ? 'best' : '') + '"><div class="pr-name">' + (idx === 0 ? '<span class="best-badge">הזול ביותר!</span>' : '') + '🛒 ' + sanitize(s.name) + '</div><div class="pr-price">' + sanitize(s.price) + ' ₪</div></div>';
-    }).join('');
-    
-    document.getElementById('rl-link-btn').onclick = function() { window.open('https://www.rami-levy.co.il/he/online/search?q=' + encodeURIComponent(item.name), '_blank'); };
-    document.getElementById('shufersal-link-btn').onclick = function() { window.open('https://www.shufersal.co.il/online/he/search?q=' + encodeURIComponent(item.name), '_blank'); };
-    document.getElementById('victory-link-btn').onclick = function() { window.open('https://www.victoryonline.co.il/search?q=' + encodeURIComponent(item.name), '_blank'); };
-    document.getElementById('carrefour-link-btn').onclick = function() { window.open('https://www.carrefour.co.il/search?q=' + encodeURIComponent(item.name), '_blank'); };
-    
-    openModal('price-modal-bg');
-  }
-
-  // ══════════════════════════════════════════
-  // MODALS
-  // ══════════════════════════════════════════
-  function openModal(id) {
-    document.getElementById(id).classList.add('open');
-    if (id === 'share-modal') document.getElementById('share-preview').innerHTML = '<pre style="font-size:11px;color:var(--text-dim);white-space:pre-wrap;line-height:1.7;direction:rtl;text-align:right">' + sanitize(buildShareText()) + '</pre>';
-  }
-  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-
-  // ══════════════════════════════════════════
-  // EVENTS & GLOBALS
-  // ══════════════════════════════════════════
-  document.getElementById('new-name').addEventListener('keydown', function(e) { if (e.key === 'Enter') addItem(); });
-  document.getElementById('new-notes').addEventListener('keydown', function(e) { if (e.key === 'Enter') addItem(); });
-  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') ['import-modal','share-modal','price-modal-bg','ai-modal'].forEach(closeModal); });
-  ['import-modal','share-modal','price-modal-bg','ai-modal'].forEach(function(id) { document.getElementById(id).addEventListener('click', function(e) { if (e.target === this) closeModal(id); }); });
-
-  window.addItem = addItem;
-  window.toggleItem = toggleItem;
-  window.adjustQty = adjustQty;
-  window.removeItem = removeItem;
-  window.clearDone = clearDone;
-  window.adjustNewQty = adjustNewQty;
-  window.setFilter = setFilter;
-  window.openPriceModal = openPriceModal;
-  window.openAiSettings = openAiSettings;
-  window.saveAiKey = saveAiKey;
-  window.clearAiKey = clearAiKey;
-  window.openImportModal = function() { openModal('import-modal'); };
-  window.openShareModal = function() { openModal('share-modal'); };
-  window.closeModal = closeModal;
-  window.execImport = execImport;
-  window.shareViaWhatsApp = shareViaWhatsApp;
-  window.shareViaCopy = shareViaCopy;
-  window.shareViaSms = shareViaSms;
-  window.shareViaEmail = shareViaEmail;
-
-  initApp();
-})();
+  renderLists();
 </script>
 </body>
 </html>
