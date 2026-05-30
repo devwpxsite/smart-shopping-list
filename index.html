@@ -38,7 +38,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .icon-btn{background:none;border:1px solid var(--border);border-radius:50%;color:var(--text-muted);font-size:14px;width:30px;height:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .icon-btn:hover{border-color:var(--text-dim);color:var(--text)}
 
-/* PROGRESS */
+/* PROGRESS & CARDS */
 .section{margin-top:16px;animation:fadeUp .35s ease}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
 .prog-card{padding:16px}
@@ -53,13 +53,17 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 
 .done-banner{margin-top:16px;background:var(--green-dim);border:1px solid rgba(62,207,142,.2);border-radius:var(--radius);padding:14px;text-align:center;font-size:13px;font-weight:600;color:var(--green);display:none;animation:fadeUp .3s ease}
 
+/* LIST MANAGER BAR */
+.list-sel { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-family: var(--font); font-weight: 600; outline: none; cursor: pointer; }
+.list-sel option { background: var(--surface2); color: var(--text); }
+
 /* ADD PANEL */
 .add-main{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--border);position:relative}
 .add-icon{color:var(--gold-dim);font-size:15px;flex-shrink:0}
 .inp-wrap{flex:1;position:relative}
 
 /* Mobile Zoom Fix */
-#new-name,#new-notes,#new-qty,.cat-sel,.m-inp,.m-ta,#import-ta,#ai-key-inp,#new-list-name-inp { font-size:16px !important; }
+#new-name,#new-notes,#new-qty,.cat-sel,.list-sel,.m-inp,.m-ta,#import-ta,#ai-key-inp,#new-list-name-inp { font-size:16px !important; }
 
 #new-name{width:100%;background:transparent;border:none;outline:none;font-family:var(--font);font-weight:500;color:var(--text);caret-color:var(--gold)}
 #new-name::placeholder{color:var(--text-muted);font-weight:400}
@@ -182,6 +186,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .share-opt.sms-opt{border-color:rgba(212,168,67,.2)}
 .share-opt.sms-opt:hover{background:var(--gold-glow);border-color:rgba(212,168,67,.4)}
 
+/* Toast */
 #toast-wrap{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:600;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
 .toast{background:var(--surface2);border:1px solid var(--border-light);color:var(--text-dim);font-size:12px;font-weight:600;padding:9px 18px;border-radius:99px;box-shadow:0 4px 24px rgba(0,0,0,.5);animation:toastIn .25s ease,toastOut .3s ease 4.5s forwards;white-space:nowrap; max-width: 90vw; overflow:hidden; text-overflow:ellipsis;}
 .toast.success{color:var(--green);border-color:rgba(62,207,142,.3)}
@@ -196,7 +201,9 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 @keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @keyframes toastIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @keyframes toastOut{from{opacity:1}to{opacity:0}}
-@media(max-width:420px){.cat-sel{display:none}.h-btn span.label{display:none}}
+
+/* תוקן הבאג: הפרדת מחלקות כדי למנוע הסתרה של בורר הרשימות במובייל */
+@media(max-width:420px){.mobile-hide{display:none}.h-btn span.label{display:none}}
 </style>
 </head>
 <body>
@@ -227,7 +234,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
   <div class="section">
     <div class="card" style="padding: 12px 14px; display: flex; align-items: center; gap: 10px;">
       <span style="font-size: 13px; font-weight: 700; color: var(--text-dim); white-space: nowrap;">רשימה פעילה:</span>
-      <select id="list-manager-select" class="cat-sel" style="flex: 1; font-size: 14px; padding: 6px 10px;" onchange="switchList(this.value)"></select>
+      <select id="list-manager-select" class="list-sel" style="flex: 1; font-size: 14px; padding: 6px 10px;" onchange="switchList(this.value)"></select>
       <button class="act-btn" onclick="openModal('list-modal')" style="padding: 6px 12px; margin: 0; border-color: var(--gold-dim); color: var(--gold);">＋ חדשה</button>
       <button class="act-btn" onclick="deleteCurrentList()" style="padding: 6px 10px; margin: 0; border-color: rgba(248,113,113,0.2); color: var(--red);">🗑️</button>
     </div>
@@ -259,7 +266,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
         </div>
         <div class="auto-cat-badge" id="auto-cat-badge"></div>
         <div class="add-controls">
-          <select id="new-cat" class="cat-sel">
+          <select id="new-cat" class="cat-sel mobile-hide">
             <option value="produce">🥦 ירקות</option>
             <option value="bakery">🥖 מאפים</option>
             <option value="dairy">🥛 חלב</option>
@@ -328,7 +335,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     <div class="m-label">מפתח API (Gemini API Key):</div>
     <input type="password" id="ai-key-inp" class="m-inp" placeholder="AIzaSy... או AQ...">
     <div class="m-sub" style="margin-top:8px;font-size:10px">
-      אין לך מפתח? <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:var(--gold)">לחץ כאן ליצירת מפתח חינם ב-Google AI Studio</a>.
+      אין לך מפתח? <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:var(--gold)">לחץ כאן ליצירת מפתח חינם ב-Google AI Studio</a>. (שים לב: אל תיצור מפתח דרך Google Cloud הרגיל).
     </div>
     <div class="sep"></div>
     <button class="m-btn primary" onclick="saveAiKey()">💾 שמור מפתח והפעל מנוע AI</button>
@@ -405,8 +412,8 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 (function () {
   'use strict';
 
-  var STORAGE_KEY = 'shopping_lists_v3';
-  var CURRENT_LIST_KEY = 'current_list_v3';
+  var STORAGE_KEY = 'shopping_lists_v4';
+  var CURRENT_LIST_KEY = 'current_list_v4';
   var AI_KEY_STORAGE = 'gemini_api_key';
   
   var CAT_META = {
@@ -432,7 +439,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     { cat: 'frozen', words: ['קפוא','קפואים','קפואה','פיצה','גלידה','ארטיק','קרח','אפונה קפואה','שניצל קפוא'] },
     { cat: 'cleaning', words: ['כביסה','אבקת כביסה','נוזל כלים','סבון כביסה','מרכך','מגב','מטלית','שקיות אשפה','שקיות','נייר טואלט','מגבות נייר','נייר אלומיניום','ניקוי','אקונומיקה','ספוג'] },
     { cat: 'hygiene', words: ['שמפו','מרכך שיער','סבון גוף','דאודורנט','משחת שיניים','מי פה','טמפונים','גילוח','תרופה','אקמול','טיטולים','חיתולים','מגבונים','פלסטרים'] },
-    { cat: 'drinks', words: ['מים','מיץ','קולה','ספרייט','פאנטה','סودة','בירה','יין','וודקה','קפה','תה'] },
+    { cat: 'drinks', words: ['מים','מיץ','קולה','ספרייט','פאנטה','סודה','בירה','יין','וודקה','קפה','תה'] },
     { cat: 'snacks', words: ['חטיף','חטיפים','ביסלי','במבה','פופקורן','שוקולד','סוכריות','גומי','קינדר','בוטנים','שקדים','גרעינים'] },
     { cat: 'pets', words: ['כלב','כלבים','חתול','חתולים','רצועה','חטיף לכלב','תרופה לכלב'] },
     { cat: 'diy', words: ['עץ','קרשים','קורות','צבע לעץ','ברגים','מסמרים','מברשת','לכה','דבק נגרים','אדנית','נדנדה','דיבלים','מברגה'] }
@@ -445,8 +452,17 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
   var isCatManuallyChanged = false;
   var parsedImportItems = [];
 
-  function getItems() { return lists[currentList] || []; }
-  function setItems(newItems) { lists[currentList] = newItems; saveToStorage(); }
+  function getItems() { 
+    if (!lists || typeof lists !== 'object') return [];
+    if (!lists[currentList]) return [];
+    return lists[currentList]; 
+  }
+  
+  function setItems(newItems) { 
+    if (!lists || typeof lists !== 'object') lists = {};
+    lists[currentList] = newItems; 
+    saveToStorage(); 
+  }
 
   function autoCategorize(name) {
     if (!name || !name.trim()) return 'other';
@@ -467,8 +483,10 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 
   function initApp() {
     var rawLists = localStorage.getItem(STORAGE_KEY);
-    if (rawLists) { try { lists = JSON.parse(rawLists) || {}; } catch(e) { lists = {}; } }
-    if (Object.keys(lists).length === 0) { lists = { "🧺 קניות לבית": [] }; }
+    if (rawLists) { try { lists = JSON.parse(rawLists); } catch(e) { lists = null; } }
+    if (!lists || typeof lists !== 'object' || Array.isArray(lists) || Object.keys(lists).length === 0) { 
+      lists = { "🧺 קניות לבית": [] }; 
+    }
 
     currentList = localStorage.getItem(CURRENT_LIST_KEY) || Object.keys(lists)[0];
     if (!lists[currentList]) { currentList = Object.keys(lists)[0]; }
@@ -493,7 +511,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
   function renderListSelector() {
     var sel = document.getElementById('list-manager-select');
     sel.innerHTML = Object.keys(lists).map(function(name) {
-      return `<option value="${sanitize(name)}" ${name === currentList ? 'selected' : ''}>${sanitize(name)}</option>`;
+      return '<option value="' + sanitize(name) + '" ' + (name === currentList ? 'selected' : '') + '>' + sanitize(name) + '</option>';
     }).join('');
   }
 
@@ -501,6 +519,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     if (lists[name]) {
       currentList = name;
       saveToStorage();
+      renderListSelector();
       render();
     }
   }
@@ -526,7 +545,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
       showToast('לא ניתן למחוק את הרשימה האחרונה!', 'error');
       return;
     }
-    if (confirm(`האם אתה בטוח שברצונך למחוק את הרשימה "${currentList}"?`)) {
+    if (confirm('האם אתה בטוח שברצונך למחוק את הרשימה "' + currentList + '"?')) {
       delete lists[currentList];
       currentList = Object.keys(lists)[0];
       saveToStorage();
@@ -540,10 +559,10 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     var wrap = document.getElementById('toast-wrap');
     var el = document.createElement('div');
     el.className = 'toast' + (type ? ' ' + type : '');
-    if(type === 'error') el.style.animation = 'toastIn .25s ease, toastOut .3s ease 4.5s forwards';
+    if(type === 'error') el.style.animation = 'toastIn .25s ease, toastOut .3s ease 6s forwards';
     el.innerHTML = sanitize(msg);
     wrap.appendChild(el);
-    setTimeout(function() { el.remove(); }, type === 'error' ? 5000 : 2700);
+    setTimeout(function() { el.remove(); }, type === 'error' ? 6200 : 2700);
   }
 
   // ══════════════════════════════════════════
@@ -571,8 +590,11 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
          var errText = (data && data.error && data.error.message) ? data.error.message : 'שגיאה לא ידועה';
          var hebError = "שגיאת שרת גוגל";
          if (errText.includes('API key not valid')) hebError = "המפתח לא חוקי (אולי נוסף רווח בטעות?)";
-         else if (errText.includes('has not been used')) hebError = "המפתח עדיין לא פעיל במערכת גוגל (נסה שוב בעוד כמה דקות)";
+         else if (errText.includes('has not been used')) hebError = "המפתח עדיין לא פעיל (נסה שוב בעוד כמה דקות)";
          else if (errText.includes('API key not found')) hebError = "המפתח לא נמצא (וודא שהעתקת אותו בשלמותו)";
+         else if (errText.includes('has not enabled the API') || errText.includes('generativelanguage.googleapis.com')) {
+             hebError = "שגיאת הרשאות: ה-API לא מופעל. מחק מפתח זה וצור מפתח חדש *אך ורק* דרך Google AI Studio.";
+         }
          else hebError = "שגיאת AI: " + errText;
 
          showToast(hebError, 'error');
@@ -732,6 +754,8 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 
     if (isAiEnabled && !isCatManuallyChanged && finalCat === 'other') {
        fetchCategoryFromAI(name, newItemId);
+    } else if (!isAiEnabled && !isCatManuallyChanged && finalCat === 'other') {
+       showToast('נוסף ל"כללי" (ניתן להפעיל AI לזיהוי אוטומטי)', 'success');
     }
 
     nameEl.value = '';
