@@ -127,7 +127,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .empty-title{font-size:14px;font-weight:600;color:var(--text-dim);margin-bottom:6px}
 .empty-sub{font-size:12px}
 
-/* MODALS */
+/* ── MODALS ── */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(10px);z-index:400;display:none;align-items:center;justify-content:center;padding:16px}
 .modal-bg.open{display:flex;animation:fadeUp .2s ease}
 .modal{background:var(--surface);border:1px solid var(--border-light);border-radius:20px;padding:24px;width:100%;max-width:420px;box-shadow:0 24px 64px rgba(0,0,0,.8);animation:slideUp .25s ease;max-height:90vh;overflow-y:auto}
@@ -153,6 +153,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .m-row .m-btn{margin-top:0}
 .sep{height:1px;background:var(--border);margin:16px 0}
 
+/* Import preview */
 .import-preview{background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);padding:12px;max-height:200px;overflow-y:auto;margin-top:10px}
 .prev-empty{font-size:11px;color:var(--text-muted);text-align:center;padding:16px 0}
 .prev-item{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;gap:8px}
@@ -163,12 +164,14 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .preview-stats{display:flex;align-items:center;justify-content:space-between;margin-top:8px;font-size:11px;color:var(--text-muted)}
 .preview-stats b{color:var(--text-dim)}
 
+/* Price modal */
 .price-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:6px}
 .price-row.best{background:var(--green-dim);border-color:rgba(62,207,142,.2)}
 .pr-name{font-size:12px;font-weight:600;color:var(--text-dim);display:flex;align-items:center;gap:6px}
 .pr-price{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--text)}
 .best-badge{font-size:9px;font-weight:700;color:var(--green);background:rgba(62,207,142,.15);padding:2px 6px;border-radius:4px}
 
+/* Share modal */
 .share-opt{display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);cursor:pointer;transition:all .15s;margin-bottom:8px}
 .share-opt:hover{border-color:var(--border-light);background:rgba(255,255,255,.04)}
 .share-opt-icon{font-size:22px;flex-shrink:0}
@@ -183,6 +186,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
 .share-opt.sms-opt{border-color:rgba(212,168,67,.2)}
 .share-opt.sms-opt:hover{background:var(--gold-glow);border-color:rgba(212,168,67,.4)}
 
+/* Toast */
 #toast-wrap{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:600;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
 .toast{background:var(--surface2);border:1px solid var(--border-light);color:var(--text-dim);font-size:12px;font-weight:600;padding:9px 18px;border-radius:99px;box-shadow:0 4px 24px rgba(0,0,0,.5);animation:toastIn .25s ease,toastOut .3s ease 2.2s forwards;white-space:nowrap}
 .toast.success{color:var(--green);border-color:rgba(62,207,142,.3)}
@@ -351,6 +355,16 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
       <div class="share-opt-text"><div class="share-opt-title">העתק ללוח</div></div>
       <div class="share-opt-arrow">›</div>
     </div>
+    <div class="share-opt sms-opt" onclick="shareViaSms()">
+      <div class="share-opt-icon">📱</div>
+      <div class="share-opt-text"><div class="share-opt-title">שלח ב-SMS</div></div>
+      <div class="share-opt-arrow">›</div>
+    </div>
+    <div class="share-opt" onclick="shareViaEmail()" style="border-color:rgba(212,168,67,.15)">
+      <div class="share-opt-icon">📧</div>
+      <div class="share-opt-text"><div class="share-opt-title">שלח במייל</div></div>
+      <div class="share-opt-arrow">›</div>
+    </div>
     <div class="sep"></div>
     <div class="m-label">תצוגה מקדימה של הרשימה המשותפת:</div>
     <div class="import-preview" id="share-preview" style="margin-top:8px;max-height:150px"></div>
@@ -388,7 +402,6 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     other: { title: 'כללי', icon: '📦' }
   };
 
-  // מילון סטטי משודרג (למקרה שה-AI מכובה או שלמוצר יש התאמה ודאית)
   var CAT_RULES = [
     { cat: 'dairy', words: ['חלב','גבינה','גבינות','שמנת','קוטג','יוגורט','יוגורטים','חמאה','קצפת','לבנה','שוקו','מוצרלה','ריקוטה','פרמזן','גאודה','בולגרית','צהובה','מעדן','מעדנים'] },
     { cat: 'bakery', words: ['לחם','לחמים','פיתה','פיתות','לחמניה','לחמניות','חלה','חלות','מאפה','מאפים','קרואסון','עוגה','עוגות','עוגיות','בגט','בורקס','טורטיה'] },
@@ -423,6 +436,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
   var items = [];
   var currentFilter = 'all';
   var isAiEnabled = false;
+  var isCatManuallyChanged = false;
 
   function initApp() {
     var raw = localStorage.getItem(STORAGE_KEY);
@@ -455,9 +469,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     var key = localStorage.getItem(AI_KEY_STORAGE);
     if (!key) return;
 
-    var prompt = "You are a Hebrew supermarket categorization engine. Analyze this item: '" + itemName + "'. " +
-                 "Return ONLY ONE exact word from this list: produce, bakery, dairy, meat, frozen, cleaning, hygiene, drinks, snacks, pets, diy, other. " +
-                 "Do not return any other text.";
+    var prompt = "You are a Hebrew supermarket categorization engine. Analyze this item: '" + itemName + "'. Return ONLY ONE exact word from this list: produce, bakery, dairy, meat, frozen, cleaning, hygiene, drinks, snacks, pets, diy, other. Do not return any other text.";
     
     try {
       var res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + key, {
@@ -470,10 +482,16 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
       });
       
       var data = await res.json();
+
+      if (!res.ok) {
+         showToast('שגיאת AI: המפתח כנראה לא תקין', 'error');
+         console.error("AI Error:", data);
+         return;
+      }
+
       if (data && data.candidates && data.candidates[0].content.parts[0].text) {
         var smartCat = data.candidates[0].content.parts[0].text.trim().toLowerCase();
         
-        // Validate result
         if (CAT_META[smartCat] && smartCat !== 'other') {
            var itemIndex = items.findIndex(function(i) { return i.id === itemId; });
            if (itemIndex > -1) {
@@ -485,6 +503,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
         }
       }
     } catch(e) {
+      showToast('שגיאת תקשורת עם ה-AI', 'error');
       console.warn("AI categorization failed", e);
     }
   }
@@ -595,8 +614,6 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     document.getElementById('done-banner').style.display = (total > 0 && done === total) ? 'block' : 'none';
   }
 
-  var isCatManuallyChanged = false;
-
   document.getElementById('new-cat').addEventListener('change', function() {
     isCatManuallyChanged = true;
   });
@@ -606,9 +623,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     var name = nameEl.value.trim();
     if (!name) { nameEl.focus(); return; }
     
-    var manualCat = document.getElementById('new-cat').value;
-    var finalCat = manualCat;
-    
+    var finalCat = document.getElementById('new-cat').value;
     var newItemId = Date.now().toString();
     
     items.push({
@@ -620,7 +635,6 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
       done: false
     });
 
-    // קריאה לבינה מלאכותית מאחורי הקלעים אם המערכת מקוטלגת ל"כללי" ולא נבחרה ידנית
     if (isAiEnabled && !isCatManuallyChanged && finalCat === 'other') {
        fetchCategoryFromAI(name, newItemId);
     }
@@ -628,7 +642,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     nameEl.value = '';
     document.getElementById('new-qty').value = '1';
     document.getElementById('new-notes').value = '';
-    document.getElementById('new-cat').value = 'other'; // default reset
+    document.getElementById('new-cat').value = 'other';
     hideCatBadge();
     isCatManuallyChanged = false;
     nameEl.focus();
@@ -659,7 +673,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
   document.getElementById('new-name').addEventListener('input', function() {
     var val = this.value.trim();
     var badge = document.getElementById('auto-cat-badge');
-    isCatManuallyChanged = false; // user is typing, reset manual override flag
+    isCatManuallyChanged = false;
     if (!val) { hideCatBadge(); document.getElementById('new-cat').value = 'other'; return; }
     
     var cat = autoCategorize(val);
@@ -755,10 +769,9 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
         if (existing) { existing.qty += p.qty; if (!existing.notes && p.notes) existing.notes = p.notes; }
         else { items.push({ id: Date.now().toString() + Math.random(), name: p.name, qty: p.qty, cat: p.cat, notes: p.notes, done: false }); }
       });
-      showToast(parsedImportItems.length + ' מוצרים נוספו לרשימה', 'success');
+      showToast(parsedImportItems.length + ' מוצרים נוספו/מוזגו לרשימה', 'success');
     }
     
-    // במידה וה-AI מופעל, שלח בקשת קטלוג עבור פריטים שעלו כ"כללי"
     if (isAiEnabled) {
        items.forEach(function(it) {
           if (it.cat === 'other') fetchCategoryFromAI(it.name, it.id);
@@ -770,7 +783,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
   }
 
   // ══════════════════════════════════════════
-  // SHARE 
+  // SHARE
   // ══════════════════════════════════════════
   function buildShareText() {
     if (!items.length) return 'הרשימה ריקה';
@@ -780,15 +793,12 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
       var c = item.cat || 'other';
       if (!groups[c]) groups[c] = []; groups[c].push(item);
     });
-    
     Object.keys(CAT_META).forEach(function(catKey) {
       var catItems = groups[catKey];
       if (!catItems || !catItems.length) return;
       lines.push(CAT_META[catKey].icon + ' ' + CAT_META[catKey].title + ':');
       catItems.forEach(function(item) {
-        var line = ' • ' + item.name;
-        if (item.qty > 1) line += ' ×' + item.qty;
-        if (item.notes) line += ' (' + item.notes + ')';
+        var line = ' • ' + item.name + (item.qty > 1 ? ' ×' + item.qty : '') + (item.notes ? ' (' + item.notes + ')' : '');
         lines.push(line);
       });
       lines.push('');
@@ -810,9 +820,10 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     document.body.removeChild(ta);
   }
   function shareViaSms() { window.open('sms:?body=' + encodeURIComponent(buildShareText()), '_blank'); closeModal('share-modal'); }
+  function shareViaEmail() { window.open('mailto:?subject=' + encodeURIComponent('רשימת קניות') + '&body=' + encodeURIComponent(buildShareText()), '_blank'); closeModal('share-modal'); }
 
   // ══════════════════════════════════════════
-  // PRICE MODAL 
+  // PRICE MODAL
   // ══════════════════════════════════════════
   function openPriceModal(id) {
     var item = items.find(function(i) { return i.id === id; });
@@ -820,39 +831,31 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
     document.getElementById('price-modal-name').textContent = 'הערכת מחירים עבור: ' + item.name + ' (' + item.qty + ' יח\')';
     var basePrices = { produce:4.9, dairy:8.9, bakery:11.9, meat:35, frozen:25, cleaning:18, hygiene:22, drinks:8, snacks:12, pets:45, diy:15, other:15 };
     var baseVal = (basePrices[item.cat] || 15) * item.qty;
-    var stores = [ { name:'מחסני השוק', factor:0.88 }, { name:'רמי לוי', factor:0.93 }, { name:'יוחננוף', factor:0.96 }, { name:'ויקטורי', factor:1.02 }, { name:'שופרסל', factor:1.12 } ];
+    var stores = [ {name:'מחסני השוק', factor:0.88}, {name:'רמי לוי', factor:0.93}, {name:'יוחננוף', factor:0.96}, {name:'ויקטורי', factor:1.02}, {name:'שופרסל', factor:1.12} ];
     var sorted = stores.map(function(s) { return { name: s.name, price: (baseVal * s.factor).toFixed(2) }; }).sort(function(a,b) { return parseFloat(a.price) - parseFloat(b.price); });
-    
     document.getElementById('price-list').innerHTML = sorted.map(function(s, idx) {
       return '<div class="price-row ' + (idx === 0 ? 'best' : '') + '"><div class="pr-name">' + (idx === 0 ? '<span class="best-badge">הזול ביותר!</span>' : '') + '🛒 ' + sanitize(s.name) + '</div><div class="pr-price">' + sanitize(s.price) + ' ₪</div></div>';
     }).join('');
-    
     document.getElementById('chp-link-btn').onclick = function() { window.open('https://chp.co.il/?q=' + encodeURIComponent(item.name), '_blank'); };
     openModal('price-modal-bg');
   }
 
   // ══════════════════════════════════════════
-  // MODALS 
+  // MODALS
   // ══════════════════════════════════════════
   function openModal(id) {
     document.getElementById(id).classList.add('open');
-    if (id === 'share-modal') {
-      document.getElementById('share-preview').innerHTML = '<pre style="font-size:11px;color:var(--text-dim);white-space:pre-wrap;line-height:1.7;direction:rtl;text-align:right">' + sanitize(buildShareText()) + '</pre>';
-    }
+    if (id === 'share-modal') document.getElementById('share-preview').innerHTML = '<pre style="font-size:11px;color:var(--text-dim);white-space:pre-wrap;line-height:1.7;direction:rtl;text-align:right">' + sanitize(buildShareText()) + '</pre>';
   }
-
   function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
   // ══════════════════════════════════════════
-  // EVENTS & GLOBALS 
+  // EVENTS & GLOBALS
   // ══════════════════════════════════════════
   document.getElementById('new-name').addEventListener('keydown', function(e) { if (e.key === 'Enter') addItem(); });
   document.getElementById('new-notes').addEventListener('keydown', function(e) { if (e.key === 'Enter') addItem(); });
-  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { ['import-modal','share-modal','price-modal-bg','ai-modal'].forEach(closeModal); } });
-  
-  ['import-modal','share-modal','price-modal-bg','ai-modal'].forEach(function(id) {
-    document.getElementById(id).addEventListener('click', function(e) { if (e.target === this) closeModal(id); });
-  });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') ['import-modal','share-modal','price-modal-bg','ai-modal'].forEach(closeModal); });
+  ['import-modal','share-modal','price-modal-bg','ai-modal'].forEach(function(id) { document.getElementById(id).addEventListener('click', function(e) { if (e.target === this) closeModal(id); }); });
 
   window.addItem = addItem;
   window.toggleItem = toggleItem;
@@ -862,6 +865,9 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
   window.adjustNewQty = adjustNewQty;
   window.setFilter = setFilter;
   window.openPriceModal = openPriceModal;
+  window.openAiSettings = openAiSettings;
+  window.saveAiKey = saveAiKey;
+  window.clearAiKey = clearAiKey;
   window.openImportModal = function() { openModal('import-modal'); };
   window.openShareModal = function() { openModal('share-modal'); };
   window.closeModal = closeModal;
@@ -869,6 +875,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.92);backdrop
   window.shareViaWhatsApp = shareViaWhatsApp;
   window.shareViaCopy = shareViaCopy;
   window.shareViaSms = shareViaSms;
+  window.shareViaEmail = shareViaEmail;
 
   initApp();
 })();
