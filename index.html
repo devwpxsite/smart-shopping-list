@@ -301,7 +301,6 @@ header{position:sticky;top:0;z-index:100;
 .m-row .m-btn{margin-top:0}
 .sep{height:1px;background:var(--border);margin:16px 0}
 
-/* Import preview */
 .import-preview{background:var(--surface2);border:1px solid var(--border-light);
   border-radius:var(--radius-sm);padding:12px;max-height:200px;overflow-y:auto;margin-top:10px}
 .prev-empty{font-size:11px;color:var(--text-muted);text-align:center;padding:16px 0}
@@ -392,7 +391,6 @@ header{position:sticky;top:0;z-index:100;
 </header>
 
 <div class="wrap">
-  <!-- List selector -->
   <div class="section">
     <div class="card list-bar">
       <span class="list-label">רשימה:</span>
@@ -402,7 +400,6 @@ header{position:sticky;top:0;z-index:100;
     </div>
   </div>
 
-  <!-- Progress -->
   <div class="section">
     <div class="card prog-card">
       <div class="prog-head">
@@ -420,7 +417,6 @@ header{position:sticky;top:0;z-index:100;
 
   <div class="done-banner" id="done-banner">🎉 כל המוצרים בעגלה! קנייה מוצלחת!</div>
 
-  <!-- Add item -->
   <div class="section">
     <div class="card">
       <div class="add-main">
@@ -451,7 +447,6 @@ header{position:sticky;top:0;z-index:100;
     </div>
   </div>
 
-  <!-- Filter bar -->
   <div class="section filter-bar">
     <div class="f-tabs">
       <button class="f-tab active" data-f="all" onclick="setFilter('all')">הכל (<span id="fc-all">0</span>)</button>
@@ -471,7 +466,6 @@ header{position:sticky;top:0;z-index:100;
 
 <div id="toast-wrap"></div>
 
-<!-- NEW LIST MODAL -->
 <div class="modal-bg" id="list-modal">
   <div class="modal">
     <div class="sheet-handle"></div>
@@ -483,7 +477,6 @@ header{position:sticky;top:0;z-index:100;
   </div>
 </div>
 
-<!-- CATEGORY MANAGER MODAL -->
 <div class="modal-bg" id="cat-modal">
   <div class="modal">
     <div class="sheet-handle"></div>
@@ -499,7 +492,6 @@ header{position:sticky;top:0;z-index:100;
   </div>
 </div>
 
-<!-- AI MODAL -->
 <div class="modal-bg" id="ai-modal">
   <div class="modal">
     <div class="sheet-handle"></div>
@@ -516,7 +508,6 @@ header{position:sticky;top:0;z-index:100;
   </div>
 </div>
 
-<!-- IMPORT MODAL -->
 <div class="modal-bg" id="import-modal">
   <div class="modal">
     <div class="sheet-handle"></div>
@@ -536,7 +527,6 @@ header{position:sticky;top:0;z-index:100;
   </div>
 </div>
 
-<!-- SHARE MODAL -->
 <div class="modal-bg" id="share-modal">
   <div class="modal">
     <div class="sheet-handle"></div>
@@ -572,9 +562,9 @@ header{position:sticky;top:0;z-index:100;
 (function () {
   'use strict';
 
-  var STORAGE_KEY = 'shopping_lists_v6'; 
-  var CURRENT_LIST_KEY = 'current_list_v6';
-  var CUSTOM_CATS_KEY = 'custom_cats_v6';
+  var STORAGE_KEY = 'shopping_lists_v7'; 
+  var CURRENT_LIST_KEY = 'current_list_v7';
+  var CUSTOM_CATS_KEY = 'custom_cats_v7';
   var AI_KEY_STORAGE = 'gemini_api_key_v5';
 
   var CAT_META = {
@@ -1377,6 +1367,7 @@ header{position:sticky;top:0;z-index:100;
   window.switchList = switchList;
   window.createNewList = createNewList;
   window.deleteCurrentList = deleteCurrentList;
+  window.openCatModal = openCatModal;
   window.openImportModal = function() { openModal('import-modal'); };
   window.openShareModal = function() { openModal('share-modal'); };
   window.closeModal = closeModal;
