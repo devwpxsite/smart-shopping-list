@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -212,7 +211,6 @@ header{position:sticky;top:0;z-index:100;
 .item-row.done{opacity:.38}
 .item-row.just-added{animation:itemPop .35s ease}
 @keyframes itemPop{0%{opacity:0;transform:translateX(-8px)}60%{transform:translateX(2px)}100%{opacity:1;transform:translateX(0)}}
-@keyframes itemRemove{to{opacity:0;transform:translateX(8px);max-height:0;padding:0;margin:0;overflow:hidden}}
 
 .chk-btn{width:22px;height:22px;border-radius:7px;border:2px solid var(--border-light);
   background:transparent;cursor:pointer;flex-shrink:0;display:flex;
@@ -242,7 +240,6 @@ header{position:sticky;top:0;z-index:100;
   padding:5px;border-radius:var(--radius-xs);font-size:13px;
   transition:all .15s;line-height:1}
 .ico-btn:hover{color:var(--red);background:var(--red-dim)}
-.ico-btn.cmp:hover{color:var(--gold);background:var(--gold-glow)}
 
 /* ── EMPTY STATE ── */
 .empty{text-align:center;padding:56px 20px;color:var(--text-muted);animation:fadeUp .4s ease}
@@ -322,15 +319,6 @@ header{position:sticky;top:0;z-index:100;
 .preview-stats{display:flex;align-items:center;justify-content:space-between;
   margin-top:8px;font-size:11px;color:var(--text-muted)}
 .preview-stats b{color:var(--text-dim)}
-
-/* Price modal */
-.price-row{display:flex;align-items:center;justify-content:space-between;
-  padding:10px 13px;border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:7px}
-.price-row.best{background:var(--green-dim);border-color:rgba(46,204,136,.2)}
-.pr-name{font-size:12px;font-weight:700;color:var(--text-dim);display:flex;align-items:center;gap:7px}
-.pr-price{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--text)}
-.best-badge{font-size:9px;font-weight:800;color:var(--green);
-  background:rgba(46,204,136,.15);padding:2px 7px;border-radius:4px}
 
 /* Share */
 .share-opt{display:flex;align-items:center;gap:12px;padding:12px 14px;
@@ -579,23 +567,6 @@ header{position:sticky;top:0;z-index:100;
   </div>
 </div>
 
-<!-- PRICE MODAL -->
-<div class="modal-bg" id="price-modal-bg">
-  <div class="modal">
-    <div class="sheet-handle"></div>
-    <div class="m-title"><span>📊</span> השוואת מחירים <button class="m-close" onclick="closeModal('price-modal-bg')">✕</button></div>
-    <div class="m-sub" id="price-modal-name">...</div>
-    <div id="price-list" style="margin-bottom:16px"></div>
-    <div class="m-label" style="margin-top:0;margin-bottom:9px;text-align:center">חפש אונליין:</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      <button class="m-btn secondary" id="rl-link-btn" style="margin:0">🛒 רמי לוי</button>
-      <button class="m-btn secondary" id="shufersal-link-btn" style="margin:0">🛒 שופרסל</button>
-      <button class="m-btn secondary" id="victory-link-btn" style="margin:0">🛒 ויקטורי</button>
-      <button class="m-btn secondary" id="carrefour-link-btn" style="margin:0">🛒 קרפור</button>
-    </div>
-  </div>
-</div>
-
 <script>
 (function () {
   'use strict';
@@ -761,10 +732,8 @@ header{position:sticky;top:0;z-index:100;
   function getAutocompleteSuggestions(query) {
     if (!query || query.length < 1) return [];
     var q = query.toLowerCase().trim();
-    // Also search from existing list items (history)
     var historyItems = getItems().map(function(i) { return { name: i.name, cat: i.cat }; });
     var allSuggestions = SUGGESTIONS.concat(historyItems);
-    // Deduplicate
     var seen = {};
     allSuggestions = allSuggestions.filter(function(s) {
       var key = s.name.toLowerCase();
@@ -772,7 +741,6 @@ header{position:sticky;top:0;z-index:100;
       seen[key] = true;
       return true;
     });
-    // Score: starts-with gets priority, then contains
     var starts = [], contains = [];
     allSuggestions.forEach(function(s) {
       var low = s.name.toLowerCase();
@@ -832,7 +800,6 @@ header{position:sticky;top:0;z-index:100;
     nameEl.value = name;
     document.getElementById('new-cat').value = cat;
     isCatManuallyChanged = false;
-    // Update badge
     var meta = CAT_META[cat] || CAT_META.other;
     var badge = document.getElementById('auto-cat-badge');
     if (cat !== 'other') {
@@ -1006,7 +973,6 @@ header{position:sticky;top:0;z-index:100;
               '<div class="item-name">' + sanitize(item.name) + '</div>' + noteHtml +
             '</div>' +
             '<div class="item-acts">' +
-              '<button class="ico-btn cmp" onclick="openPriceModal(\'' + item.id + '\')" title="השוואת מחירים">💰</button>' +
               '<div class="qty-pill">' +
                 '<button onclick="adjustQty(\'' + item.id + '\',-1)">−</button>' +
                 '<div class="qty-val">' + item.qty + '</div>' +
@@ -1069,7 +1035,6 @@ header{position:sticky;top:0;z-index:100;
     nameEl.focus();
     render();
 
-    // Animate new row
     var newRow = document.querySelector('[data-id="' + newId + '"]');
     if (newRow) newRow.classList.add('just-added');
 
@@ -1275,39 +1240,6 @@ header{position:sticky;top:0;z-index:100;
   function shareViaSms() { window.open('sms:?body=' + encodeURIComponent(buildShareText()), '_blank'); closeModal('share-modal'); }
   function shareViaEmail() { window.open('mailto:?subject=' + encodeURIComponent('רשימת קניות') + '&body=' + encodeURIComponent(buildShareText()), '_blank'); closeModal('share-modal'); }
 
-  // ── PRICE MODAL ──
-  function openPriceModal(id) {
-    var item = getItems().find(function(i) { return i.id === id; });
-    if (!item) return;
-    document.getElementById('price-modal-name').textContent = item.name + ' × ' + item.qty;
-    var nm = item.name.toLowerCase();
-    var knownPrices = {
-      'חלב':6.2,'קוטג':5.9,'גבינה צהובה':22,'יוגורט':4.5,'חמאה':8.5,'שמנת':14.9,
-      'לחם':8,'פיתות':14,'לחמניות':15,'לחם פרוס':12,
-      'מלפפון':4.9,'עגבניה':5.9,'בצל':3.9,'תפוח אדמה':4.9,'לימון':6,'בננה':7,'תפוח':9,
-      'עוף':25,'חזה עוף':35,'בשר טחון':45,'שניצל':35,'סלמון':70,
-      'אבקת כביסה':30,'מרכך כביסה':18,'נייר טואלט':35,'נוזל כלים':12,
-      'שמפו':18,'משחת שיניים':14,'דאודורנט':18,
-      'קולה':7.5,'מים':12,'בירה':35,'יין':40,
-      'במבה':4.5,'ביסלי':4.5,'שוקולד':6,
-      'אוכל לכלב':80,'צבע לעץ':80,'לכה':60,'ברגים':15
-    };
-    var baseVal = 0;
-    for (var k in knownPrices) { if (nm.includes(k)) { baseVal = knownPrices[k]; break; } }
-    if (!baseVal) { var basePrices = {produce:5.5,dairy:10,bakery:14,meat:45,frozen:28,cleaning:22,hygiene:20,drinks:9,snacks:6,pets:60,diy:30,other:15}; baseVal = basePrices[item.cat] || 15; }
-    var total = baseVal * item.qty;
-    var stores = [{name:'רמי לוי',factor:.92},{name:'יוחננוף',factor:.95},{name:'קרפור',factor:.98},{name:'ויקטורי',factor:1.03},{name:'שופרסל',factor:1.1}];
-    var sorted = stores.map(function(s) { return {name:s.name,price:(total*s.factor*(1+(Math.random()*.04-.02))).toFixed(2)}; }).sort(function(a,b){return a.price-b.price;});
-    document.getElementById('price-list').innerHTML = sorted.map(function(s,i) {
-      return '<div class="price-row'+(i===0?' best':'')+'"><div class="pr-name">'+(i===0?'<span class="best-badge">הזול!</span>':'')+' 🛒 '+sanitize(s.name)+'</div><div class="pr-price">'+sanitize(s.price)+' ₪</div></div>';
-    }).join('');
-    document.getElementById('rl-link-btn').onclick = function(){ window.open('https://www.rami-levy.co.il/he/online/search?q='+encodeURIComponent(item.name),'_blank'); };
-    document.getElementById('shufersal-link-btn').onclick = function(){ window.open('https://www.shufersal.co.il/online/he/search?q='+encodeURIComponent(item.name),'_blank'); };
-    document.getElementById('victory-link-btn').onclick = function(){ window.open('https://www.victoryonline.co.il/search?q='+encodeURIComponent(item.name),'_blank'); };
-    document.getElementById('carrefour-link-btn').onclick = function(){ window.open('https://www.carrefour.co.il/search?q='+encodeURIComponent(item.name),'_blank'); };
-    openModal('price-modal-bg');
-  }
-
   // ── MODALS ──
   function openModal(id) {
     document.getElementById(id).classList.add('open');
@@ -1318,9 +1250,9 @@ header{position:sticky;top:0;z-index:100;
   function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') ['import-modal','share-modal','price-modal-bg','ai-modal','list-modal'].forEach(closeModal);
+    if (e.key === 'Escape') ['import-modal','share-modal','ai-modal','list-modal'].forEach(closeModal);
   });
-  ['import-modal','share-modal','price-modal-bg','ai-modal','list-modal'].forEach(function(id) {
+  ['import-modal','share-modal','ai-modal','list-modal'].forEach(function(id) {
     document.getElementById(id).addEventListener('click', function(e) { if (e.target === this) closeModal(id); });
   });
 
@@ -1332,7 +1264,6 @@ header{position:sticky;top:0;z-index:100;
   window.clearDone = clearDone;
   window.adjustNewQty = adjustNewQty;
   window.setFilter = setFilter;
-  window.openPriceModal = openPriceModal;
   window.switchList = switchList;
   window.createNewList = createNewList;
   window.deleteCurrentList = deleteCurrentList;
