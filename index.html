@@ -17,6 +17,8 @@
   --purple:#a78bfa; --purple-dim:rgba(167,139,250,0.09);
   --radius:16px; --radius-sm:10px; --radius-xs:6px;
   --font:'Heebo',sans-serif; --mono:'DM Mono',monospace;
+  --shadow-sm:0 2px 8px rgba(0,0,0,0.3);
+  --shadow-md:0 8px 24px rgba(0,0,0,0.4);
   --shadow-lg:0 24px 64px rgba(0,0,0,0.7);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -44,10 +46,12 @@ header{position:sticky;top:0;z-index:100;
 .brand-icon{width:38px;height:38px;background:linear-gradient(135deg,#c09030,var(--gold));
   border-radius:12px;display:flex;align-items:center;justify-content:center;
   font-size:18px;box-shadow:0 0 24px rgba(212,168,67,0.25);flex-shrink:0;transition:transform .2s}
+.brand-icon:hover{transform:scale(1.05);box-shadow:0 0 32px rgba(212,168,67,0.4)}
 .brand-title{font-size:15px;font-weight:800;line-height:1.2;letter-spacing:-.2px}
 .brand-sub{font-size:11px;color:var(--text-dim);display:flex;align-items:center;gap:5px}
 .ai-dot{width:6px;height:6px;border-radius:50%;background:var(--text-muted);display:inline-block;transition:all .3s}
-.ai-dot.active{background:var(--gold);box-shadow:0 0 8px var(--gold)}
+.ai-dot.active{background:var(--gold);box-shadow:0 0 8px var(--gold);animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.5}}
 .h-right{display:flex;align-items:center;gap:7px}
 .chip{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--text-dim);
   background:var(--surface2);border:1px solid var(--border);padding:4px 10px;border-radius:20px;white-space:nowrap}
@@ -64,15 +68,21 @@ header{position:sticky;top:0;z-index:100;
 .section{margin-top:14px;animation:fadeUp .35s ease}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
 
+/* ── LIST SELECTOR ── */
 .list-bar{padding:10px 12px;display:flex;align-items:center;gap:9px}
 .list-label{font-size:12px;font-weight:700;color:var(--text-dim);white-space:nowrap}
 .list-sel{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);
-  color:var(--text);font-family:var(--font);font-weight:600;font-size:13px;padding:7px 10px;outline:none;cursor:pointer}
+  color:var(--text);font-family:var(--font);font-weight:600;font-size:13px;padding:7px 10px;outline:none;cursor:pointer;transition:border-color .2s}
+.list-sel:focus{border-color:var(--border-focus)}
+.list-sel option{background:var(--surface2);color:var(--text)}
 .list-action-btn{display:flex;align-items:center;justify-content:center;gap:4px;
-  font-family:var(--font);font-size:11px;font-weight:700;padding:7px 11px;border-radius:var(--radius-sm);border:1px solid;cursor:pointer;flex-shrink:0}
+  font-family:var(--font);font-size:11px;font-weight:700;padding:7px 11px;border-radius:var(--radius-sm);border:1px solid;cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0}
 .list-action-btn.new{background:var(--gold-glow);border-color:rgba(212,168,67,.25);color:var(--gold)}
+.list-action-btn.new:hover{background:rgba(212,168,67,.18);border-color:var(--gold-dim)}
 .list-action-btn.del{background:var(--red-dim);border-color:rgba(240,96,96,.2);color:var(--red)}
+.list-action-btn.del:hover{background:rgba(240,96,96,.18)}
 
+/* ── PROGRESS ── */
 .prog-card{padding:15px}
 .prog-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .prog-label{font-size:12px;font-weight:600;color:var(--text-dim)}
@@ -83,15 +93,17 @@ header{position:sticky;top:0;z-index:100;
 .ps{font-size:11px;color:var(--text-muted)}
 .ps b{color:var(--text-dim);font-weight:600}
 .done-banner{margin-top:14px;background:linear-gradient(135deg,rgba(46,204,136,.12),rgba(46,204,136,.06));
-  border:1px solid rgba(46,204,136,.22);border-radius:var(--radius);padding:14px;text-align:center;font-size:13px;font-weight:700;color:var(--green);display:none}
+  border:1px solid rgba(46,204,136,.22);border-radius:var(--radius);padding:14px;text-align:center;font-size:13px;font-weight:700;color:var(--green);display:none;animation:fadeUp .3s ease}
 
+/* ── ADD CARD ── */
 .add-main{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--border);position:relative}
 .add-icon{color:var(--gold-dim);font-size:14px;flex-shrink:0}
 .inp-wrap{flex:1;position:relative}
 
-.autocomplete-list{position:absolute;top:calc(100% + 8px);right:-14px;left:-14px;z-index:200;background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);overflow:hidden;display:none}
-.autocomplete-list.show{display:block}
-.ac-item{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--border)}
+.autocomplete-list{position:absolute;top:calc(100% + 8px);right:-14px;left:-14px;z-index:200;background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);box-shadow:var(--shadow-md);overflow:hidden;display:none}
+.autocomplete-list.show{display:block;animation:fadeUp .15s ease}
+.ac-item{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .12s}
+.ac-item:last-child{border-bottom:none}
 .ac-item:hover,.ac-item.selected{background:var(--surface3)}
 .ac-icon{font-size:16px;flex-shrink:0;width:24px;text-align:center}
 .ac-text{flex:1;min-width:0}
@@ -101,39 +113,44 @@ header{position:sticky;top:0;z-index:100;
 
 #new-name,#new-notes,#new-qty,.cat-sel,.list-sel,.inline-cat-sel,.m-inp,.m-ta,#import-ta,#ai-key-inp,#new-list-name-inp,#new-cat-icon,#new-cat-title{font-size:16px !important}
 #new-name{width:100%;background:transparent;border:none;outline:none;font-family:var(--font);font-weight:500;color:var(--text);caret-color:var(--gold)}
-#new-name::placeholder{color:var(--text-muted)}
+#new-name::placeholder{color:var(--text-muted);font-weight:400}
 
 .auto-cat-badge{display:none;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--gold);background:var(--gold-glow);border:1px solid rgba(212,168,67,.2);padding:3px 9px;border-radius:99px;white-space:nowrap;flex-shrink:0}
-.auto-cat-badge.show{display:flex}
+.auto-cat-badge.show{display:flex;animation:fadeUp .2s ease}
 
 .add-controls{display:flex;align-items:center;gap:7px;flex-shrink:0}
 .cat-sel{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-dim);font-family:var(--font);font-weight:600;padding:6px 7px;outline:none;cursor:pointer;max-width:130px;text-overflow:ellipsis}
+.cat-sel option{background:var(--surface2)}
 .qty-ctrl{display:flex;align-items:center;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden}
-.qty-b{background:none;border:none;color:var(--text-muted);font-size:16px;padding:5px 9px;cursor:pointer;line-height:1}
+.qty-b{background:none;border:none;color:var(--text-muted);font-size:16px;padding:5px 9px;cursor:pointer;line-height:1;transition:all .15s}
 .qty-b:hover{color:var(--gold);background:var(--gold-glow)}
 #new-qty{width:32px;text-align:center;background:transparent;border:none;outline:none;font-family:var(--mono);font-weight:500;color:var(--text)}
 
-.btn-add{background:linear-gradient(135deg,var(--gold-dim),var(--gold));border:none;border-radius:var(--radius-sm);color:#0c0c0e;font-family:var(--font);font-size:12px;font-weight:800;padding:7px 15px;cursor:pointer;white-space:nowrap}
+.btn-add{background:linear-gradient(135deg,var(--gold-dim),var(--gold));border:none;border-radius:var(--radius-sm);color:#0c0c0e;font-family:var(--font);font-size:12px;font-weight:800;padding:7px 15px;cursor:pointer;transition:all .15s;white-space:nowrap}
 .btn-add:active{transform:scale(.95)}
 
 .add-sec{display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid var(--border)}
 #new-notes{flex:1;background:transparent;border:none;outline:none;font-family:var(--font);color:var(--text-dim);caret-color:var(--gold)}
+#new-notes::placeholder{color:var(--text-muted)}
 .add-actions{display:flex;align-items:center;gap:6px;padding:10px 14px;flex-wrap:wrap}
-.act-btn{background:none;border:1px solid var(--border);font-size:11px;font-weight:700;font-family:var(--font);cursor:pointer;padding:6px 11px;border-radius:99px;display:flex;align-items:center;gap:4px;color:var(--text-muted)}
+.act-btn{background:none;border:1px solid var(--border);font-size:11px;font-weight:700;font-family:var(--font);cursor:pointer;padding:6px 11px;border-radius:99px;display:flex;align-items:center;gap:4px;color:var(--text-muted);transition:all .15s}
 .act-btn:hover{background:var(--surface2);color:var(--text-dim)}
 
+/* ── FILTER BAR ── */
 .filter-bar{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px}
 .f-tabs{display:flex;gap:3px;background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:4px}
-.f-tab{background:none;border:none;font-family:var(--font);font-size:11px;font-weight:700;color:var(--text-muted);padding:5px 13px;border-radius:99px;cursor:pointer}
-.f-tab.active{background:var(--gold);color:#0c0c0e}
+.f-tab{background:none;border:none;font-family:var(--font);font-size:11px;font-weight:700;color:var(--text-muted);padding:5px 13px;border-radius:99px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.f-tab.active{background:var(--gold);color:#0c0c0e;box-shadow:0 2px 8px rgba(212,168,67,.3)}
 
+/* ── CATEGORY BLOCKS ── */
 .cat-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;animation:fadeUp .3s ease;margin-bottom:12px}
 .cat-hdr{display:flex;align-items:center;gap:9px;padding:10px 14px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.008)}
 .cat-icon{font-size:15px}
 .cat-name{font-size:10px;font-weight:800;color:var(--text-dim);letter-spacing:.6px;text-transform:uppercase;flex:1}
 .cat-cnt{font-family:var(--mono);font-size:10px;color:var(--text-muted);background:var(--surface2);border:1px solid var(--border);padding:2px 8px;border-radius:99px}
 
-.item-row{display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);gap:10px;position:relative}
+/* ── ITEM ROWS ── */
+.item-row{display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);transition:background .15s;gap:10px;position:relative}
 .item-row:last-child{border-bottom:none}
 .item-row.done{opacity:.38}
 .item-row.just-added{animation:itemPop .35s ease}
@@ -147,29 +164,44 @@ header{position:sticky;top:0;z-index:100;
 .item-row.done .item-name{text-decoration:line-through;color:var(--text-muted)}
 .item-note{font-size:10px;margin-top:3px;color:var(--text-dim)}
 
+/* ── INLINE ACTS ── */
 .item-acts{display:flex;align-items:center;gap:6px;flex-shrink:0}
-.inline-cat-sel {background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-xs);color:var(--text);padding:4px 0 4px 4px;cursor:pointer;outline:none;width:44px;overflow:hidden;white-space:nowrap;text-overflow:clip}
+.inline-cat-sel {
+  background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-xs);
+  color:var(--text);padding:4px 0 4px 4px;cursor:pointer;outline:none;
+  width:44px;overflow:hidden;white-space:nowrap;text-overflow:clip;
+}
 .order-container {display:flex;flex-direction:column;gap:1px}
-.order-arrow {background:none;border:none;color:var(--text-dim);font-size:9px;cursor:pointer;padding:1px}
-.qty-pill{display:flex;align-items:center;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm)}
-.qty-pill button{background:none;border:none;color:var(--text-muted);padding:4px 8px;cursor:pointer;font-size:13px}
+.order-arrow {background:none;border:none;color:var(--text-dim);font-size:9px;cursor:pointer;line-height:1;padding:1px;transition:color .1s}
+.order-arrow:hover {color:var(--gold)}
+.qty-pill{display:flex;align-items:center;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden}
+.qty-pill button{background:none;border:none;color:var(--text-muted);padding:4px 8px;cursor:pointer;font-size:13px;transition:all .15s}
+.qty-pill button:hover{color:var(--gold);background:var(--gold-glow)}
 .qty-val{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--text-dim);min-width:24px;text-align:center}
-.ico-btn{background:none;border:none;cursor:pointer;color:var(--text-muted);padding:5px;border-radius:var(--radius-xs);font-size:13px}
+.ico-btn{background:none;border:none;cursor:pointer;color:var(--text-muted);padding:5px;border-radius:var(--radius-xs);font-size:13px;transition:all .15s}
+.ico-btn:hover{color:var(--red);background:var(--red-dim)}
 
-.empty{text-align:center;padding:56px 20px;color:var(--text-muted)}
+.empty{text-align:center;padding:56px 20px;color:var(--text-muted);animation:fadeUp .4s ease}
 .empty-icon{font-size:40px;margin-bottom:14px;opacity:.6}
 .empty-title{font-size:14px;font-weight:700;color:var(--text-dim);margin-bottom:6px}
 
-/* MODALS */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(12px);z-index:400;display:none;align-items:center;justify-content:center;padding:16px}
+/* ── MODALS ── */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(12px);z-index:400;display:none;align-items:flex-end;justify-content:center;padding:0}
 .modal-bg.open{display:flex;animation:bgFadeIn .2s ease}
 @keyframes bgFadeIn{from{opacity:0}to{opacity:1}}
-.modal{background:var(--surface);border:1px solid var(--border-light);border-radius:20px;padding:24px;width:100%;max-width:420px;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto}
+@media(min-width:500px){.modal-bg{align-items:center;padding:16px}}
+.modal{background:var(--surface);border:1px solid var(--border-light);border-radius:24px 24px 0 0;padding:20px 20px 32px;width:100%;box-shadow:var(--shadow-lg);max-height:92vh;overflow-y:auto;animation:sheetUp .28s cubic-bezier(.32,0,.15,1)}
+@media(min-width:500px){.modal{border-radius:20px;padding:24px;max-width:420px;animation:slideUp .25s ease}}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 
+.sheet-handle{width:40px;height:4px;background:var(--border-light);border-radius:99px;margin:0 auto 16px;display:block}
+@media(min-width:500px){.sheet-handle{display:none}}
 .m-title{font-size:15px;font-weight:800;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.m-close{margin-right:auto;background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer}
+.m-close{margin-right:auto;background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:50%;width:28px;height:28px}
+.m-close:hover{background:var(--surface2);color:var(--text)}
 .m-sub{font-size:12px;color:var(--text-dim);margin-bottom:16px}
-.m-inp{width:100%;background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font);padding:11px 13px;outline:none;text-align:right}
+.m-inp{width:100%;background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font);padding:11px 13px;outline:none}
 .m-ta{width:100%;background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font);padding:11px 13px;outline:none;resize:none;direction:rtl}
 .m-btn{display:flex;align-items:center;justify-content:center;gap:6px;font-family:var(--font);font-size:13px;font-weight:800;padding:12px 16px;border-radius:var(--radius-sm);border:none;cursor:pointer;width:100%;margin-top:8px}
 .m-btn.primary{background:var(--gold);color:#0c0c0e}
@@ -182,14 +214,14 @@ header{position:sticky;top:0;z-index:100;
 .import-preview{background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);padding:12px;max-height:200px;overflow-y:auto;margin-top:10px}
 .prev-empty{font-size:11px;color:var(--text-muted);text-align:center;padding:16px 0}
 .prev-item{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;gap:8px}
-.prev-item:last-child{border-bottom:none}
 
 #toast-wrap{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:600;display:flex;flex-direction:column-reverse;align-items:center;gap:6px;pointer-events:none}
-.toast{background:rgba(22,22,26,.96);border:1px solid var(--border-light);color:var(--text-dim);font-size:12px;font-weight:700;padding:10px 18px;border-radius:99px;box-shadow:0 4px 28px rgba(0,0,0,.6);white-space:nowrap;backdrop-filter:blur(10px)}
+.toast{background:rgba(22,22,26,.96);border:1px solid var(--border-light);color:var(--text-dim);font-size:12px;font-weight:700;padding:10px 18px;border-radius:99px;box-shadow:0 4px 28px rgba(0,0,0,.6);white-space:nowrap;backdrop-filter:blur(10px);animation:toastIn .25s ease,toastOut .3s ease 4.5s forwards}
 .toast.success{color:var(--green);border-color:rgba(46,204,136,.3)}
-.toast.error{color:var(--red);border-color:rgba(240,96,96,.3);white-space:normal;max-width:90vw}
+.toast.error{color:var(--red);border-color:rgba(240,96,96,.3);white-space:normal;max-width:90vw;animation:toastIn .25s ease,toastOut .3s ease 8s forwards}
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes toastIn{from{opacity:0;transform:translateY(10px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes toastOut{from{opacity:1}to{opacity:0;transform:translateY(6px) scale(.95)}}
 @media(max-width:420px){.mobile-hide{display:none}.h-btn span.label{display:none}.btn-add{padding:7px 12px;font-size:11px}}
 </style>
 </head>
@@ -209,9 +241,9 @@ header{position:sticky;top:0;z-index:100;
     </div>
     <div class="h-right">
       <div class="chip" id="chip-total">0 פריטים</div>
-      <button class="icon-btn" onclick="openCatModal()" title="ניהול קטגוריות">🏷️</button>
-      <button class="h-btn" onclick="openShareModal()"><span>↗</span><span class="label">שיתוף</span></button>
-      <button class="icon-btn" onclick="openAiSettings()" title="הגדרות AI">⚙️</button>
+      <button class="icon-btn" onclick="window.openCatModal()" title="ניהול קטגוריות">🏷️</button>
+      <button class="h-btn" onclick="window.openShareModal()"><span>↗</span><span class="label">שיתוף</span></button>
+      <button class="icon-btn" onclick="window.openAiSettings()" title="הגדרות AI">⚙️</button>
     </div>
   </div>
 </header>
@@ -220,9 +252,9 @@ header{position:sticky;top:0;z-index:100;
   <div class="section">
     <div class="card list-bar">
       <span class="list-label">רשימה:</span>
-      <select id="list-manager-select" class="list-sel" onchange="switchList(this.value)"></select>
-      <button class="list-action-btn new" onclick="openModal('list-modal')">＋ חדשה</button>
-      <button class="list-action-btn del" onclick="deleteCurrentList()">🗑️</button>
+      <select id="list-manager-select" class="list-sel" onchange="window.switchList(this.value)"></select>
+      <button class="list-action-btn new" onclick="window.openModal('list-modal')">＋ חדשה</button>
+      <button class="list-action-btn del" onclick="window.deleteCurrentList()">🗑️</button>
     </div>
   </div>
 
@@ -255,29 +287,29 @@ header{position:sticky;top:0;z-index:100;
         <div class="add-controls">
           <select id="new-cat" class="cat-sel mobile-hide"></select>
           <div class="qty-ctrl">
-            <button class="qty-b" onclick="adjustNewQty(-1)">−</button>
+            <button class="qty-b" onclick="window.adjustNewQty(-1)">−</button>
             <input id="new-qty" type="number" value="1" min="1">
-            <button class="qty-b" onclick="adjustNewQty(1)">＋</button>
+            <button class="qty-b" onclick="window.adjustNewQty(1)">＋</button>
           </div>
-          <button class="btn-add" onclick="addItem()">הוסף</button>
+          <button class="btn-add" onclick="window.addItem()">הוסף</button>
         </div>
       </div>
       <div class="add-sec">
         <input id="new-notes" type="text" placeholder="הערה (למשל: רק אם יש מבצע)">
       </div>
       <div class="add-actions">
-        <button class="act-btn" onclick="openImportModal()">💬 ייבוא</button>
-        <button class="act-btn" onclick="openShareModal()">↗ שתף</button>
-        <button class="act-btn" onclick="clearDone()">🧹 נקה שנקנו</button>
+        <button class="act-btn" onclick="window.openImportModal()">💬 ייבוא</button>
+        <button class="act-btn" onclick="window.openShareModal()">↗ שתף</button>
+        <button class="act-btn" onclick="window.clearDone()">🧹 נקה שנקנו</button>
       </div>
     </div>
   </div>
 
   <div class="section filter-bar">
     <div class="f-tabs">
-      <button class="f-tab active" data-f="all" onclick="setFilter('all')">הכל</button>
-      <button class="f-tab" data-f="active" onclick="setFilter('active')">לקנות</button>
-      <button class="f-tab" data-f="done" onclick="setFilter('done')">בעגלה</button>
+      <button class="f-tab active" data-f="all" onclick="window.setFilter('all')">הכל</button>
+      <button class="f-tab" data-f="active" onclick="window.setFilter('active')">לקנות</button>
+      <button class="f-tab" data-f="done" onclick="window.setFilter('done')">בעגלה</button>
     </div>
   </div>
 
@@ -286,7 +318,7 @@ header{position:sticky;top:0;z-index:100;
   <div class="empty" id="empty" style="display:none">
     <div class="empty-icon">🍃</div>
     <div class="empty-title">הרשימה ריקה</div>
-    <div class="empty-sub">הוסף מוצרים או ייבא מוואטסאפ</div>
+    <div class="empty-sub">הוסף מוצרים למעלה או ייבא מוואטסאפ</div>
   </div>
 </div>
 
@@ -294,23 +326,25 @@ header{position:sticky;top:0;z-index:100;
 
 <div class="modal-bg" id="list-modal">
   <div class="modal">
-    <div class="m-title">🧺 רשימה חדשה <button class="m-close" onclick="closeModal('list-modal')">✕</button></div>
+    <div class="sheet-handle"></div>
+    <div class="m-title">🧺 רשימה חדשה <button class="m-close" onclick="window.closeModal('list-modal')">✕</button></div>
     <div class="m-sub">תן שם לרשימה (קניות לבית, פרויקט גינה...)</div>
     <input type="text" id="new-list-name-inp" class="m-inp" placeholder="שם הרשימה...">
     <div class="sep"></div>
-    <button class="m-btn primary" onclick="createNewList()">＋ צור רשימה</button>
+    <button class="m-btn primary" onclick="window.createNewList()">＋ צור רשימה</button>
   </div>
 </div>
 
 <div class="modal-bg" id="cat-modal">
   <div class="modal">
-    <div class="m-title">🏷️ ניהול קטגוריות <button class="m-close" onclick="closeModal('cat-modal')">✕</button></div>
+    <div class="sheet-handle"></div>
+    <div class="m-title">🏷️ ניהול קטגוריות <button class="m-close" onclick="window.closeModal('cat-modal')">✕</button></div>
     <div class="m-sub">הוסף קטגוריות אישיות משלך.</div>
     <div style="display:flex; gap:8px;">
       <input type="text" id="new-cat-icon" class="m-inp" placeholder="אימוג'י" style="width:70px; text-align:center;">
       <input type="text" id="new-cat-title" class="m-inp" placeholder="שם הקטגוריה..." style="flex:1;">
     </div>
-    <button class="m-btn primary" onclick="addCustomCategory()" style="margin-top:10px;">＋ הוסף קטגוריה</button>
+    <button class="m-btn primary" onclick="window.addCustomCategory()" style="margin-top:10px;">＋ הוסף קטגוריה</button>
     <div class="sep"></div>
     <div id="custom-cat-list" style="max-height:160px; overflow-y:auto;"></div>
   </div>
@@ -318,30 +352,33 @@ header{position:sticky;top:0;z-index:100;
 
 <div class="modal-bg" id="ai-modal">
   <div class="modal">
-    <div class="m-title">🤖 סיווג AI חכם <button class="m-close" onclick="closeModal('ai-modal')">✕</button></div>
+    <div class="sheet-handle"></div>
+    <div class="m-title">🤖 סיווג AI חכם <button class="m-close" onclick="window.closeModal('ai-modal')">✕</button></div>
     <div class="m-sub">הכנס מפתח חינמי של Google Gemini לזיהוי מושלם.</div>
     <input type="password" id="ai-key-inp" class="m-inp" placeholder="AIzaSy...">
-    <button class="m-btn primary" onclick="saveAiKey()" style="margin-top:8px;">💾 שמור והפעל AI</button>
-    <button class="m-btn secondary" onclick="clearAiKey()">🗑️ נתק AI</button>
+    <button class="m-btn primary" onclick="window.saveAiKey()" style="margin-top:8px;">💾 שמור והפעל AI</button>
+    <button class="m-btn secondary" onclick="window.clearAiKey()">🗑️ נתק AI</button>
   </div>
 </div>
 
 <div class="modal-bg" id="import-modal">
   <div class="modal">
-    <div class="m-title">💬 ייבוא מוואטסאפ <button class="m-close" onclick="closeModal('import-modal')">✕</button></div>
+    <div class="sheet-handle"></div>
+    <div class="m-title">💬 ייבוא מוואטסאפ <button class="m-close" onclick="window.closeModal('import-modal')">✕</button></div>
     <textarea class="m-ta" id="import-ta" rows="5" placeholder="הדבק רשימה חופשית..."></textarea>
     <div class="m-row" style="margin-top:10px">
-      <button class="m-btn green" onclick="execImport('add')">＋ הוסף לקיימת</button>
-      <button class="m-btn secondary" onclick="execImport('replace')">↺ החלף הכל</button>
+      <button class="m-btn green" onclick="window.execImport('add')">＋ הוסף לקיימת</button>
+      <button class="m-btn secondary" onclick="window.execImport('replace')">↺ החלף הכל</button>
     </div>
   </div>
 </div>
 
 <div class="modal-bg" id="share-modal">
   <div class="modal">
-    <div class="m-title">↗ שיתוף רשימה <button class="m-close" onclick="closeModal('share-modal')">✕</button></div>
-    <button class="m-btn primary" onclick="shareViaWhatsApp()" style="background:#25d366;color:#fff">💬 שלח בוואטסאפ</button>
-    <button class="m-btn secondary" onclick="shareViaCopy()">📋 העתק טקסט</button>
+    <div class="sheet-handle"></div>
+    <div class="m-title">↗ שיתוף רשימה <button class="m-close" onclick="window.closeModal('share-modal')">✕</button></div>
+    <button class="m-btn primary" onclick="window.shareViaWhatsApp()" style="background:#25d366;color:#fff;margin-top:0">💬 שלח בוואטסאפ</button>
+    <button class="m-btn secondary" onclick="window.shareViaCopy()">📋 העתק טקסט</button>
   </div>
 </div>
 
@@ -349,9 +386,10 @@ header{position:sticky;top:0;z-index:100;
 (function () {
   'use strict';
   
-  var STORAGE_KEY = 'shopping_lists_v15';
-  var CURRENT_LIST_KEY = 'current_list_v15';
-  var CUSTOM_CATS_KEY = 'custom_cats_v15';
+  // 1. קבועים והגדרות מערכת
+  var STORAGE_KEY = 'shopping_lists_v16';
+  var CURRENT_LIST_KEY = 'current_list_v16';
+  var CUSTOM_CATS_KEY = 'custom_cats_v16';
   var AI_KEY_STORAGE = 'gemini_api_key_v5';
 
   var CAT_META = {
@@ -372,17 +410,17 @@ header{position:sticky;top:0;z-index:100;
 
   var CAT_RULES = [
     { cat:'dairy', words:['חלב','גבינ','שמנת','קוטג','יוגורט','חמאה','קצפת','לבנה','שוקו','מוצרלה','ריקוטה','פרמזן','גאודה','בולגרית','צהובה','מעדן'] },
-    { cat:'bakery', words:['לחם','פיתה','לחמניה','חלה','מאפה','קרואסון','עוגה','עוגיות','בגט','בורקס','טורטיה'] },
-    { cat:'produce', words:['אפרסק','נקטרינה','שזיף','ענבים','מנגו','אננס','מלון','קיווי','אבוקדו','תפוז','קלמנטינה','אשכולית','פומלה','לימון','תפוח','אגס','בננה','תות','דובדבן','רימון','תאנה','מלפפון','עגבניה','שרי','בצל','שום','גזר','חסה','פלפל','גמבה','תפוח אדמה','בטטה','קישוא','חציל','כרוב','כרובית','ברוקולי','סלק','סלרי','פטרוזיליה','כוסברה','שמיר','נענע','פטריות','פפאיה'] },
+    { cat:'bakery', words:['לחם','פיתה','פיתות','לחמני','חלה','חלות','מאפה','מאפים','קרואסון','עוגה','עוגות','עוגיו','בגט','בורקס','טורטיה'] },
+    { cat:'produce', words:['עגבני','מלפפו','לימון','לימוני','תפוח','אגס','בננ','תות','דובדב','רימון','תאנה','פרי','פירות','שרי','בצל','שום','גזר','חסה','פלפל','גמבה','בטטה','קישוא','חציל','כרוב','ברוקולי','סלק','צנון','סלרי','פטרוזילי','כוסברה','שמיר','נענע','תיבול','פטריות','ירק','אפרסק','נקטרינה','שזיף','ענבי','מנגו','אננס','מלון','קיווי','אבוקדו','תפוז','קלמנטינה','אשכולית','פומלה'] },
     { cat:'meat', words:['עוף','פרגית','שוקיים','כנפיים','חזה','הודו','בשר','בקר','שניצל','קציצות','המבורגר','נקניק','סלמון','דג'] },
     { cat:'frozen', words:['קפוא','פיצה','גלידה','ארטיק','קרח'] },
-    { cat:'pantry', words:['קטשופ','מיונז','חרדל','רוטב','שימורים','טונה','פסטה','אורז','שמן','סוכר','מלח','קמח','תבלין','זיתים','חומץ'] },
-    { cat:'cleaning', words:['כביסה','אבקת','כלים','סבון','מרכך','מגב','מטלית','שקיות','נייר','אלומיניום','ניקוי','אקונומיקה','ספוג'] },
-    { cat:'hygiene', words:['שמפו','סבון גוף','דאודורנט','משחת','מי פה','טמפון','גילוח','תרופה','אקמול','טיטול','חיתול','מגבונים','פלסטר'] },
+    { cat:'pantry', words:['קטשופ','מיונז','חרדל','רטב','רוטב','שימורים','טונה','פסטה','אורז','שמן','סוכר','מלח','קמח','תבלין','זיתי','חומץ'] },
+    { cat:'cleaning', words:['כביסה','אבקת','נוזל כלים','סבון כביסה','מרכך','מגב','מטלית','שקיות','נייר טואלט','מגבות נייר','אלומיניום','ניקוי','אקונומיקה','ספוג'] },
+    { cat:'hygiene', words:['שמפו','מרכך שיער','סבון גוף','דאודורנט','משחת שיניים','מי פה','טמפוני','גילוח','תרופ','אקמול','טיטולי','חיתולי','מגבוני','פלסטר'] },
     { cat:'drinks', words:['מים','מיץ','קולה','ספרייט','פאנטה','סודה','בירה','יין','וודקה','קפה','תה'] },
-    { cat:'snacks', words:['חטיף','ביסלי','במבה','פופקורן','שוקולד','סוכריות','גומי','קינדר','בוטנים','שקדים','גרעינים'] },
+    { cat:'snacks', words:['חטיף','ביסלי','במבה','פופקורן','שוקולד','סוכריו','גומי','קינדר','בוטנים','שקדים','גרעינים'] },
     { cat:'pets', words:['כלב','חתול','רצועה'] },
-    { cat:'diy', words:['עץ','קרש','צבע','ברגים','מסמרים','מברשת','לכה','דבק','אדנית','נדנדה','דיבלים','מברגה'] }
+    { cat:'diy', words:['עץ','קרש','קורות','צבע','ברגים','מסמרים','מברשת','לכה','דבק','אדנית','נדנדה','דיבלים','מברגה'] }
   ];
 
   var SUGGESTIONS = [
@@ -395,13 +433,25 @@ header{position:sticky;top:0;z-index:100;
     {name:'אבקת כביסה', cat:'cleaning'}, {name:'נייר טואלט', cat:'cleaning'}, {name:'נוזל כלים', cat:'cleaning'}
   ];
 
-  var lists = {}, customCats = {}, currentList = '', currentFilter = 'all', isAiEnabled = false, isCatManuallyChanged = false, acSelectedIndex = -1;
+  var lists = {};
+  var customCats = {};
+  var currentList = '';
+  var currentFilter = 'all';
+  var isAiEnabled = false;
+  var isCatManuallyChanged = false;
+  var acSelectedIndex = -1;
 
+  // 2. פונקציות עזר ובסיס הנתונים
+  function sanitize(str) { return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   function getAllCats() { return Object.assign({}, CAT_META, customCats); }
   function getItems() { return lists[currentList] || []; }
   function setItems(newItems) { lists[currentList] = newItems; saveToStorage(); }
-  function sanitize(str) { return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
+  function saveToStorage() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(lists));
+      localStorage.setItem(CURRENT_LIST_KEY, currentList);
+    } catch(e) {}
+  }
   function autoCategorize(name) {
     if (!name || !name.trim()) return 'other';
     var lower = name.trim().toLowerCase();
@@ -413,60 +463,12 @@ header{position:sticky;top:0;z-index:100;
     return 'other';
   }
 
-  function initApp() {
-    try {
-      customCats = JSON.parse(localStorage.getItem(CUSTOM_CATS_KEY)) || {};
-      lists = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { '🧺 קניות לבית': [] };
-    } catch(e) { lists = { '🧺 קניות לבית': [] }; }
-    currentList = localStorage.getItem(CURRENT_LIST_KEY) || Object.keys(lists)[0];
-    if (!lists[currentList]) currentList = Object.keys(lists)[0];
-    var aiKey = localStorage.getItem(AI_KEY_STORAGE);
-    if (aiKey && aiKey.length > 10) { isAiEnabled = true; var d = document.getElementById('ai-status-dot'); var t = document.getElementById('ai-status-text'); if(d) d.classList.add('active'); if(t) t.textContent = 'AI מחובר'; }
-    renderCatSelect(); renderListSelector(); render();
-  }
-
-  function saveToStorage() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(lists)); localStorage.setItem(CURRENT_LIST_KEY, currentList); } catch(e) {} }
-
-  function renderCatSelect() {
-    var all = getAllCats();
-    var sel = document.getElementById('new-cat');
-    if (!sel) return;
-    sel.innerHTML = Object.keys(all).map(function(k) { return '<option value="'+k+'">'+all[k].icon+' '+sanitize(all[k].title)+'</option>'; }).join('');
-    sel.value = 'other';
-  }
-
-  window.addCustomCategory = function() {
-    var icon = document.getElementById('new-cat-icon').value.trim() || '📌';
-    var title = document.getElementById('new-cat-title').value.trim();
-    if (!title) return showToast('נא להזין שם', 'error');
-    var id = 'c_' + Date.now().toString(36);
-    customCats[id] = { title: title, icon: icon };
-    localStorage.setItem(CUSTOM_CATS_KEY, JSON.stringify(customCats));
-    document.getElementById('new-cat-title').value = '';
-    renderCatSelect(); renderCustomCatsList(); render(); showToast('נוספה', 'success');
-  };
-
-  window.renderCustomCatsList = function() {
-    var listEl = document.getElementById('custom-cat-list');
-    if (!listEl) return;
-    listEl.innerHTML = Object.keys(customCats).map(function(k) {
-      return '<div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border); font-size:13px;">' +
-             '<span>' + customCats[k].icon + ' ' + sanitize(customCats[k].title) + '</span>' +
-             '<button class="icon-btn" style="width:28px;height:28px;color:var(--red);border-color:transparent" onclick="removeCustomCategory(\''+k+'\')">🗑️</button></div>';
-    }).join('');
-  };
-
-  window.removeCustomCategory = function(id) {
-    delete customCats[id];
-    localStorage.setItem(CUSTOM_CATS_KEY, JSON.stringify(customCats));
-    Object.keys(lists).forEach(function(l) { lists[l].forEach(function(i) { if (i.cat === id) i.cat = 'other'; }); });
-    saveToStorage(); renderCatSelect(); renderCustomCatsList(); render();
-  };
-
+  // 3. פונקציות תצוגה מרכזיות (רנדור)
   function render() {
     var wrap = document.getElementById('list-wrap');
     var empty = document.getElementById('empty');
     if(!wrap || !empty) return;
+    
     var items = getItems();
     var filtered = items.filter(function(item) {
       if (currentFilter === 'active') return !item.done;
@@ -475,7 +477,12 @@ header{position:sticky;top:0;z-index:100;
     });
     
     updateStats();
-    if (!filtered.length) { wrap.innerHTML = ''; empty.style.display = 'block'; return; }
+    
+    if (!filtered.length) { 
+      wrap.innerHTML = ''; 
+      empty.style.display = 'block'; 
+      return; 
+    }
     empty.style.display = 'none';
 
     var allCats = getAllCats();
@@ -492,36 +499,39 @@ header{position:sticky;top:0;z-index:100;
       var catItems = groups[catKey];
       if (!catItems || !catItems.length) return;
       var meta = allCats[catKey];
+      
       var itemsHtml = catItems.map(function(item) {
-        var noteHtml = item.notes ? '<div class="item-note"><span class="nbadge">' + sanitize(item.notes) + '</span></div>' : '';
+        var isSale = item.notes && item.notes.includes('מבצע');
+        var noteHtml = item.notes ? '<div class="item-note"><span class="nbadge' + (isSale ? ' sale' : '') + '">' + sanitize(item.notes) + '</span></div>' : '';
         
-        // יצירת בורר קטגוריה פנימי שכולל את שם הקטגוריה (כמו שביקשת)
+        // בורר הקטגוריות הפנימי
         var catOptions = Object.keys(allCats).map(function(k) {
           return '<option value="' + k + '"' + (k === (item.cat || 'other') ? ' selected' : '') + '>' + allCats[k].icon + ' ' + sanitize(all[k].title) + '</option>';
         }).join('');
 
         return (
           '<div class="item-row ' + (item.done ? 'done' : '') + '" data-id="' + item.id + '">' +
-            '<button class="chk-btn ' + (item.done ? 'on' : '') + '" onclick="toggleItem(\'' + item.id + '\')">' + (item.done ? '✓' : '') + '</button>' +
-            '<div class="item-info" onclick="toggleItem(\'' + item.id + '\')">' +
+            '<button class="chk-btn ' + (item.done ? 'on' : '') + '" onclick="window.toggleItem(\'' + item.id + '\')">' + (item.done ? '✓' : '') + '</button>' +
+            '<div class="item-info" onclick="window.toggleItem(\'' + item.id + '\')">' +
               '<div class="item-name">' + sanitize(item.name) + '</div>' + noteHtml +
             '</div>' +
             '<div class="item-acts">' +
-              '<select class="inline-cat-sel" onchange="changeItemCategory(\'' + item.id + '\', this.value)">' + catOptions + '</select>' +
+              '<select class="inline-cat-sel" onchange="window.changeItemCategory(\'' + item.id + '\', this.value)">' + catOptions + '</select>' +
               '<div class="order-container">' +
-                '<button class="order-arrow" onclick="moveItem(\'' + item.id + '\', -1)">▲</button>' +
-                '<button class="order-arrow" onclick="moveItem(\'' + item.id + '\', 1)">▼</button>' +
+                '<button class="order-arrow" onclick="window.moveItem(\'' + item.id + '\', -1)">▲</button>' +
+                '<button class="order-arrow" onclick="window.moveItem(\'' + item.id + '\', 1)">▼</button>' +
               '</div>' +
               '<div class="qty-pill">' +
-                '<button onclick="adjustQty(\'' + item.id + '\',-1)">−</button>' +
+                '<button onclick="window.adjustQty(\'' + item.id + '\',-1)">−</button>' +
                 '<div class="qty-val">' + item.qty + '</div>' +
-                '<button onclick="adjustQty(\'' + item.id + '\',1)">＋</button>' +
+                '<button onclick="window.adjustQty(\'' + item.id + '\',1)">＋</button>' +
               '</div>' +
-              '<button class="ico-btn" onclick="removeItem(\'' + item.id + '\')">🗑️</button>' +
+              '<button class="ico-btn" onclick="window.removeItem(\'' + item.id + '\')">🗑️</button>' +
             '</div>' +
           '</div>'
         );
       }).join('');
+      
       html += '<div class="cat-block"><div class="cat-hdr"><div class="cat-icon">' + meta.icon + '</div><div class="cat-name">' + meta.title + '</div><div class="cat-cnt">' + catItems.length + '</div></div><div>' + itemsHtml + '</div></div>';
     });
     wrap.innerHTML = html;
@@ -532,22 +542,78 @@ header{position:sticky;top:0;z-index:100;
     var total = items.length;
     var done = items.filter(function(i) { return i.done; }).length;
     var pct = total === 0 ? 0 : Math.round((done / total) * 100);
-    document.getElementById('cnt-total').textContent = total;
-    document.getElementById('cnt-done').textContent = done;
-    document.getElementById('cnt-left').textContent = total - done;
-    document.getElementById('chip-total').textContent = total + ' פריטים';
-    document.getElementById('pct').textContent = pct + '%';
-    document.getElementById('prog-fill').style.width = pct + '%';
-    document.getElementById('done-banner').style.display = (total > 0 && done === total) ? 'block' : 'none';
+    
+    var els = ['cnt-total', 'cnt-done', 'cnt-left', 'fc-all', 'fc-active', 'fc-done', 'chip-total', 'pct', 'prog-fill', 'done-banner'];
+    var dom = {};
+    els.forEach(function(id) { dom[id] = document.getElementById(id); });
+
+    if(dom['cnt-total']) dom['cnt-total'].textContent = total;
+    if(dom['cnt-done']) dom['cnt-done'].textContent = done;
+    if(dom['cnt-left']) dom['cnt-left'].textContent = total - done;
+    if(dom['fc-all']) dom['fc-all'].textContent = total;
+    if(dom['fc-active']) dom['fc-active'].textContent = total - done;
+    if(dom['fc-done']) dom['fc-done'].textContent = done;
+    if(dom['chip-total']) dom['chip-total'].textContent = total + ' פריטים';
+    if(dom['pct']) dom['pct'].textContent = pct + '%';
+    if(dom['prog-fill']) dom['prog-fill'].style.width = pct + '%';
+    if(dom['done-banner']) dom['done-banner'].style.display = (total > 0 && done === total) ? 'block' : 'none';
   }
 
+  function renderListSelector() {
+    var sel = document.getElementById('list-manager-select');
+    if(!sel) return;
+    sel.innerHTML = Object.keys(lists).map(function(name) {
+      return '<option value="' + sanitize(name) + '"' + (name === currentList ? ' selected' : '') + '>' + sanitize(name) + '</option>';
+    }).join('');
+  }
+
+  function renderCatSelect() {
+    var all = getAllCats();
+    var sel = document.getElementById('new-cat');
+    if (!sel) return;
+    sel.innerHTML = Object.keys(all).map(function(k) {
+      return '<option value="' + k + '">' + all[k].icon + ' ' + sanitize(all[k].title) + '</option>';
+    }).join('');
+    sel.value = 'other';
+  }
+
+  window.renderCustomCatsList = function() {
+    var listEl = document.getElementById('custom-cat-list');
+    if (!listEl) return;
+    var html = Object.keys(customCats).map(function(k) {
+      return '<div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border); font-size:13px;">' +
+             '<span>' + customCats[k].icon + ' ' + sanitize(customCats[k].title) + '</span>' +
+             '<button class="icon-btn" style="width:28px;height:28px;color:var(--red);border-color:transparent" onclick="window.removeCustomCategory(\''+k+'\')">🗑️</button></div>';
+    }).join('');
+    listEl.innerHTML = html || '<div style="text-align:center;color:var(--text-muted);font-size:12px;padding:16px;">אין קטגוריות אישיות</div>';
+  };
+
+  function showToast(msg, type) {
+    var wrap = document.getElementById('toast-wrap');
+    if(!wrap) return;
+    var el = document.createElement('div');
+    el.className = 'toast ' + (type || '');
+    el.innerHTML = sanitize(msg);
+    wrap.appendChild(el);
+    setTimeout(function() { el.remove(); }, type === 'error' ? 8200 : 2700);
+  }
+
+  function hideCatBadge() {
+    var badge = document.getElementById('auto-cat-badge');
+    if(badge) { badge.classList.remove('show'); badge.textContent = ''; }
+  }
+
+  // 4. פונקציות הוספה, עדכון ומחיקה של המשתמש
   window.addItem = function() {
     var nameEl = document.getElementById('new-name');
     var catSel = document.getElementById('new-cat');
     var qtyEl = document.getElementById('new-qty');
     var notesEl = document.getElementById('new-notes');
 
-    if(!nameEl || !nameEl.value.trim()) return;
+    if (!nameEl || !nameEl.value.trim()) {
+      if (nameEl) nameEl.focus();
+      return;
+    }
 
     var name = nameEl.value.trim();
     var finalCat = catSel ? catSel.value : 'other';
@@ -573,8 +639,7 @@ header{position:sticky;top:0;z-index:100;
     isCatManuallyChanged = false;
 
     window.hideAutocomplete();
-    var badge = document.getElementById('auto-cat-badge');
-    if(badge) badge.classList.remove('show');
+    hideCatBadge();
 
     nameEl.focus();
     render();
@@ -598,16 +663,27 @@ header{position:sticky;top:0;z-index:100;
     var items = getItems(); var item = items.find(function(i) { return i.id === id; });
     if (item) { item.qty = Math.max(1, item.qty + amt); setItems(items); render(); }
   };
-  window.removeItem = function(id) { setItems(getItems().filter(function(i) { return i.id !== id; })); render(); };
-  window.clearDone = function() { setItems(getItems().filter(function(i) { return !i.done; })); render(); };
-  window.adjustNewQty = function(amt) { var inp = document.getElementById('new-qty'); inp.value = Math.max(1, (parseInt(inp.value)||1) + amt); };
+  window.removeItem = function(id) {
+    setItems(getItems().filter(function(i) { return i.id !== id; })); render();
+  };
+  window.clearDone = function() {
+    var items = getItems(); var before = items.length;
+    var filtered = items.filter(function(i) { return !i.done; });
+    setItems(filtered); render();
+    var removed = before - filtered.length;
+    if (removed > 0) showToast(removed + ' פריטים הוסרו', 'success');
+  };
+  window.adjustNewQty = function(amt) {
+    var inp = document.getElementById('new-qty');
+    if(inp) inp.value = Math.max(1, (parseInt(inp.value)||1) + amt);
+  };
   window.setFilter = function(type) {
     currentFilter = type;
     document.querySelectorAll('.f-tab').forEach(function(btn) { btn.classList.remove('active'); });
-    document.querySelector('.f-tab[onclick="setFilter(\''+type+'\')"]').classList.add('active');
+    var activeBtn = document.querySelector('.f-tab[onclick="window.setFilter(\''+type+'\')"]');
+    if(activeBtn) activeBtn.classList.add('active');
     render();
   };
-
   window.moveItem = function(id, dir) {
     var items = getItems();
     var idx = items.findIndex(function(i) { return i.id === id; });
@@ -633,7 +709,6 @@ header{position:sticky;top:0;z-index:100;
       render();
     }
   };
-
   window.changeItemCategory = function(id, newCat) {
     var items = getItems();
     var item = items.find(function(i) { return i.id === id; });
@@ -645,40 +720,133 @@ header{position:sticky;top:0;z-index:100;
     }
   };
 
-  window.getAutocompleteSuggestions = function(query) {
+  // 5. ניהול רשימות
+  window.switchList = function(name) {
+    if (lists[name]) { currentList = name; saveToStorage(); renderListSelector(); render(); }
+  };
+  window.createNewList = function() {
+    var inp = document.getElementById('new-list-name-inp');
+    if(!inp) return;
+    var name = inp.value.trim();
+    if (!name) { inp.focus(); return; }
+    if (lists[name]) { showToast('רשימה זו כבר קיימת', 'error'); return; }
+    lists[name] = [];
+    currentList = name;
+    inp.value = '';
+    saveToStorage(); renderListSelector(); window.closeModal('list-modal'); render();
+    showToast('הרשימה נוצרה', 'success');
+  };
+  window.deleteCurrentList = function() {
+    if (Object.keys(lists).length <= 1) { showToast('לא ניתן למחוק את הרשימה האחרונה!', 'error'); return; }
+    if (confirm('למחוק את הרשימה "' + currentList + '"?')) {
+      delete lists[currentList];
+      currentList = Object.keys(lists)[0];
+      saveToStorage(); renderListSelector(); render();
+      showToast('הרשימה נמחקה', 'success');
+    }
+  };
+
+  // 6. ניהול קטגוריות מותאמות אישית
+  window.addCustomCategory = function() {
+    var iconInp = document.getElementById('new-cat-icon');
+    var titleInp = document.getElementById('new-cat-title');
+    if(!iconInp || !titleInp) return;
+    
+    var icon = iconInp.value.trim() || '📌';
+    var title = titleInp.value.trim();
+    if (!title) { showToast('נא להזין שם קטגוריה', 'error'); return; }
+    
+    var id = 'c_' + Date.now().toString(36);
+    customCats[id] = { title: title, icon: icon };
+    localStorage.setItem(CUSTOM_CATS_KEY, JSON.stringify(customCats));
+    
+    titleInp.value = ''; iconInp.value = '';
+    renderCatSelect(); window.renderCustomCatsList(); render();
+    showToast('הקטגוריה נוספה', 'success');
+  };
+  window.removeCustomCategory = function(id) {
+    if (confirm('למחוק את הקטגוריה? מוצרים קיימים יעברו ל"כללי".')) {
+      delete customCats[id];
+      localStorage.setItem(CUSTOM_CATS_KEY, JSON.stringify(customCats));
+      Object.keys(lists).forEach(function(listName) {
+         lists[listName].forEach(function(item) { if (item.cat === id) item.cat = 'other'; });
+      });
+      saveToStorage(); renderCatSelect(); window.renderCustomCatsList(); render();
+    }
+  };
+
+  // 7. חלונות קופצים (Modals)
+  window.openModal = function(id) {
+    var el = document.getElementById(id);
+    if(el) el.classList.add('open');
+  };
+  window.closeModal = function(id) {
+    var el = document.getElementById(id);
+    if(el) el.classList.remove('open');
+  };
+  window.openCatModal = function() { window.renderCustomCatsList(); window.openModal('cat-modal'); };
+  window.openImportModal = function() { window.openModal('import-modal'); };
+  window.openShareModal = function() { window.openModal('share-modal'); };
+  window.openAiSettings = function() {
+    var key = localStorage.getItem(AI_KEY_STORAGE);
+    var inp = document.getElementById('ai-key-inp');
+    if (key && inp) inp.value = key;
+    window.openModal('ai-modal');
+  };
+
+  // 8. השלמה אוטומטית (Autocomplete)
+  function getAutocompleteSuggestions(query) {
     if (!query || query.length < 1) return [];
     var q = query.toLowerCase().trim();
     var historyItems = getItems().map(function(i) { return { name: i.name, cat: i.cat }; });
     var allSuggestions = SUGGESTIONS.concat(historyItems);
     var seen = {};
-    allSuggestions = allSuggestions.filter(function(s) {
+    var filtered = allSuggestions.filter(function(s) {
       var key = s.name.toLowerCase();
       if (seen[key]) return false;
-      seen[key] = true;
-      return true;
+      seen[key] = true; return true;
     });
     var starts = [], contains = [];
-    allSuggestions.forEach(function(s) {
+    filtered.forEach(function(s) {
       var low = s.name.toLowerCase();
       if (low.startsWith(q)) starts.push(s);
       else if (low.includes(q)) contains.push(s);
     });
     return starts.concat(contains).slice(0, 7);
-  };
+  }
 
   window.showAutocomplete = function(query) {
     var list = document.getElementById('autocomplete-list');
-    var suggestions = window.getAutocompleteSuggestions(query);
+    if (!list) return;
+    var suggestions = getAutocompleteSuggestions(query);
     acSelectedIndex = -1;
-    if (!suggestions.length || !query.trim()) { list.classList.remove('show'); return; }
+
+    if (!suggestions.length || !query.trim()) {
+      list.classList.remove('show'); list.innerHTML = ''; return;
+    }
+
     var allCats = getAllCats();
     list.innerHTML = suggestions.map(function(s, idx) {
       var meta = allCats[s.cat] || allCats.other;
-      var highlighted = s.name.replace(new RegExp('('+query+')','gi'), '<mark>$1</mark>');
-      return '<div class="ac-item" data-idx="'+idx+'" data-name="'+sanitize(s.name)+'" data-cat="'+s.cat+'"><div class="ac-icon">'+meta.icon+'</div><div class="ac-text"><div class="ac-name">'+highlighted+'</div><div class="ac-cat">'+meta.title+'</div></div></div>';
+      var safeName = sanitize(s.name);
+      var safeQuery = sanitize(query);
+      var highlighted = safeName.replace(new RegExp('('+safeQuery+')','gi'), '<mark>$1</mark>');
+      return '<div class="ac-item" data-idx="' + idx + '" data-name="' + safeName + '" data-cat="' + s.cat + '">' +
+        '<div class="ac-icon">' + meta.icon + '</div>' +
+        '<div class="ac-text">' +
+          '<div class="ac-name">' + highlighted + '</div>' +
+          '<div class="ac-cat">' + meta.title + '</div>' +
+        '</div>' +
+      '</div>';
     }).join('');
+
     list.classList.add('show');
-    list.querySelectorAll('.ac-item').forEach(function(el) { el.addEventListener('mousedown', function(e) { e.preventDefault(); window.selectAutocomplete(el.dataset.name, el.dataset.cat); }); });
+    list.querySelectorAll('.ac-item').forEach(function(el) {
+      el.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        window.selectAutocomplete(el.dataset.name, el.dataset.cat);
+      });
+    });
   };
 
   window.hideAutocomplete = function() {
@@ -688,115 +856,101 @@ header{position:sticky;top:0;z-index:100;
   };
 
   window.selectAutocomplete = function(name, cat) {
-    document.getElementById('new-name').value = name;
-    document.getElementById('new-cat').value = cat;
+    var nameEl = document.getElementById('new-name');
+    var catSel = document.getElementById('new-cat');
+    if(nameEl) nameEl.value = name;
+    if(catSel) catSel.value = cat;
     isCatManuallyChanged = false;
+    
     var meta = getAllCats()[cat];
     var badge = document.getElementById('auto-cat-badge');
-    if (meta && cat !== 'other') { badge.textContent = meta.icon + ' ' + meta.title; badge.classList.add('show'); }
-    else { badge.classList.remove('show'); }
+    if (meta && cat !== 'other' && badge) {
+      badge.textContent = meta.icon + ' ' + meta.title;
+      badge.classList.add('show');
+    } else if (badge) {
+      badge.classList.remove('show');
+    }
+    
     window.hideAutocomplete();
-    document.getElementById('new-name').focus();
+    if(nameEl) nameEl.focus();
   };
 
-  var nameInput = document.getElementById('new-name');
-  if (nameInput) {
-    nameInput.addEventListener('input', function() {
-      var val = this.value.trim();
-      isCatManuallyChanged = false;
-      var catSel = document.getElementById('new-cat');
-      var badge = document.getElementById('auto-cat-badge');
-      if (!val) { 
-        if(badge) badge.classList.remove('show');
-        if(catSel) catSel.value = 'other'; 
-        window.hideAutocomplete();
-        return; 
-      }
-      var cat = autoCategorize(val);
-      if(catSel) catSel.value = cat;
-      if (cat !== 'other') {
-        var meta = getAllCats()[cat];
-        if (meta && badge) { badge.textContent = meta.icon + ' ' + meta.title; badge.classList.add('show'); }
-      } else if(badge) { badge.classList.remove('show'); }
-      window.showAutocomplete(val);
-    });
+  // 9. AI ומפתחות
+  async function fetchCategoryFromAI(itemName, itemId) {
+    var key = localStorage.getItem(AI_KEY_STORAGE);
+    if (!key) return;
+    var allCats = getAllCats();
+    var allowedIds = Object.keys(allCats);
+    var mapping = allowedIds.map(function(k) { return k + "=" + allCats[k].title; }).join(", ");
+    var prompt = "Categorize this Hebrew supermarket item: '" + itemName + "'. Available categories (ID=Description): " + mapping + ". Return ONLY the exact ID (e.g. produce, bakery). No other words.";
     
-    nameInput.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') {
-        var list = document.getElementById('autocomplete-list');
-        if (list && list.classList.contains('show') && acSelectedIndex >= 0) {
-          var items = list.querySelectorAll('.ac-item');
-          if (items[acSelectedIndex]) {
-            e.preventDefault();
-            window.selectAutocomplete(items[acSelectedIndex].dataset.name, items[acSelectedIndex].dataset.cat);
-            return;
+    try {
+      var res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + key, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ contents:[{parts:[{text:prompt}]}], generationConfig:{temperature:0.0,maxOutputTokens:10} })
+      });
+      var data = await res.json();
+      
+      if (!res.ok) {
+        var errText = (data && data.error && data.error.message) ? data.error.message : '';
+        var hebError = 'שגיאת AI';
+        if (errText.includes('API key not valid')) hebError = 'מפתח ה-API לא חוקי.';
+        else if (res.status === 429) hebError = 'מגבלת פניות לגוגל.';
+        showToast(hebError, 'error'); return;
+      }
+      
+      if (data && data.candidates && data.candidates[0].content.parts[0].text) {
+        var rawText = data.candidates[0].content.parts[0].text.trim().toLowerCase();
+        var smartCat = 'other';
+        for (var i = 0; i < allowedIds.length; i++) {
+          if (rawText.includes(allowedIds[i].toLowerCase())) { smartCat = allowedIds[i]; break; }
+        }
+        if (allCats[smartCat] && smartCat !== 'other') {
+          var cur = getItems();
+          var idx = cur.findIndex(function(i) { return i.id === itemId; });
+          if (idx > -1) { 
+            cur[idx].cat = smartCat; 
+            setItems(cur); render(); 
+            showToast('🤖 ' + itemName + ' → ' + allCats[smartCat].title, 'ai'); 
           }
         }
-        e.preventDefault();
-        window.addItem();
-      } else if (e.key === 'ArrowDown') {
-        var list = document.getElementById('autocomplete-list');
-        if (list && list.classList.contains('show')) {
-          e.preventDefault();
-          var items = list.querySelectorAll('.ac-item');
-          acSelectedIndex = (acSelectedIndex + 1) % items.length;
-          items.forEach(function(el, i){ el.classList.toggle('selected', i === acSelectedIndex); });
-        }
-      } else if (e.key === 'ArrowUp') {
-        var list = document.getElementById('autocomplete-list');
-        if (list && list.classList.contains('show')) {
-          e.preventDefault();
-          var items = list.querySelectorAll('.ac-item');
-          acSelectedIndex = (acSelectedIndex - 1 + items.length) % items.length;
-          items.forEach(function(el, i){ el.classList.toggle('selected', i === acSelectedIndex); });
-        }
-      } else if (e.key === 'Escape') {
-        window.hideAutocomplete();
       }
-    });
-
-    nameInput.addEventListener('blur', function() { setTimeout(window.hideAutocomplete, 150); });
+    } catch(e) {}
   }
 
-  var newCatEl = document.getElementById('new-cat');
-  if(newCatEl) newCatEl.addEventListener('change', function() { isCatManuallyChanged = true; });
-  
-  window.openModal = function(id) { document.getElementById(id).classList.add('open'); };
-  window.closeModal = function(id) { document.getElementById(id).classList.remove('open'); };
-  
-  document.querySelectorAll('.modal-bg').forEach(function(el) {
-    el.addEventListener('click', function(e) { if(e.target === this) window.closeModal(this.id); });
-  });
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') ['import-modal','share-modal','ai-modal','list-modal','cat-modal'].forEach(window.closeModal);
-  });
-
-  window.openCatModal = function() { window.renderCustomCatsList(); window.openModal('cat-modal'); };
-  window.openImportModal = function() { window.openModal('import-modal'); };
-  window.openShareModal = function() { window.openModal('share-modal'); };
-
-  window.createNewList = function() {
-    var inp = document.getElementById('new-list-name-inp');
-    var name = inp.value.trim();
-    if (!name) { inp.focus(); return; }
-    if (lists[name]) { showToast('רשימה קיימת', 'error'); return; }
-    lists[name] = []; currentList = name; inp.value = '';
-    saveToStorage(); renderListSelector(); window.closeModal('list-modal'); render();
-    showToast('הרשימה נוצרה', 'success');
+  window.saveAiKey = function() {
+    var inp = document.getElementById('ai-key-inp');
+    if(!inp) return;
+    var key = inp.value.replace(/[\s\r\n]+/g, '').trim();
+    if (key.length < 10) { showToast('מפתח לא תקין', 'error'); return; }
+    localStorage.setItem(AI_KEY_STORAGE, key);
+    isAiEnabled = true;
+    var dot = document.getElementById('ai-status-dot');
+    var txt = document.getElementById('ai-status-text');
+    if(dot) dot.classList.add('active');
+    if(txt) txt.textContent = 'AI מחובר';
+    window.closeModal('ai-modal');
+    showToast('AI הופעל בהצלחה!', 'success');
   };
 
-  window.deleteCurrentList = function() {
-    if (Object.keys(lists).length <= 1) { showToast('לא ניתן למחוק את הרשימה האחרונה', 'error'); return; }
-    if (confirm('למחוק את הרשימה "' + currentList + '"?')) {
-      delete lists[currentList]; currentList = Object.keys(lists)[0];
-      saveToStorage(); renderListSelector(); render();
-      showToast('הרשימה נמחקה', 'success');
-    }
+  window.clearAiKey = function() {
+    localStorage.removeItem(AI_KEY_STORAGE);
+    var inp = document.getElementById('ai-key-inp');
+    if(inp) inp.value = '';
+    isAiEnabled = false;
+    var dot = document.getElementById('ai-status-dot');
+    var txt = document.getElementById('ai-status-text');
+    if(dot) dot.classList.remove('active');
+    if(txt) txt.textContent = 'מילון מקומי';
+    window.closeModal('ai-modal');
+    showToast('AI נותק', 'error');
   };
 
+  // 10. ייבוא ושיתוף
   window.execImport = function(mode) {
-    var lines = document.getElementById('import-ta').value.split('\n');
+    var importTa = document.getElementById('import-ta');
+    if(!importTa) return;
+    var lines = importTa.value.split('\n');
     var parsed = [];
     lines.forEach(function(line) {
       var text = line.trim().replace(/^[\-*•·◦▪▸➤➢✓✔☑\s]+/,'').replace(/^\d+[\.\)\-]\s*/,'').replace(/^[א-ת]\.\s*/,'').trim();
@@ -811,13 +965,15 @@ header{position:sticky;top:0;z-index:100;
       var mParen = name.match(/^([^\(]+)\s*\((.+?)\)\s*$/);
       if (mParen) { name = mParen[1].trim(); notes = mParen[2].trim(); }
       if (!name || name.length < 1) return;
-      parsed.push({ id:'imp_'+Date.now()+'_'+Math.random().toString(36).slice(2,5), name:name, qty:qty, cat:autoCategorize(name), notes:notes, done:false });
+      parsed.push({ id:'imp_'+Date.now()+'_'+Math.random().toString(36).substr(2,5), name:name, qty:qty, cat:autoCategorize(name), notes:notes, done:false });
     });
     if (!parsed.length) { showToast('לא זוהו מוצרים', 'error'); return; }
     
     var items = getItems();
-    if (mode === 'replace') { items = parsed; showToast(parsed.length + ' מוצרים יובאו', 'success'); } 
-    else {
+    if (mode === 'replace') { 
+      items = parsed; 
+      showToast(parsed.length + ' מוצרים יובאו', 'success'); 
+    } else {
       parsed.forEach(function(p) {
         var ex = items.find(function(i) { return i.name.trim().toLowerCase() === p.name.trim().toLowerCase(); });
         if (ex) { ex.qty += p.qty; if (!ex.notes && p.notes) ex.notes = p.notes; }
@@ -826,10 +982,127 @@ header{position:sticky;top:0;z-index:100;
       showToast(parsed.length + ' מוצרים נוספו', 'success');
     }
     setItems(items);
-    render(); window.closeModal('import-modal'); document.getElementById('import-ta').value = '';
+    if (isAiEnabled) items.forEach(function(it) { if (it.cat === 'other') setTimeout(function() { fetchCategoryFromAI(it.name, it.id); }, 50); });
+    render(); window.closeModal('import-modal'); importTa.value = '';
   };
 
+  function buildShareText() {
+    var items = getItems();
+    if (!items.length) return 'הרשימה ריקה';
+    var lines = ['🛒 ' + currentList + '\n'];
+    var groups = {};
+    items.filter(function(i) { return !i.done; }).forEach(function(item) {
+      var c = item.cat || 'other';
+      if (!groups[c]) groups[c] = [];
+      groups[c].push(item);
+    });
+    var allCats = getAllCats();
+    Object.keys(allCats).forEach(function(catKey) {
+      var catItems = groups[catKey];
+      if (!catItems || !catItems.length) return;
+      lines.push(allCats[catKey].icon + ' ' + allCats[catKey].title + ':');
+      catItems.forEach(function(item) { lines.push(' • ' + item.name + (item.qty > 1 ? ' ×' + item.qty : '') + (item.notes ? ' (' + item.notes + ')' : '')); });
+      lines.push('');
+    });
+    return lines.join('\n').trim();
+  }
+
+  window.shareViaWhatsApp = function() { window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(buildShareText()), '_blank'); window.closeModal('share-modal'); };
+  window.shareViaCopy = function() {
+    var text = buildShareText();
+    var ta = document.createElement('textarea'); ta.value = text; ta.style.cssText = 'position:fixed;opacity:0';
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    try { document.execCommand('copy'); showToast('הועתק!', 'success'); } catch(e) { showToast('שגיאה', 'error'); }
+    document.body.removeChild(ta); window.closeModal('share-modal');
+  };
+
+  // 11. ניהול אירועים (Event Listeners) מאובטח
+  function setupListeners() {
+    var nameInput = document.getElementById('new-name');
+    if (nameInput) {
+      nameInput.addEventListener('input', function() {
+        var val = this.value.trim();
+        isCatManuallyChanged = false;
+        var catSel = document.getElementById('new-cat');
+        var badge = document.getElementById('auto-cat-badge');
+        if (!val) { 
+          if(badge) badge.classList.remove('show');
+          if(catSel) catSel.value = 'other'; 
+          window.hideAutocomplete();
+          return; 
+        }
+        var cat = autoCategorize(val);
+        if(catSel) catSel.value = cat;
+        if (cat !== 'other') {
+          var meta = getAllCats()[cat];
+          if (meta && badge) { badge.textContent = meta.icon + ' ' + meta.title; badge.classList.add('show'); }
+        } else if(badge) { badge.classList.remove('show'); }
+        window.showAutocomplete(val);
+      });
+
+      nameInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          var list = document.getElementById('autocomplete-list');
+          if (list && list.classList.contains('show') && acSelectedIndex >= 0) {
+            var items = list.querySelectorAll('.ac-item');
+            if (items[acSelectedIndex]) {
+              e.preventDefault();
+              window.selectAutocomplete(items[acSelectedIndex].dataset.name, items[acSelectedIndex].dataset.cat);
+              return;
+            }
+          }
+          e.preventDefault();
+          window.addItem();
+        } else if (e.key === 'ArrowDown') {
+          var list = document.getElementById('autocomplete-list');
+          if (list && list.classList.contains('show')) {
+            e.preventDefault();
+            var items = list.querySelectorAll('.ac-item');
+            if (items.length > 0) {
+              acSelectedIndex = (acSelectedIndex + 1) % items.length;
+              items.forEach(function(el, i){ el.classList.toggle('selected', i === acSelectedIndex); });
+            }
+          }
+        } else if (e.key === 'ArrowUp') {
+          var list = document.getElementById('autocomplete-list');
+          if (list && list.classList.contains('show')) {
+            e.preventDefault();
+            var items = list.querySelectorAll('.ac-item');
+            if (items.length > 0) {
+              acSelectedIndex = (acSelectedIndex - 1 + items.length) % items.length;
+              items.forEach(function(el, i){ el.classList.toggle('selected', i === acSelectedIndex); });
+            }
+          }
+        } else if (e.key === 'Escape') {
+          window.hideAutocomplete();
+        }
+      });
+
+      nameInput.addEventListener('blur', function() { setTimeout(window.hideAutocomplete, 150); });
+    }
+
+    var newCatEl = document.getElementById('new-cat');
+    if(newCatEl) newCatEl.addEventListener('change', function() { isCatManuallyChanged = true; });
+    
+    var newNotesEl = document.getElementById('new-notes');
+    if(newNotesEl) newNotesEl.addEventListener('keydown', function(e) { if (e.key === 'Enter') window.addItem(); });
+    
+    var newListNameInp = document.getElementById('new-list-name-inp');
+    if(newListNameInp) newListNameInp.addEventListener('keydown', function(e) { if (e.key === 'Enter') window.createNewList(); });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') ['import-modal','share-modal','ai-modal','list-modal','cat-modal'].forEach(window.closeModal);
+    });
+
+    document.querySelectorAll('.modal-bg').forEach(function(el) {
+      el.addEventListener('click', function(e) { if(e.target === this) window.closeModal(this.id); });
+    });
+  }
+
+  // הפעלה סופית
+  setupListeners();
   initApp();
+
 })();
 </script>
 </body>
