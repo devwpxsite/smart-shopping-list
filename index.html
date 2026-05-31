@@ -36,7 +36,6 @@ body::before{content:'';position:fixed;inset:0;
 
 .wrap{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 16px 120px}
 
-/* ── HEADER ── */
 header{position:sticky;top:0;z-index:100;
   background:rgba(12,12,14,0.88);backdrop-filter:blur(24px) saturate(180%);
   -webkit-backdrop-filter:blur(24px) saturate(180%);
@@ -46,12 +45,10 @@ header{position:sticky;top:0;z-index:100;
 .brand-icon{width:38px;height:38px;background:linear-gradient(135deg,#c09030,var(--gold));
   border-radius:12px;display:flex;align-items:center;justify-content:center;
   font-size:18px;box-shadow:0 0 24px rgba(212,168,67,0.25);flex-shrink:0;transition:transform .2s}
-.brand-icon:hover{transform:scale(1.05);box-shadow:0 0 32px rgba(212,168,67,0.4)}
 .brand-title{font-size:15px;font-weight:800;line-height:1.2;letter-spacing:-.2px}
 .brand-sub{font-size:11px;color:var(--text-dim);display:flex;align-items:center;gap:5px}
 .ai-dot{width:6px;height:6px;border-radius:50%;background:var(--text-muted);display:inline-block;transition:all .3s}
-.ai-dot.active{background:var(--gold);box-shadow:0 0 8px var(--gold);animation:pulse-dot 2s ease-in-out infinite}
-@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.5}}
+.ai-dot.active{background:var(--gold);box-shadow:0 0 8px var(--gold)}
 .h-right{display:flex;align-items:center;gap:7px}
 .chip{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--text-dim);
   background:var(--surface2);border:1px solid var(--border);padding:4px 10px;border-radius:20px;white-space:nowrap}
@@ -64,11 +61,9 @@ header{position:sticky;top:0;z-index:100;
   cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .icon-btn:hover{border-color:var(--border-light);color:var(--text);background:var(--surface2)}
 
-/* ── SECTIONS ── */
 .section{margin-top:14px;animation:fadeUp .35s ease}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
 
-/* ── LIST SELECTOR ── */
 .list-bar{padding:10px 12px;display:flex;align-items:center;gap:9px}
 .list-label{font-size:12px;font-weight:700;color:var(--text-dim);white-space:nowrap}
 .list-sel{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);
@@ -78,11 +73,8 @@ header{position:sticky;top:0;z-index:100;
 .list-action-btn{display:flex;align-items:center;justify-content:center;gap:4px;
   font-family:var(--font);font-size:11px;font-weight:700;padding:7px 11px;border-radius:var(--radius-sm);border:1px solid;cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0}
 .list-action-btn.new{background:var(--gold-glow);border-color:rgba(212,168,67,.25);color:var(--gold)}
-.list-action-btn.new:hover{background:rgba(212,168,67,.18);border-color:var(--gold-dim)}
 .list-action-btn.del{background:var(--red-dim);border-color:rgba(240,96,96,.2);color:var(--red)}
-.list-action-btn.del:hover{background:rgba(240,96,96,.18)}
 
-/* ── PROGRESS ── */
 .prog-card{padding:15px}
 .prog-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .prog-label{font-size:12px;font-weight:600;color:var(--text-dim)}
@@ -93,17 +85,15 @@ header{position:sticky;top:0;z-index:100;
 .ps{font-size:11px;color:var(--text-muted)}
 .ps b{color:var(--text-dim);font-weight:600}
 .done-banner{margin-top:14px;background:linear-gradient(135deg,rgba(46,204,136,.12),rgba(46,204,136,.06));
-  border:1px solid rgba(46,204,136,.22);border-radius:var(--radius);padding:14px;text-align:center;font-size:13px;font-weight:700;color:var(--green);display:none;animation:fadeUp .3s ease}
+  border:1px solid rgba(46,204,136,.22);border-radius:var(--radius);padding:14px;text-align:center;font-size:13px;font-weight:700;color:var(--green);display:none}
 
-/* ── ADD CARD ── */
 .add-main{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--border);position:relative}
 .add-icon{color:var(--gold-dim);font-size:14px;flex-shrink:0}
 .inp-wrap{flex:1;position:relative}
 
 .autocomplete-list{position:absolute;top:calc(100% + 8px);right:-14px;left:-14px;z-index:200;background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);box-shadow:var(--shadow-md);overflow:hidden;display:none}
-.autocomplete-list.show{display:block;animation:fadeUp .15s ease}
-.ac-item{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .12s}
-.ac-item:last-child{border-bottom:none}
+.autocomplete-list.show{display:block}
+.ac-item{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--border)}
 .ac-item:hover,.ac-item.selected{background:var(--surface3)}
 .ac-icon{font-size:16px;flex-shrink:0;width:24px;text-align:center}
 .ac-text{flex:1;min-width:0}
@@ -113,44 +103,39 @@ header{position:sticky;top:0;z-index:100;
 
 #new-name,#new-notes,#new-qty,.cat-sel,.list-sel,.inline-cat-sel,.m-inp,.m-ta,#import-ta,#ai-key-inp,#new-list-name-inp,#new-cat-icon,#new-cat-title{font-size:16px !important}
 #new-name{width:100%;background:transparent;border:none;outline:none;font-family:var(--font);font-weight:500;color:var(--text);caret-color:var(--gold)}
-#new-name::placeholder{color:var(--text-muted);font-weight:400}
-
+#new-name::placeholder{color:var(--text-muted)}
 .auto-cat-badge{display:none;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--gold);background:var(--gold-glow);border:1px solid rgba(212,168,67,.2);padding:3px 9px;border-radius:99px;white-space:nowrap;flex-shrink:0}
-.auto-cat-badge.show{display:flex;animation:fadeUp .2s ease}
+.auto-cat-badge.show{display:flex}
 
 .add-controls{display:flex;align-items:center;gap:7px;flex-shrink:0}
 .cat-sel{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-dim);font-family:var(--font);font-weight:600;padding:6px 7px;outline:none;cursor:pointer;max-width:130px;text-overflow:ellipsis}
 .cat-sel option{background:var(--surface2)}
 .qty-ctrl{display:flex;align-items:center;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden}
-.qty-b{background:none;border:none;color:var(--text-muted);font-size:16px;padding:5px 9px;cursor:pointer;line-height:1;transition:all .15s}
+.qty-b{background:none;border:none;color:var(--text-muted);font-size:16px;padding:5px 9px;cursor:pointer}
 .qty-b:hover{color:var(--gold);background:var(--gold-glow)}
 #new-qty{width:32px;text-align:center;background:transparent;border:none;outline:none;font-family:var(--mono);font-weight:500;color:var(--text)}
 
-.btn-add{background:linear-gradient(135deg,var(--gold-dim),var(--gold));border:none;border-radius:var(--radius-sm);color:#0c0c0e;font-family:var(--font);font-size:12px;font-weight:800;padding:7px 15px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn-add{background:linear-gradient(135deg,var(--gold-dim),var(--gold));border:none;border-radius:var(--radius-sm);color:#0c0c0e;font-family:var(--font);font-size:12px;font-weight:800;padding:7px 15px;cursor:pointer;white-space:nowrap}
 .btn-add:active{transform:scale(.95)}
 
 .add-sec{display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid var(--border)}
 #new-notes{flex:1;background:transparent;border:none;outline:none;font-family:var(--font);color:var(--text-dim);caret-color:var(--gold)}
-#new-notes::placeholder{color:var(--text-muted)}
 .add-actions{display:flex;align-items:center;gap:6px;padding:10px 14px;flex-wrap:wrap}
-.act-btn{background:none;border:1px solid var(--border);font-size:11px;font-weight:700;font-family:var(--font);cursor:pointer;padding:6px 11px;border-radius:99px;display:flex;align-items:center;gap:4px;color:var(--text-muted);transition:all .15s}
+.act-btn{background:none;border:1px solid var(--border);font-size:11px;font-weight:700;font-family:var(--font);cursor:pointer;padding:6px 11px;border-radius:99px;display:flex;align-items:center;gap:4px;color:var(--text-muted)}
 .act-btn:hover{background:var(--surface2);color:var(--text-dim)}
 
-/* ── FILTER BAR ── */
 .filter-bar{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px}
 .f-tabs{display:flex;gap:3px;background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:4px}
-.f-tab{background:none;border:none;font-family:var(--font);font-size:11px;font-weight:700;color:var(--text-muted);padding:5px 13px;border-radius:99px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.f-tab{background:none;border:none;font-family:var(--font);font-size:11px;font-weight:700;color:var(--text-muted);padding:5px 13px;border-radius:99px;cursor:pointer;transition:all .2s}
 .f-tab.active{background:var(--gold);color:#0c0c0e;box-shadow:0 2px 8px rgba(212,168,67,.3)}
 
-/* ── CATEGORY BLOCKS ── */
 .cat-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;animation:fadeUp .3s ease;margin-bottom:12px}
 .cat-hdr{display:flex;align-items:center;gap:9px;padding:10px 14px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.008)}
 .cat-icon{font-size:15px}
 .cat-name{font-size:10px;font-weight:800;color:var(--text-dim);letter-spacing:.6px;text-transform:uppercase;flex:1}
 .cat-cnt{font-family:var(--mono);font-size:10px;color:var(--text-muted);background:var(--surface2);border:1px solid var(--border);padding:2px 8px;border-radius:99px}
 
-/* ── ITEM ROWS ── */
-.item-row{display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);transition:background .15s;gap:10px;position:relative}
+.item-row{display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);gap:10px}
 .item-row:last-child{border-bottom:none}
 .item-row.done{opacity:.38}
 .item-row.just-added{animation:itemPop .35s ease}
@@ -164,44 +149,29 @@ header{position:sticky;top:0;z-index:100;
 .item-row.done .item-name{text-decoration:line-through;color:var(--text-muted)}
 .item-note{font-size:10px;margin-top:3px;color:var(--text-dim)}
 
-/* ── INLINE ACTS ── */
 .item-acts{display:flex;align-items:center;gap:6px;flex-shrink:0}
-.inline-cat-sel {
-  background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-xs);
-  color:var(--text);padding:4px 0 4px 4px;cursor:pointer;outline:none;
-  width:44px;overflow:hidden;white-space:nowrap;text-overflow:clip;
-}
+.inline-cat-sel {background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-xs);color:var(--text);padding:4px 0 4px 4px;cursor:pointer;outline:none;width:44px;overflow:hidden;white-space:nowrap;text-overflow:clip}
 .order-container {display:flex;flex-direction:column;gap:1px}
-.order-arrow {background:none;border:none;color:var(--text-dim);font-size:9px;cursor:pointer;line-height:1;padding:1px;transition:color .1s}
-.order-arrow:hover {color:var(--gold)}
-.qty-pill{display:flex;align-items:center;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden}
-.qty-pill button{background:none;border:none;color:var(--text-muted);padding:4px 8px;cursor:pointer;font-size:13px;transition:all .15s}
-.qty-pill button:hover{color:var(--gold);background:var(--gold-glow)}
+.order-arrow {background:none;border:none;color:var(--text-dim);font-size:9px;cursor:pointer;padding:1px}
+.qty-pill{display:flex;align-items:center;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm)}
+.qty-pill button{background:none;border:none;color:var(--text-muted);padding:4px 8px;cursor:pointer;font-size:13px}
 .qty-val{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--text-dim);min-width:24px;text-align:center}
-.ico-btn{background:none;border:none;cursor:pointer;color:var(--text-muted);padding:5px;border-radius:var(--radius-xs);font-size:13px;transition:all .15s}
-.ico-btn:hover{color:var(--red);background:var(--red-dim)}
+.ico-btn{background:none;border:none;cursor:pointer;color:var(--text-muted);padding:5px;border-radius:var(--radius-xs);font-size:13px}
 
-.empty{text-align:center;padding:56px 20px;color:var(--text-muted);animation:fadeUp .4s ease}
+.empty{text-align:center;padding:56px 20px;color:var(--text-muted)}
 .empty-icon{font-size:40px;margin-bottom:14px;opacity:.6}
 .empty-title{font-size:14px;font-weight:700;color:var(--text-dim);margin-bottom:6px}
 
-/* ── MODALS ── */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(12px);z-index:400;display:none;align-items:flex-end;justify-content:center;padding:0}
+/* MODALS */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(12px);z-index:400;display:none;align-items:center;justify-content:center;padding:16px}
 .modal-bg.open{display:flex;animation:bgFadeIn .2s ease}
 @keyframes bgFadeIn{from{opacity:0}to{opacity:1}}
-@media(min-width:500px){.modal-bg{align-items:center;padding:16px}}
-.modal{background:var(--surface);border:1px solid var(--border-light);border-radius:24px 24px 0 0;padding:20px 20px 32px;width:100%;box-shadow:var(--shadow-lg);max-height:92vh;overflow-y:auto;animation:sheetUp .28s cubic-bezier(.32,0,.15,1)}
-@media(min-width:500px){.modal{border-radius:20px;padding:24px;max-width:420px;animation:slideUp .25s ease}}
-@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-@keyframes slideUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.modal{background:var(--surface);border:1px solid var(--border-light);border-radius:20px;padding:24px;width:100%;max-width:420px;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto}
 
-.sheet-handle{width:40px;height:4px;background:var(--border-light);border-radius:99px;margin:0 auto 16px;display:block}
-@media(min-width:500px){.sheet-handle{display:none}}
 .m-title{font-size:15px;font-weight:800;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.m-close{margin-right:auto;background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:50%;width:28px;height:28px}
-.m-close:hover{background:var(--surface2);color:var(--text)}
+.m-close{margin-right:auto;background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer}
 .m-sub{font-size:12px;color:var(--text-dim);margin-bottom:16px}
-.m-inp{width:100%;background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font);padding:11px 13px;outline:none}
+.m-inp{width:100%;background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font);padding:11px 13px;outline:none;text-align:right}
 .m-ta{width:100%;background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font);padding:11px 13px;outline:none;resize:none;direction:rtl}
 .m-btn{display:flex;align-items:center;justify-content:center;gap:6px;font-family:var(--font);font-size:13px;font-weight:800;padding:12px 16px;border-radius:var(--radius-sm);border:none;cursor:pointer;width:100%;margin-top:8px}
 .m-btn.primary{background:var(--gold);color:#0c0c0e}
@@ -211,15 +181,12 @@ header{position:sticky;top:0;z-index:100;
 .m-row .m-btn{margin-top:0}
 .sep{height:1px;background:var(--border);margin:16px 0}
 
-.import-preview{background:var(--surface2);border:1px solid var(--border-light);border-radius:var(--radius-sm);padding:12px;max-height:200px;overflow-y:auto;margin-top:10px}
-.prev-empty{font-size:11px;color:var(--text-muted);text-align:center;padding:16px 0}
-.prev-item{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;gap:8px}
-
 #toast-wrap{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:600;display:flex;flex-direction:column-reverse;align-items:center;gap:6px;pointer-events:none}
 .toast{background:rgba(22,22,26,.96);border:1px solid var(--border-light);color:var(--text-dim);font-size:12px;font-weight:700;padding:10px 18px;border-radius:99px;box-shadow:0 4px 28px rgba(0,0,0,.6);white-space:nowrap;backdrop-filter:blur(10px);animation:toastIn .25s ease,toastOut .3s ease 4.5s forwards}
 .toast.success{color:var(--green);border-color:rgba(46,204,136,.3)}
-.toast.error{color:var(--red);border-color:rgba(240,96,96,.3);white-space:normal;max-width:90vw;animation:toastIn .25s ease,toastOut .3s ease 8s forwards}
+.toast.error{color:var(--red);border-color:rgba(240,96,96,.3);animation:toastIn .25s ease,toastOut .3s ease 6s forwards}
 
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes toastIn{from{opacity:0;transform:translateY(10px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes toastOut{from{opacity:1}to{opacity:0;transform:translateY(6px) scale(.95)}}
 @media(max-width:420px){.mobile-hide{display:none}.h-btn span.label{display:none}.btn-add{padding:7px 12px;font-size:11px}}
@@ -298,8 +265,8 @@ header{position:sticky;top:0;z-index:100;
         <input id="new-notes" type="text" placeholder="הערה (למשל: רק אם יש מבצע)">
       </div>
       <div class="add-actions">
-        <button class="act-btn" onclick="window.openImportModal()">💬 ייבוא</button>
-        <button class="act-btn" onclick="window.openShareModal()">↗ שתף</button>
+        <button class="act-btn wa" onclick="window.openImportModal()">💬 ייבוא</button>
+        <button class="act-btn share" onclick="window.openShareModal()">↗ שתף</button>
         <button class="act-btn" onclick="window.clearDone()">🧹 נקה שנקנו</button>
       </div>
     </div>
@@ -318,15 +285,15 @@ header{position:sticky;top:0;z-index:100;
   <div class="empty" id="empty" style="display:none">
     <div class="empty-icon">🍃</div>
     <div class="empty-title">הרשימה ריקה</div>
-    <div class="empty-sub">הוסף מוצרים למעלה או ייבא מוואטסאפ</div>
+    <div class="empty-sub">הוסף מוצרים או ייבא מוואטסאפ</div>
   </div>
 </div>
 
 <div id="toast-wrap"></div>
 
+<!-- MODALS -->
 <div class="modal-bg" id="list-modal">
   <div class="modal">
-    <div class="sheet-handle"></div>
     <div class="m-title">🧺 רשימה חדשה <button class="m-close" onclick="window.closeModal('list-modal')">✕</button></div>
     <div class="m-sub">תן שם לרשימה (קניות לבית, פרויקט גינה...)</div>
     <input type="text" id="new-list-name-inp" class="m-inp" placeholder="שם הרשימה...">
@@ -337,7 +304,6 @@ header{position:sticky;top:0;z-index:100;
 
 <div class="modal-bg" id="cat-modal">
   <div class="modal">
-    <div class="sheet-handle"></div>
     <div class="m-title">🏷️ ניהול קטגוריות <button class="m-close" onclick="window.closeModal('cat-modal')">✕</button></div>
     <div class="m-sub">הוסף קטגוריות אישיות משלך.</div>
     <div style="display:flex; gap:8px;">
@@ -352,7 +318,6 @@ header{position:sticky;top:0;z-index:100;
 
 <div class="modal-bg" id="ai-modal">
   <div class="modal">
-    <div class="sheet-handle"></div>
     <div class="m-title">🤖 סיווג AI חכם <button class="m-close" onclick="window.closeModal('ai-modal')">✕</button></div>
     <div class="m-sub">הכנס מפתח חינמי של Google Gemini לזיהוי מושלם.</div>
     <input type="password" id="ai-key-inp" class="m-inp" placeholder="AIzaSy...">
@@ -363,7 +328,6 @@ header{position:sticky;top:0;z-index:100;
 
 <div class="modal-bg" id="import-modal">
   <div class="modal">
-    <div class="sheet-handle"></div>
     <div class="m-title">💬 ייבוא מוואטסאפ <button class="m-close" onclick="window.closeModal('import-modal')">✕</button></div>
     <textarea class="m-ta" id="import-ta" rows="5" placeholder="הדבק רשימה חופשית..."></textarea>
     <div class="m-row" style="margin-top:10px">
@@ -375,7 +339,6 @@ header{position:sticky;top:0;z-index:100;
 
 <div class="modal-bg" id="share-modal">
   <div class="modal">
-    <div class="sheet-handle"></div>
     <div class="m-title">↗ שיתוף רשימה <button class="m-close" onclick="window.closeModal('share-modal')">✕</button></div>
     <button class="m-btn primary" onclick="window.shareViaWhatsApp()" style="background:#25d366;color:#fff;margin-top:0">💬 שלח בוואטסאפ</button>
     <button class="m-btn secondary" onclick="window.shareViaCopy()">📋 העתק טקסט</button>
@@ -386,11 +349,11 @@ header{position:sticky;top:0;z-index:100;
 (function () {
   'use strict';
   
-  // 1. קבועים והגדרות מערכת
-  var STORAGE_KEY = 'shopping_lists_v16';
-  var CURRENT_LIST_KEY = 'current_list_v16';
-  var CUSTOM_CATS_KEY = 'custom_cats_v16';
-  var AI_KEY_STORAGE = 'gemini_api_key_v5';
+  // 1. קבועים והגדרות מערכת יציבים
+  var STORAGE_KEY = 'shopping_lists_v17';
+  var CURRENT_LIST_KEY = 'current_list_v17';
+  var CUSTOM_CATS_KEY = 'custom_cats_v17';
+  var AI_KEY_STORAGE = 'gemini_api_key_v10';
 
   var CAT_META = {
     produce: { title: 'ירקות ופירות', icon: '🥦' },
@@ -423,16 +386,6 @@ header{position:sticky;top:0;z-index:100;
     { cat:'diy', words:['עץ','קרש','קורות','צבע','ברגים','מסמרים','מברשת','לכה','דבק','אדנית','נדנדה','דיבלים','מברגה'] }
   ];
 
-  var SUGGESTIONS = [
-    {name:'חלב טרי', cat:'dairy'}, {name:'גבינה צהובה', cat:'dairy'}, {name:'קוטג', cat:'dairy'},
-    {name:'עגבניות', cat:'produce'}, {name:'מלפפונים', cat:'produce'}, {name:'בצל', cat:'produce'}, {name:'אפרסק', cat:'produce'},
-    {name:'לחם פרוס', cat:'bakery'}, {name:'פיתות', cat:'bakery'}, {name:'לחמניות', cat:'bakery'},
-    {name:'חזה עוף', cat:'meat'}, {name:'בשר טחון', cat:'meat'}, {name:'שניצל', cat:'meat'},
-    {name:'קטשופ', cat:'pantry'}, {name:'מיונז', cat:'pantry'}, {name:'שמן זית', cat:'pantry'}, {name:'פסטה', cat:'pantry'},
-    {name:'פיצה קפואה', cat:'frozen'}, {name:'גלידה', cat:'frozen'},
-    {name:'אבקת כביסה', cat:'cleaning'}, {name:'נייר טואלט', cat:'cleaning'}, {name:'נוזל כלים', cat:'cleaning'}
-  ];
-
   var lists = {};
   var customCats = {};
   var currentList = '';
@@ -441,412 +394,569 @@ header{position:sticky;top:0;z-index:100;
   var isCatManuallyChanged = false;
   var acSelectedIndex = -1;
 
-  // 2. פונקציות עזר ובסיס הנתונים
+  // 2. פונקציות עזר מאובטחות ES5
   function sanitize(str) { return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-  function getAllCats() { return Object.assign({}, CAT_META, customCats); }
-  function getItems() { return lists[currentList] || []; }
-  function setItems(newItems) { lists[currentList] = newItems; saveToStorage(); }
+  
+  function getAllCats() { 
+    var all = {};
+    for (var k in CAT_META) all[k] = CAT_META[k];
+    for (var c in customCats) all[c] = customCats[c];
+    return all;
+  }
+  
+  function getItems() { 
+    var arr = lists[currentList];
+    if (Object.prototype.toString.call(arr) !== '[object Array]') {
+      lists[currentList] = [];
+      return lists[currentList];
+    }
+    return arr;
+  }
+  
+  function setItems(newItems) { 
+    lists[currentList] = newItems; 
+    saveToStorage(); 
+  }
+  
   function saveToStorage() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(lists));
       localStorage.setItem(CURRENT_LIST_KEY, currentList);
     } catch(e) {}
   }
+
+  function getItemIndexById(items, id) {
+    for (var i = 0; i < items.length; i++) { if (items[i].id === id) return i; }
+    return -1;
+  }
+
   function autoCategorize(name) {
-    if (!name || !name.trim()) return 'other';
-    var lower = name.trim().toLowerCase();
+    if (!name) return 'other';
+    var lower = name.toLowerCase();
     for (var r = 0; r < CAT_RULES.length; r++) {
       for (var w = 0; w < CAT_RULES[r].words.length; w++) {
-        if (lower.includes(CAT_RULES[r].words[w])) return CAT_RULES[r].cat;
+        if (lower.indexOf(CAT_RULES[r].words[w]) !== -1) return CAT_RULES[r].cat;
       }
     }
     return 'other';
   }
 
-  // 3. פונקציות תצוגה מרכזיות (רנדור)
-  function render() {
-    var wrap = document.getElementById('list-wrap');
-    var empty = document.getElementById('empty');
-    if(!wrap || !empty) return;
-    
-    var items = getItems();
-    var filtered = items.filter(function(item) {
-      if (currentFilter === 'active') return !item.done;
-      if (currentFilter === 'done') return item.done;
-      return true;
-    });
-    
-    updateStats();
-    
-    if (!filtered.length) { 
-      wrap.innerHTML = ''; 
-      empty.style.display = 'block'; 
-      return; 
-    }
-    empty.style.display = 'none';
-
-    var allCats = getAllCats();
-    var groups = {};
-    Object.keys(allCats).forEach(function(k) { groups[k] = []; });
-    filtered.forEach(function(item) {
-      var c = item.cat || 'other';
-      if (!groups[c]) groups[c] = [];
-      groups[c].push(item);
-    });
-
-    var html = '';
-    Object.keys(allCats).forEach(function(catKey) {
-      var catItems = groups[catKey];
-      if (!catItems || !catItems.length) return;
-      var meta = allCats[catKey];
-      
-      var itemsHtml = catItems.map(function(item) {
-        var isSale = item.notes && item.notes.includes('מבצע');
-        var noteHtml = item.notes ? '<div class="item-note"><span class="nbadge' + (isSale ? ' sale' : '') + '">' + sanitize(item.notes) + '</span></div>' : '';
-        
-        // בורר הקטגוריות הפנימי
-        var catOptions = Object.keys(allCats).map(function(k) {
-          return '<option value="' + k + '"' + (k === (item.cat || 'other') ? ' selected' : '') + '>' + allCats[k].icon + ' ' + sanitize(all[k].title) + '</option>';
-        }).join('');
-
-        return (
-          '<div class="item-row ' + (item.done ? 'done' : '') + '" data-id="' + item.id + '">' +
-            '<button class="chk-btn ' + (item.done ? 'on' : '') + '" onclick="window.toggleItem(\'' + item.id + '\')">' + (item.done ? '✓' : '') + '</button>' +
-            '<div class="item-info" onclick="window.toggleItem(\'' + item.id + '\')">' +
-              '<div class="item-name">' + sanitize(item.name) + '</div>' + noteHtml +
-            '</div>' +
-            '<div class="item-acts">' +
-              '<select class="inline-cat-sel" onchange="window.changeItemCategory(\'' + item.id + '\', this.value)">' + catOptions + '</select>' +
-              '<div class="order-container">' +
-                '<button class="order-arrow" onclick="window.moveItem(\'' + item.id + '\', -1)">▲</button>' +
-                '<button class="order-arrow" onclick="window.moveItem(\'' + item.id + '\', 1)">▼</button>' +
-              '</div>' +
-              '<div class="qty-pill">' +
-                '<button onclick="window.adjustQty(\'' + item.id + '\',-1)">−</button>' +
-                '<div class="qty-val">' + item.qty + '</div>' +
-                '<button onclick="window.adjustQty(\'' + item.id + '\',1)">＋</button>' +
-              '</div>' +
-              '<button class="ico-btn" onclick="window.removeItem(\'' + item.id + '\')">🗑️</button>' +
-            '</div>' +
-          '</div>'
-        );
-      }).join('');
-      
-      html += '<div class="cat-block"><div class="cat-hdr"><div class="cat-icon">' + meta.icon + '</div><div class="cat-name">' + meta.title + '</div><div class="cat-cnt">' + catItems.length + '</div></div><div>' + itemsHtml + '</div></div>';
-    });
-    wrap.innerHTML = html;
-  }
-
-  function updateStats() {
-    var items = getItems();
-    var total = items.length;
-    var done = items.filter(function(i) { return i.done; }).length;
-    var pct = total === 0 ? 0 : Math.round((done / total) * 100);
-    
-    var els = ['cnt-total', 'cnt-done', 'cnt-left', 'fc-all', 'fc-active', 'fc-done', 'chip-total', 'pct', 'prog-fill', 'done-banner'];
-    var dom = {};
-    els.forEach(function(id) { dom[id] = document.getElementById(id); });
-
-    if(dom['cnt-total']) dom['cnt-total'].textContent = total;
-    if(dom['cnt-done']) dom['cnt-done'].textContent = done;
-    if(dom['cnt-left']) dom['cnt-left'].textContent = total - done;
-    if(dom['fc-all']) dom['fc-all'].textContent = total;
-    if(dom['fc-active']) dom['fc-active'].textContent = total - done;
-    if(dom['fc-done']) dom['fc-done'].textContent = done;
-    if(dom['chip-total']) dom['chip-total'].textContent = total + ' פריטים';
-    if(dom['pct']) dom['pct'].textContent = pct + '%';
-    if(dom['prog-fill']) dom['prog-fill'].style.width = pct + '%';
-    if(dom['done-banner']) dom['done-banner'].style.display = (total > 0 && done === total) ? 'block' : 'none';
-  }
-
-  function renderListSelector() {
-    var sel = document.getElementById('list-manager-select');
-    if(!sel) return;
-    sel.innerHTML = Object.keys(lists).map(function(name) {
-      return '<option value="' + sanitize(name) + '"' + (name === currentList ? ' selected' : '') + '>' + sanitize(name) + '</option>';
-    }).join('');
-  }
-
-  function renderCatSelect() {
-    var all = getAllCats();
-    var sel = document.getElementById('new-cat');
-    if (!sel) return;
-    sel.innerHTML = Object.keys(all).map(function(k) {
-      return '<option value="' + k + '">' + all[k].icon + ' ' + sanitize(all[k].title) + '</option>';
-    }).join('');
-    sel.value = 'other';
-  }
-
-  window.renderCustomCatsList = function() {
-    var listEl = document.getElementById('custom-cat-list');
-    if (!listEl) return;
-    var html = Object.keys(customCats).map(function(k) {
-      return '<div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border); font-size:13px;">' +
-             '<span>' + customCats[k].icon + ' ' + sanitize(customCats[k].title) + '</span>' +
-             '<button class="icon-btn" style="width:28px;height:28px;color:var(--red);border-color:transparent" onclick="window.removeCustomCategory(\''+k+'\')">🗑️</button></div>';
-    }).join('');
-    listEl.innerHTML = html || '<div style="text-align:center;color:var(--text-muted);font-size:12px;padding:16px;">אין קטגוריות אישיות</div>';
-  };
-
-  function showToast(msg, type) {
+  window.showToast = function(msg, type) {
     var wrap = document.getElementById('toast-wrap');
     if(!wrap) return;
     var el = document.createElement('div');
     el.className = 'toast ' + (type || '');
     el.innerHTML = sanitize(msg);
     wrap.appendChild(el);
-    setTimeout(function() { el.remove(); }, type === 'error' ? 8200 : 2700);
+    setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, type === 'error' ? 6000 : 2500);
+  };
+
+  // 3. אתחול מאובטח
+  function initApp() {
+    try {
+      var savedCats = localStorage.getItem(CUSTOM_CATS_KEY);
+      if (savedCats) {
+        var pCats = JSON.parse(savedCats);
+        if (pCats && typeof pCats === 'object' && Object.prototype.toString.call(pCats) !== '[object Array]') {
+          customCats = pCats;
+        }
+      }
+    } catch(e) { customCats = {}; }
+
+    try {
+      var savedLists = localStorage.getItem(STORAGE_KEY);
+      if (savedLists) {
+        var pLists = JSON.parse(savedLists);
+        if (pLists && typeof pLists === 'object' && Object.prototype.toString.call(pLists) !== '[object Array]') {
+          lists = pLists;
+        }
+      }
+    } catch(e) { lists = null; }
+
+    var keys = lists ? Object.keys(lists) : [];
+    if (!lists || keys.length === 0) {
+      lists = { '🧺 קניות לבית': [] };
+    }
+
+    currentList = localStorage.getItem(CURRENT_LIST_KEY);
+    if (!currentList || typeof lists[currentList] === 'undefined') {
+      currentList = Object.keys(lists)[0];
+    }
+
+    var aiKey = localStorage.getItem(AI_KEY_STORAGE);
+    if (aiKey && aiKey.length > 10) { 
+      isAiEnabled = true; 
+      var d = document.getElementById('ai-status-dot'); 
+      var t = document.getElementById('ai-status-text'); 
+      if(d) d.classList.add('active'); 
+      if(t) t.textContent = 'AI מחובר'; 
+    }
+    
+    renderCatSelect(); 
+    renderListSelector(); 
+    render();
   }
+
+  // 4. פונקציות תצוגה
+  function render() {
+    try {
+      var wrap = document.getElementById('list-wrap');
+      var empty = document.getElementById('empty');
+      if(!wrap || !empty) return;
+      
+      var items = getItems();
+      var filtered = [];
+      for(var i=0; i<items.length; i++) {
+        if (currentFilter === 'active' && items[i].done) continue;
+        if (currentFilter === 'done' && !items[i].done) continue;
+        filtered.push(items[i]);
+      }
+      
+      updateStats(items);
+      
+      if (filtered.length === 0) { 
+        wrap.innerHTML = ''; 
+        empty.style.display = 'block'; 
+        return; 
+      }
+      empty.style.display = 'none';
+
+      var allCats = getAllCats();
+      var catKeys = Object.keys(allCats);
+      var groups = {};
+      for(var j=0; j<catKeys.length; j++) groups[catKeys[j]] = [];
+      
+      for(var k=0; k<filtered.length; k++) {
+        var item = filtered[k];
+        var c = item.cat || 'other';
+        if (!groups[c]) groups['other'].push(item);
+        else groups[c].push(item);
+      }
+
+      var html = '';
+      for(var x=0; x<catKeys.length; x++) {
+        var catKey = catKeys[x];
+        var catItems = groups[catKey];
+        if (!catItems || catItems.length === 0) continue;
+        
+        var meta = allCats[catKey];
+        var itemsHtml = '';
+        
+        for(var y=0; y<catItems.length; y++) {
+          var ci = catItems[y];
+          var isSale = ci.notes && ci.notes.indexOf('מבצע') !== -1;
+          var noteHtml = ci.notes ? '<div class="item-note"><span class="nbadge' + (isSale ? ' sale' : '') + '">' + sanitize(ci.notes) + '</span></div>' : '';
+          
+          var catOptions = '';
+          for(var z=0; z<catKeys.length; z++) {
+            var optKey = catKeys[z];
+            var isSel = (optKey === (ci.cat || 'other')) ? ' selected' : '';
+            catOptions += '<option value="' + optKey + '"' + isSel + '>' + allCats[optKey].icon + ' ' + sanitize(allCats[optKey].title) + '</option>';
+          }
+
+          itemsHtml += 
+            '<div class="item-row ' + (ci.done ? 'done' : '') + '" data-id="' + ci.id + '">' +
+              '<button class="chk-btn ' + (ci.done ? 'on' : '') + '" onclick="window.toggleItem(\'' + ci.id + '\')">' + (ci.done ? '✓' : '') + '</button>' +
+              '<div class="item-info" onclick="window.toggleItem(\'' + ci.id + '\')">' +
+                '<div class="item-name">' + sanitize(ci.name) + '</div>' + noteHtml +
+              '</div>' +
+              '<div class="item-acts">' +
+                '<select class="inline-cat-sel" onchange="window.changeItemCategory(\'' + ci.id + '\', this.value)">' + catOptions + '</select>' +
+                '<div class="order-container">' +
+                  '<button class="order-arrow" onclick="window.moveItem(\'' + ci.id + '\', -1)">▲</button>' +
+                  '<button class="order-arrow" onclick="window.moveItem(\'' + ci.id + '\', 1)">▼</button>' +
+                '</div>' +
+                '<div class="qty-pill">' +
+                  '<button onclick="window.adjustQty(\'' + ci.id + '\',-1)">−</button>' +
+                  '<div class="qty-val">' + ci.qty + '</div>' +
+                  '<button onclick="window.adjustQty(\'' + ci.id + '\',1)">＋</button>' +
+                '</div>' +
+                '<button class="ico-btn" onclick="window.removeItem(\'' + ci.id + '\')">🗑️</button>' +
+              '</div>' +
+            '</div>';
+        }
+        
+        html += '<div class="cat-block"><div class="cat-hdr"><div class="cat-icon">' + meta.icon + '</div><div class="cat-name">' + meta.title + '</div><div class="cat-cnt">' + catItems.length + '</div></div><div>' + itemsHtml + '</div></div>';
+      }
+      wrap.innerHTML = html;
+    } catch(err) {
+      window.showToast('שגיאה בתצוגה: ' + err.message, 'error');
+    }
+  }
+
+  function updateStats(items) {
+    var total = items.length;
+    var done = 0;
+    for(var i=0; i<items.length; i++) if(items[i].done) done++;
+    var pct = total === 0 ? 0 : Math.round((done / total) * 100);
+    
+    var d = function(id, val) { var el = document.getElementById(id); if(el) el.textContent = val; };
+    d('cnt-total', total);
+    d('cnt-done', done);
+    d('cnt-left', total - done);
+    d('fc-all', total);
+    d('fc-active', total - done);
+    d('fc-done', done);
+    d('chip-total', total + ' פריטים');
+    d('pct', pct + '%');
+    
+    var pFill = document.getElementById('prog-fill');
+    if(pFill) pFill.style.width = pct + '%';
+    
+    var ban = document.getElementById('done-banner');
+    if(ban) ban.style.display = (total > 0 && done === total) ? 'block' : 'none';
+  }
+
+  function renderListSelector() {
+    var sel = document.getElementById('list-manager-select');
+    if(!sel) return;
+    var keys = Object.keys(lists);
+    var html = '';
+    for(var i=0; i<keys.length; i++) {
+      html += '<option value="' + sanitize(keys[i]) + '"' + (keys[i] === currentList ? ' selected' : '') + '>' + sanitize(keys[i]) + '</option>';
+    }
+    sel.innerHTML = html;
+  }
+
+  function renderCatSelect() {
+    var all = getAllCats();
+    var sel = document.getElementById('new-cat');
+    if (!sel) return;
+    var keys = Object.keys(all);
+    var html = '';
+    for(var i=0; i<keys.length; i++) html += '<option value="' + keys[i] + '">' + all[keys[i]].icon + ' ' + sanitize(all[keys[i]].title) + '</option>';
+    sel.innerHTML = html;
+    sel.value = 'other';
+  }
+
+  window.renderCustomCatsList = function() {
+    var listEl = document.getElementById('custom-cat-list');
+    if (!listEl) return;
+    var keys = Object.keys(customCats);
+    if(keys.length === 0) { listEl.innerHTML = '<div style="text-align:center;color:var(--text-muted);font-size:12px;padding:16px;">אין קטגוריות אישיות</div>'; return; }
+    var html = '';
+    for(var i=0; i<keys.length; i++) {
+      var k = keys[i];
+      html += '<div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border); font-size:13px;">' +
+             '<span>' + customCats[k].icon + ' ' + sanitize(customCats[k].title) + '</span>' +
+             '<button class="icon-btn" style="width:28px;height:28px;color:var(--red)" onclick="window.removeCustomCategory(\''+k+'\')">🗑️</button></div>';
+    }
+    listEl.innerHTML = html;
+  };
 
   function hideCatBadge() {
     var badge = document.getElementById('auto-cat-badge');
     if(badge) { badge.classList.remove('show'); badge.textContent = ''; }
   }
 
-  // 4. פונקציות הוספה, עדכון ומחיקה של המשתמש
+  // 5. פעולות משתמש (הוספה/עריכה)
   window.addItem = function() {
-    var nameEl = document.getElementById('new-name');
-    var catSel = document.getElementById('new-cat');
-    var qtyEl = document.getElementById('new-qty');
-    var notesEl = document.getElementById('new-notes');
+    try {
+      var nameEl = document.getElementById('new-name');
+      var catSel = document.getElementById('new-cat');
+      var qtyEl = document.getElementById('new-qty');
+      var notesEl = document.getElementById('new-notes');
 
-    if (!nameEl || !nameEl.value.trim()) {
-      if (nameEl) nameEl.focus();
-      return;
-    }
+      if (!nameEl) return;
+      var name = nameEl.value.trim();
+      if (name === '') { nameEl.focus(); return; }
 
-    var name = nameEl.value.trim();
-    var finalCat = catSel ? catSel.value : 'other';
-    var newId = 'item_' + Date.now().toString();
+      var finalCat = (catSel && catSel.value) ? catSel.value : 'other';
+      var newId = 'item_' + Date.now().toString();
 
-    var items = getItems();
-    items.push({
-      id: newId,
-      name: name,
-      qty: qtyEl ? Math.max(1, parseInt(qtyEl.value)||1) : 1,
-      cat: finalCat,
-      notes: notesEl ? notesEl.value.trim() : '',
-      done: false
-    });
-    setItems(items);
+      var items = getItems();
+      var qtyVal = qtyEl ? parseInt(qtyEl.value) : 1;
+      if (isNaN(qtyVal) || qtyVal < 1) qtyVal = 1;
 
-    var wasCatManual = isCatManuallyChanged;
+      items.push({
+        id: newId,
+        name: name,
+        qty: qtyVal,
+        cat: finalCat,
+        notes: (notesEl ? notesEl.value.trim() : ''),
+        done: false
+      });
+      setItems(items);
 
-    nameEl.value = '';
-    if(qtyEl) qtyEl.value = '1';
-    if(notesEl) notesEl.value = '';
-    if(catSel) catSel.value = 'other';
-    isCatManuallyChanged = false;
+      var wasCatManual = isCatManuallyChanged;
 
-    window.hideAutocomplete();
-    hideCatBadge();
+      nameEl.value = '';
+      if(qtyEl) qtyEl.value = '1';
+      if(notesEl) notesEl.value = '';
+      if(catSel) catSel.value = 'other';
+      isCatManuallyChanged = false;
 
-    nameEl.focus();
-    render();
+      window.hideAutocomplete();
+      hideCatBadge();
 
-    var newRow = document.querySelector('[data-id="' + newId + '"]');
-    if (newRow) newRow.classList.add('just-added');
+      nameEl.focus();
+      render();
 
-    if (isAiEnabled && !wasCatManual && finalCat === 'other') {
-      showToast('⏳ מנתח...', 'success');
-      setTimeout(function() { fetchCategoryFromAI(name, newId); }, 50);
-    } else {
-      showToast('✅ נוסף', 'success');
+      var newRow = document.querySelector('[data-id="' + newId + '"]');
+      if (newRow) newRow.classList.add('just-added');
+
+      if (isAiEnabled && !wasCatManual && finalCat === 'other') {
+        window.showToast('⏳ מנתח AI...', 'success');
+        setTimeout(function() { fetchCategoryFromAI(name, newId); }, 50);
+      } else {
+        window.showToast('✅ נוסף', 'success');
+      }
+    } catch(err) {
+      window.showToast('שגיאת הוספה: ' + err.message, 'error');
     }
   };
 
   window.toggleItem = function(id) {
-    var items = getItems(); var item = items.find(function(i) { return i.id === id; });
-    if (item) { item.done = !item.done; setItems(items); render(); }
+    var items = getItems(); var idx = getItemIndexById(items, id);
+    if (idx !== -1) { items[idx].done = !items[idx].done; setItems(items); render(); }
   };
+  
   window.adjustQty = function(id, amt) {
-    var items = getItems(); var item = items.find(function(i) { return i.id === id; });
-    if (item) { item.qty = Math.max(1, item.qty + amt); setItems(items); render(); }
+    var items = getItems(); var idx = getItemIndexById(items, id);
+    if (idx !== -1) { 
+      var n = items[idx].qty + amt;
+      items[idx].qty = n < 1 ? 1 : n; 
+      setItems(items); render(); 
+    }
   };
+  
   window.removeItem = function(id) {
-    setItems(getItems().filter(function(i) { return i.id !== id; })); render();
+    var items = getItems();
+    var newItems = [];
+    for(var i=0; i<items.length; i++) if(items[i].id !== id) newItems.push(items[i]);
+    setItems(newItems); render();
   };
+  
   window.clearDone = function() {
-    var items = getItems(); var before = items.length;
-    var filtered = items.filter(function(i) { return !i.done; });
-    setItems(filtered); render();
-    var removed = before - filtered.length;
-    if (removed > 0) showToast(removed + ' פריטים הוסרו', 'success');
+    var items = getItems(); var newItems = [];
+    for(var i=0; i<items.length; i++) if(!items[i].done) newItems.push(items[i]);
+    var removed = items.length - newItems.length;
+    setItems(newItems); render();
+    if (removed > 0) window.showToast(removed + ' פריטים הוסרו', 'success');
   };
+  
   window.adjustNewQty = function(amt) {
     var inp = document.getElementById('new-qty');
-    if(inp) inp.value = Math.max(1, (parseInt(inp.value)||1) + amt);
+    if(!inp) return;
+    var v = parseInt(inp.value);
+    if(isNaN(v)) v = 1;
+    v += amt;
+    if(v < 1) v = 1;
+    inp.value = v;
   };
+  
   window.setFilter = function(type) {
     currentFilter = type;
-    document.querySelectorAll('.f-tab').forEach(function(btn) { btn.classList.remove('active'); });
+    var tabs = document.querySelectorAll('.f-tab');
+    for(var i=0; i<tabs.length; i++) tabs[i].classList.remove('active');
     var activeBtn = document.querySelector('.f-tab[onclick="window.setFilter(\''+type+'\')"]');
     if(activeBtn) activeBtn.classList.add('active');
     render();
   };
+  
   window.moveItem = function(id, dir) {
-    var items = getItems();
-    var idx = items.findIndex(function(i) { return i.id === id; });
-    if (idx === -1) return;
-    var currentCat = items[idx].cat || 'other';
+    try {
+      var items = getItems();
+      var idx = getItemIndexById(items, id);
+      if (idx === -1) return;
+      var currentCat = items[idx].cat || 'other';
 
-    var targetIdx = -1;
-    if (dir === -1) { 
-      for (var i = idx - 1; i >= 0; i--) {
-        if ((items[i].cat || 'other') === currentCat) { targetIdx = i; break; }
+      var targetIdx = -1;
+      if (dir === -1) { 
+        for (var i = idx - 1; i >= 0; i--) { if ((items[i].cat || 'other') === currentCat) { targetIdx = i; break; } }
+      } else { 
+        for (var j = idx + 1; j < items.length; j++) { if ((items[j].cat || 'other') === currentCat) { targetIdx = j; break; } }
       }
-    } else { 
-      for (var i = idx + 1; i < items.length; i++) {
-        if ((items[i].cat || 'other') === currentCat) { targetIdx = i; break; }
-      }
-    }
 
-    if (targetIdx !== -1) {
-      var temp = items[idx];
-      items[idx] = items[targetIdx];
-      items[targetIdx] = temp;
-      setItems(items);
-      render();
-    }
+      if (targetIdx !== -1) {
+        var temp = items[idx]; items[idx] = items[targetIdx]; items[targetIdx] = temp;
+        setItems(items); render();
+      }
+    } catch(e) {}
   };
+  
   window.changeItemCategory = function(id, newCat) {
     var items = getItems();
-    var item = items.find(function(i) { return i.id === id; });
-    if (item) {
-      item.cat = newCat;
-      setItems(items);
-      render();
-      showToast('הקטגוריה עודכנה', 'success');
+    var idx = getItemIndexById(items, id);
+    if (idx !== -1) {
+      items[idx].cat = newCat;
+      setItems(items); render(); window.showToast('הקטגוריה עודכנה', 'success');
     }
   };
 
-  // 5. ניהול רשימות
+  // 6. ניהול רשימות
   window.switchList = function(name) {
     if (lists[name]) { currentList = name; saveToStorage(); renderListSelector(); render(); }
   };
+  
   window.createNewList = function() {
     var inp = document.getElementById('new-list-name-inp');
     if(!inp) return;
     var name = inp.value.trim();
-    if (!name) { inp.focus(); return; }
-    if (lists[name]) { showToast('רשימה זו כבר קיימת', 'error'); return; }
+    if (name === '') { inp.focus(); return; }
+    if (lists[name]) { window.showToast('רשימה זו כבר קיימת', 'error'); return; }
     lists[name] = [];
     currentList = name;
     inp.value = '';
     saveToStorage(); renderListSelector(); window.closeModal('list-modal'); render();
-    showToast('הרשימה נוצרה', 'success');
+    window.showToast('הרשימה נוצרה', 'success');
   };
+  
   window.deleteCurrentList = function() {
-    if (Object.keys(lists).length <= 1) { showToast('לא ניתן למחוק את הרשימה האחרונה!', 'error'); return; }
+    var keys = Object.keys(lists);
+    if (keys.length <= 1) { window.showToast('לא ניתן למחוק את הרשימה האחרונה!', 'error'); return; }
     if (confirm('למחוק את הרשימה "' + currentList + '"?')) {
       delete lists[currentList];
       currentList = Object.keys(lists)[0];
       saveToStorage(); renderListSelector(); render();
-      showToast('הרשימה נמחקה', 'success');
+      window.showToast('הרשימה נמחקה', 'success');
     }
   };
 
-  // 6. ניהול קטגוריות מותאמות אישית
-  window.addCustomCategory = function() {
-    var iconInp = document.getElementById('new-cat-icon');
-    var titleInp = document.getElementById('new-cat-title');
-    if(!iconInp || !titleInp) return;
-    
-    var icon = iconInp.value.trim() || '📌';
-    var title = titleInp.value.trim();
-    if (!title) { showToast('נא להזין שם קטגוריה', 'error'); return; }
-    
-    var id = 'c_' + Date.now().toString(36);
-    customCats[id] = { title: title, icon: icon };
-    localStorage.setItem(CUSTOM_CATS_KEY, JSON.stringify(customCats));
-    
-    titleInp.value = ''; iconInp.value = '';
-    renderCatSelect(); window.renderCustomCatsList(); render();
-    showToast('הקטגוריה נוספה', 'success');
-  };
   window.removeCustomCategory = function(id) {
     if (confirm('למחוק את הקטגוריה? מוצרים קיימים יעברו ל"כללי".')) {
       delete customCats[id];
       localStorage.setItem(CUSTOM_CATS_KEY, JSON.stringify(customCats));
-      Object.keys(lists).forEach(function(listName) {
-         lists[listName].forEach(function(item) { if (item.cat === id) item.cat = 'other'; });
-      });
+      var lKeys = Object.keys(lists);
+      for(var i=0; i<lKeys.length; i++) {
+        var arr = lists[lKeys[i]];
+        for(var j=0; j<arr.length; j++) if (arr[j].cat === id) arr[j].cat = 'other';
+      }
       saveToStorage(); renderCatSelect(); window.renderCustomCatsList(); render();
     }
   };
 
-  // 7. חלונות קופצים (Modals)
-  window.openModal = function(id) {
-    var el = document.getElementById(id);
-    if(el) el.classList.add('open');
-  };
-  window.closeModal = function(id) {
-    var el = document.getElementById(id);
-    if(el) el.classList.remove('open');
-  };
-  window.openCatModal = function() { window.renderCustomCatsList(); window.openModal('cat-modal'); };
-  window.openImportModal = function() { window.openModal('import-modal'); };
-  window.openShareModal = function() { window.openModal('share-modal'); };
-  window.openAiSettings = function() {
+  // 7. תפריט AI והשלמה חכמה
+  function fetchCategoryFromAI(itemName, itemId) {
     var key = localStorage.getItem(AI_KEY_STORAGE);
+    if (!key) return;
+    
+    var allCats = getAllCats();
+    var allowedIds = Object.keys(allCats);
+    var mapping = [];
+    for(var k=0; k<allowedIds.length; k++) mapping.push(allowedIds[k] + "=" + allCats[allowedIds[k]].title);
+    
+    var prompt = "Categorize this Hebrew supermarket item: '" + itemName + "'. Available categories (ID=Description): " + mapping.join(", ") + ". Return ONLY the exact ID. No other words.";
+    
+    // שימוש ב-XHR במקום fetch כדי למנוע קריסה בדפדפנים וותיקים
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + key, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4) {
+        try {
+          var data = JSON.parse(xhr.responseText);
+          if (xhr.status !== 200) {
+            var errText = (data && data.error && data.error.message) ? data.error.message : '';
+            var hebError = 'שגיאת AI (' + xhr.status + ')';
+            if (errText.indexOf('API key not valid') !== -1) hebError = 'מפתח לא חוקי. בדוק שהעתקת נכון.';
+            else if (xhr.status === 429) hebError = 'מגבלת פניות לגוגל.';
+            window.showToast(hebError, 'error'); return;
+          }
+          if (data && data.candidates && data.candidates[0].content.parts[0].text) {
+            var rawText = data.candidates[0].content.parts[0].text.trim().toLowerCase();
+            var smartCat = 'other';
+            for (var i = 0; i < allowedIds.length; i++) {
+              if (rawText.indexOf(allowedIds[i].toLowerCase()) !== -1) { smartCat = allowedIds[i]; break; }
+            }
+            if (allCats[smartCat] && smartCat !== 'other') {
+              var items = getItems();
+              var idx = getItemIndexById(items, itemId);
+              if (idx > -1) { 
+                items[idx].cat = smartCat; 
+                setItems(items); render(); 
+                window.showToast('🤖 ' + itemName + ' → ' + allCats[smartCat].title, 'ai'); 
+              }
+            }
+          }
+        } catch(e) {}
+      }
+    };
+    xhr.send(JSON.stringify({
+      contents: [{parts:[{text:prompt}]}],
+      generationConfig: {temperature: 0.0, maxOutputTokens: 10}
+    }));
+  }
+
+  window.saveAiKey = function() {
     var inp = document.getElementById('ai-key-inp');
-    if (key && inp) inp.value = key;
-    window.openModal('ai-modal');
+    if(!inp) return;
+    var key = inp.value.replace(/[\s\r\n]+/g, '').trim();
+    if (key.length < 10) { window.showToast('מפתח לא תקין', 'error'); return; }
+    localStorage.setItem(AI_KEY_STORAGE, key);
+    isAiEnabled = true;
+    var dot = document.getElementById('ai-status-dot');
+    var txt = document.getElementById('ai-status-text');
+    if(dot) dot.classList.add('active');
+    if(txt) txt.textContent = 'AI מחובר';
+    window.closeModal('ai-modal');
+    window.showToast('AI הופעל!', 'success');
   };
 
-  // 8. השלמה אוטומטית (Autocomplete)
-  function getAutocompleteSuggestions(query) {
-    if (!query || query.length < 1) return [];
-    var q = query.toLowerCase().trim();
-    var historyItems = getItems().map(function(i) { return { name: i.name, cat: i.cat }; });
-    var allSuggestions = SUGGESTIONS.concat(historyItems);
-    var seen = {};
-    var filtered = allSuggestions.filter(function(s) {
-      var key = s.name.toLowerCase();
-      if (seen[key]) return false;
-      seen[key] = true; return true;
-    });
-    var starts = [], contains = [];
-    filtered.forEach(function(s) {
-      var low = s.name.toLowerCase();
-      if (low.startsWith(q)) starts.push(s);
-      else if (low.includes(q)) contains.push(s);
-    });
-    return starts.concat(contains).slice(0, 7);
-  }
+  window.clearAiKey = function() {
+    localStorage.removeItem(AI_KEY_STORAGE);
+    var inp = document.getElementById('ai-key-inp');
+    if(inp) inp.value = '';
+    isAiEnabled = false;
+    var dot = document.getElementById('ai-status-dot');
+    var txt = document.getElementById('ai-status-text');
+    if(dot) dot.classList.remove('active');
+    if(txt) txt.textContent = 'מילון מקומי';
+    window.closeModal('ai-modal');
+    window.showToast('AI נותק', 'error');
+  };
 
   window.showAutocomplete = function(query) {
     var list = document.getElementById('autocomplete-list');
     if (!list) return;
-    var suggestions = getAutocompleteSuggestions(query);
-    acSelectedIndex = -1;
-
-    if (!suggestions.length || !query.trim()) {
-      list.classList.remove('show'); list.innerHTML = ''; return;
+    if (!query || query.trim() === '') { list.classList.remove('show'); return; }
+    
+    var q = query.toLowerCase().trim();
+    var items = getItems();
+    var allSugg = [];
+    for(var i=0; i<SUGGESTIONS.length; i++) allSugg.push(SUGGESTIONS[i]);
+    for(var j=0; j<items.length; j++) allSugg.push({name: items[j].name, cat: items[j].cat});
+    
+    var seen = {};
+    var filtered = [];
+    for(var k=0; k<allSugg.length; k++) {
+      var key = allSugg[k].name.toLowerCase();
+      if(!seen[key]) { seen[key] = true; filtered.push(allSugg[k]); }
     }
+    
+    var starts = [], contains = [];
+    for(var x=0; x<filtered.length; x++) {
+      var low = filtered[x].name.toLowerCase();
+      if(low.indexOf(q) === 0) starts.push(filtered[x]);
+      else if(low.indexOf(q) !== -1) contains.push(filtered[x]);
+    }
+    var finalSugg = starts.concat(contains).slice(0, 7);
+    
+    acSelectedIndex = -1;
+    if (finalSugg.length === 0) { list.classList.remove('show'); return; }
 
     var allCats = getAllCats();
-    list.innerHTML = suggestions.map(function(s, idx) {
-      var meta = allCats[s.cat] || allCats.other;
+    var safeQuery = sanitize(query);
+    var html = '';
+    for(var y=0; y<finalSugg.length; y++) {
+      var s = finalSugg[y];
+      var meta = allCats[s.cat] || allCats['other'];
       var safeName = sanitize(s.name);
-      var safeQuery = sanitize(query);
       var highlighted = safeName.replace(new RegExp('('+safeQuery+')','gi'), '<mark>$1</mark>');
-      return '<div class="ac-item" data-idx="' + idx + '" data-name="' + safeName + '" data-cat="' + s.cat + '">' +
-        '<div class="ac-icon">' + meta.icon + '</div>' +
-        '<div class="ac-text">' +
-          '<div class="ac-name">' + highlighted + '</div>' +
-          '<div class="ac-cat">' + meta.title + '</div>' +
-        '</div>' +
-      '</div>';
-    }).join('');
-
+      html += '<div class="ac-item" data-idx="' + y + '" data-name="' + safeName + '" data-cat="' + s.cat + '">' +
+        '<div class="ac-icon">' + meta.icon + '</div><div class="ac-text"><div class="ac-name">' + highlighted + '</div>' +
+        '<div class="ac-cat">' + meta.title + '</div></div></div>';
+    }
+    list.innerHTML = html;
     list.classList.add('show');
-    list.querySelectorAll('.ac-item').forEach(function(el) {
-      el.addEventListener('mousedown', function(e) {
+    
+    var acItems = list.querySelectorAll('.ac-item');
+    for(var z=0; z<acItems.length; z++) {
+      acItems[z].addEventListener('mousedown', function(e) {
         e.preventDefault();
-        window.selectAutocomplete(el.dataset.name, el.dataset.cat);
+        window.selectAutocomplete(this.getAttribute('data-name'), this.getAttribute('data-cat'));
       });
-    });
+    }
   };
 
   window.hideAutocomplete = function() {
@@ -870,91 +980,19 @@ header{position:sticky;top:0;z-index:100;
     } else if (badge) {
       badge.classList.remove('show');
     }
-    
     window.hideAutocomplete();
     if(nameEl) nameEl.focus();
   };
 
-  // 9. AI ומפתחות
-  async function fetchCategoryFromAI(itemName, itemId) {
-    var key = localStorage.getItem(AI_KEY_STORAGE);
-    if (!key) return;
-    var allCats = getAllCats();
-    var allowedIds = Object.keys(allCats);
-    var mapping = allowedIds.map(function(k) { return k + "=" + allCats[k].title; }).join(", ");
-    var prompt = "Categorize this Hebrew supermarket item: '" + itemName + "'. Available categories (ID=Description): " + mapping + ". Return ONLY the exact ID (e.g. produce, bakery). No other words.";
-    
-    try {
-      var res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + key, {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ contents:[{parts:[{text:prompt}]}], generationConfig:{temperature:0.0,maxOutputTokens:10} })
-      });
-      var data = await res.json();
-      
-      if (!res.ok) {
-        var errText = (data && data.error && data.error.message) ? data.error.message : '';
-        var hebError = 'שגיאת AI';
-        if (errText.includes('API key not valid')) hebError = 'מפתח ה-API לא חוקי.';
-        else if (res.status === 429) hebError = 'מגבלת פניות לגוגל.';
-        showToast(hebError, 'error'); return;
-      }
-      
-      if (data && data.candidates && data.candidates[0].content.parts[0].text) {
-        var rawText = data.candidates[0].content.parts[0].text.trim().toLowerCase();
-        var smartCat = 'other';
-        for (var i = 0; i < allowedIds.length; i++) {
-          if (rawText.includes(allowedIds[i].toLowerCase())) { smartCat = allowedIds[i]; break; }
-        }
-        if (allCats[smartCat] && smartCat !== 'other') {
-          var cur = getItems();
-          var idx = cur.findIndex(function(i) { return i.id === itemId; });
-          if (idx > -1) { 
-            cur[idx].cat = smartCat; 
-            setItems(cur); render(); 
-            showToast('🤖 ' + itemName + ' → ' + allCats[smartCat].title, 'ai'); 
-          }
-        }
-      }
-    } catch(e) {}
-  }
-
-  window.saveAiKey = function() {
-    var inp = document.getElementById('ai-key-inp');
-    if(!inp) return;
-    var key = inp.value.replace(/[\s\r\n]+/g, '').trim();
-    if (key.length < 10) { showToast('מפתח לא תקין', 'error'); return; }
-    localStorage.setItem(AI_KEY_STORAGE, key);
-    isAiEnabled = true;
-    var dot = document.getElementById('ai-status-dot');
-    var txt = document.getElementById('ai-status-text');
-    if(dot) dot.classList.add('active');
-    if(txt) txt.textContent = 'AI מחובר';
-    window.closeModal('ai-modal');
-    showToast('AI הופעל בהצלחה!', 'success');
-  };
-
-  window.clearAiKey = function() {
-    localStorage.removeItem(AI_KEY_STORAGE);
-    var inp = document.getElementById('ai-key-inp');
-    if(inp) inp.value = '';
-    isAiEnabled = false;
-    var dot = document.getElementById('ai-status-dot');
-    var txt = document.getElementById('ai-status-text');
-    if(dot) dot.classList.remove('active');
-    if(txt) txt.textContent = 'מילון מקומי';
-    window.closeModal('ai-modal');
-    showToast('AI נותק', 'error');
-  };
-
-  // 10. ייבוא ושיתוף
+  // 8. ייבוא ושיתוף
   window.execImport = function(mode) {
     var importTa = document.getElementById('import-ta');
     if(!importTa) return;
     var lines = importTa.value.split('\n');
     var parsed = [];
-    lines.forEach(function(line) {
-      var text = line.trim().replace(/^[\-*•·◦▪▸➤➢✓✔☑\s]+/,'').replace(/^\d+[\.\)\-]\s*/,'').replace(/^[א-ת]\.\s*/,'').trim();
-      if (!text || text.length < 2 || /^\[\d/.test(text) || /^\d{1,2}\/\d{1,2}/.test(text)) return;
+    for(var i=0; i<lines.length; i++) {
+      var text = lines[i].replace(/^[\-*•·◦▪▸➤➢✓✔☑\s]+/,'').replace(/^\d+[\.\)\-]\s*/,'').replace(/^[א-ת]\.\s*/,'').trim();
+      if (!text || text.length < 2 || text.indexOf('[') === 0 || /^\d{1,2}\/\d{1,2}/.test(text)) continue;
       var qty = 1, notes = '', name = text;
       var m1 = text.match(/^(\d+)\s*[xX×*]?\s+(.+)$/);
       if (m1 && parseInt(m1[1]) < 50) { qty = parseInt(m1[1]); name = m1[2].trim(); }
@@ -964,47 +1002,63 @@ header{position:sticky;top:0;z-index:100;
       }
       var mParen = name.match(/^([^\(]+)\s*\((.+?)\)\s*$/);
       if (mParen) { name = mParen[1].trim(); notes = mParen[2].trim(); }
-      if (!name || name.length < 1) return;
-      parsed.push({ id:'imp_'+Date.now()+'_'+Math.random().toString(36).substr(2,5), name:name, qty:qty, cat:autoCategorize(name), notes:notes, done:false });
-    });
-    if (!parsed.length) { showToast('לא זוהו מוצרים', 'error'); return; }
+      if (!name || name === '') continue;
+      parsed.push({ id:'imp_'+Date.now()+'_'+Math.floor(Math.random()*1000), name:name, qty:qty, cat:autoCategorize(name), notes:notes, done:false });
+    }
+    if (parsed.length === 0) { window.showToast('לא זוהו מוצרים', 'error'); return; }
     
     var items = getItems();
     if (mode === 'replace') { 
       items = parsed; 
-      showToast(parsed.length + ' מוצרים יובאו', 'success'); 
+      window.showToast(parsed.length + ' מוצרים יובאו', 'success'); 
     } else {
-      parsed.forEach(function(p) {
-        var ex = items.find(function(i) { return i.name.trim().toLowerCase() === p.name.trim().toLowerCase(); });
-        if (ex) { ex.qty += p.qty; if (!ex.notes && p.notes) ex.notes = p.notes; }
-        else items.push(p);
-      });
-      showToast(parsed.length + ' מוצרים נוספו', 'success');
+      for(var j=0; j<parsed.length; j++) {
+        var p = parsed[j];
+        var found = false;
+        for(var k=0; k<items.length; k++) {
+          if (items[k].name.trim().toLowerCase() === p.name.trim().toLowerCase()) {
+            items[k].qty += p.qty;
+            if (!items[k].notes && p.notes) items[k].notes = p.notes;
+            found = true; break;
+          }
+        }
+        if (!found) items.push(p);
+      }
+      window.showToast(parsed.length + ' מוצרים נוספו', 'success');
     }
     setItems(items);
-    if (isAiEnabled) items.forEach(function(it) { if (it.cat === 'other') setTimeout(function() { fetchCategoryFromAI(it.name, it.id); }, 50); });
+    if (isAiEnabled) {
+      for(var x=0; x<items.length; x++) {
+        if(items[x].cat === 'other') fetchCategoryFromAI(items[x].name, items[x].id);
+      }
+    }
     render(); window.closeModal('import-modal'); importTa.value = '';
   };
 
   function buildShareText() {
     var items = getItems();
-    if (!items.length) return 'הרשימה ריקה';
+    if (items.length === 0) return 'הרשימה ריקה';
     var lines = ['🛒 ' + currentList + '\n'];
     var groups = {};
-    items.filter(function(i) { return !i.done; }).forEach(function(item) {
-      var c = item.cat || 'other';
-      if (!groups[c]) groups[c] = [];
-      groups[c].push(item);
-    });
+    for(var i=0; i<items.length; i++) {
+      if(items[i].done) continue;
+      var c = items[i].cat || 'other';
+      if(!groups[c]) groups[c] = [];
+      groups[c].push(items[i]);
+    }
     var allCats = getAllCats();
-    Object.keys(allCats).forEach(function(catKey) {
-      var catItems = groups[catKey];
-      if (!catItems || !catItems.length) return;
-      lines.push(allCats[catKey].icon + ' ' + allCats[catKey].title + ':');
-      catItems.forEach(function(item) { lines.push(' • ' + item.name + (item.qty > 1 ? ' ×' + item.qty : '') + (item.notes ? ' (' + item.notes + ')' : '')); });
+    var keys = Object.keys(allCats);
+    for(var j=0; j<keys.length; j++) {
+      var k = keys[j];
+      if (!groups[k] || groups[k].length === 0) continue;
+      lines.push(allCats[k].icon + ' ' + allCats[k].title + ':');
+      for(var x=0; x<groups[k].length; x++) {
+        var it = groups[k][x];
+        lines.push(' • ' + it.name + (it.qty > 1 ? ' ×' + it.qty : '') + (it.notes ? ' (' + it.notes + ')' : ''));
+      }
       lines.push('');
-    });
-    return lines.join('\n').trim();
+    }
+    return lines.join('\n').replace(/\n\s*$/, '');
   }
 
   window.shareViaWhatsApp = function() { window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(buildShareText()), '_blank'); window.closeModal('share-modal'); };
@@ -1012,11 +1066,29 @@ header{position:sticky;top:0;z-index:100;
     var text = buildShareText();
     var ta = document.createElement('textarea'); ta.value = text; ta.style.cssText = 'position:fixed;opacity:0';
     document.body.appendChild(ta); ta.focus(); ta.select();
-    try { document.execCommand('copy'); showToast('הועתק!', 'success'); } catch(e) { showToast('שגיאה', 'error'); }
+    try { document.execCommand('copy'); window.showToast('הועתק!', 'success'); } catch(e) { window.showToast('שגיאה', 'error'); }
     document.body.removeChild(ta); window.closeModal('share-modal');
   };
 
-  // 11. ניהול אירועים (Event Listeners) מאובטח
+  // 9. מאזינים ומודלים
+  window.openModal = function(id) {
+    var el = document.getElementById(id);
+    if(el) el.classList.add('open');
+    if (id === 'share-modal') {
+      var prev = document.getElementById('share-preview');
+      if(prev) prev.innerHTML = '<pre style="font-size:11px;color:var(--text-dim);white-space:pre-wrap;line-height:1.7;direction:rtl;text-align:right">' + sanitize(buildShareText()) + '</pre>';
+    }
+  };
+  window.closeModal = function(id) { var el = document.getElementById(id); if(el) el.classList.remove('open'); };
+  window.openCatModal = function() { window.renderCustomCatsList(); window.openModal('cat-modal'); };
+  window.openImportModal = function() { window.openModal('import-modal'); };
+  window.openShareModal = function() { window.openModal('share-modal'); };
+  window.openAiSettings = function() {
+    var key = localStorage.getItem(AI_KEY_STORAGE);
+    if(key) { var i = document.getElementById('ai-key-inp'); if(i) i.value = key; }
+    window.openModal('ai-modal');
+  };
+
   function setupListeners() {
     var nameInput = document.getElementById('new-name');
     if (nameInput) {
@@ -1047,7 +1119,7 @@ header{position:sticky;top:0;z-index:100;
             var items = list.querySelectorAll('.ac-item');
             if (items[acSelectedIndex]) {
               e.preventDefault();
-              window.selectAutocomplete(items[acSelectedIndex].dataset.name, items[acSelectedIndex].dataset.cat);
+              window.selectAutocomplete(items[acSelectedIndex].getAttribute('data-name'), items[acSelectedIndex].getAttribute('data-cat'));
               return;
             }
           }
@@ -1058,9 +1130,11 @@ header{position:sticky;top:0;z-index:100;
           if (list && list.classList.contains('show')) {
             e.preventDefault();
             var items = list.querySelectorAll('.ac-item');
-            if (items.length > 0) {
+            if(items.length > 0) {
               acSelectedIndex = (acSelectedIndex + 1) % items.length;
-              items.forEach(function(el, i){ el.classList.toggle('selected', i === acSelectedIndex); });
+              for(var i=0; i<items.length; i++) {
+                if(i === acSelectedIndex) items[i].classList.add('selected'); else items[i].classList.remove('selected');
+              }
             }
           }
         } else if (e.key === 'ArrowUp') {
@@ -1068,9 +1142,11 @@ header{position:sticky;top:0;z-index:100;
           if (list && list.classList.contains('show')) {
             e.preventDefault();
             var items = list.querySelectorAll('.ac-item');
-            if (items.length > 0) {
+            if(items.length > 0) {
               acSelectedIndex = (acSelectedIndex - 1 + items.length) % items.length;
-              items.forEach(function(el, i){ el.classList.toggle('selected', i === acSelectedIndex); });
+              for(var i=0; i<items.length; i++) {
+                if(i === acSelectedIndex) items[i].classList.add('selected'); else items[i].classList.remove('selected');
+              }
             }
           }
         } else if (e.key === 'Escape') {
@@ -1091,15 +1167,19 @@ header{position:sticky;top:0;z-index:100;
     if(newListNameInp) newListNameInp.addEventListener('keydown', function(e) { if (e.key === 'Enter') window.createNewList(); });
 
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') ['import-modal','share-modal','ai-modal','list-modal','cat-modal'].forEach(window.closeModal);
+      if (e.key === 'Escape') {
+        window.closeModal('import-modal'); window.closeModal('share-modal');
+        window.closeModal('ai-modal'); window.closeModal('list-modal'); window.closeModal('cat-modal');
+      }
     });
 
-    document.querySelectorAll('.modal-bg').forEach(function(el) {
-      el.addEventListener('click', function(e) { if(e.target === this) window.closeModal(this.id); });
-    });
+    var modals = document.querySelectorAll('.modal-bg');
+    for(var i=0; i<modals.length; i++) {
+      modals[i].addEventListener('click', function(e) { if(e.target === this) window.closeModal(this.id); });
+    }
   }
 
-  // הפעלה סופית
+  // הפעלה
   setupListeners();
   initApp();
 
